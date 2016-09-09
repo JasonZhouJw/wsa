@@ -1,0 +1,10 @@
+#spring:
+#  datasource:
+#    url:jdbc:sqlite: demo.db
+#    driver-class-name: org.sqlite.JDBC
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#      naming:
+#        physical-strategy: com.enigmabridge.hibernate.dialect.SQLiteDialect
+#    show-sql: true
