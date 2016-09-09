@@ -1,19 +1,30 @@
-package com.alpha.core.ws.model;
+package com.alpha.core.ws.entity;
 
 import com.alpha.core.ws.utils.Constants;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WsdlInfo {
+@Entity
+public class Wsdl implements Serializable {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(length = 200)
     private String wsdl;
 
+    @Column(length = 200)
     private String address;
 
+    @Column(length = 200)
     private String facadeClass;
 
-    private List<String> operationList = new ArrayList<String>();
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Operation> operationList = new ArrayList<Operation>();
 
     public String getWsdl() {
         return wsdl;
@@ -39,11 +50,11 @@ public class WsdlInfo {
         this.facadeClass = facadeClass;
     }
 
-    public List<String> getOperationList() {
+    public List<Operation> getOperationList() {
         return operationList;
     }
 
-    public void setOperationList(List<String> operationList) {
+    public void setOperationList(List<Operation> operationList) {
         this.operationList = operationList;
     }
 
@@ -62,8 +73,16 @@ public class WsdlInfo {
 
     public void addOperation(String operation) {
         if (!this.operationList.contains(operation)) {
-            this.operationList.add(operation);
+            this.operationList.add(new Operation(operation, this));
         }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
