@@ -1,5 +1,8 @@
 package com.alpha.core.ws.executor;
 
+import com.alpha.core.ws.entity.InterfaceInfo;
+import com.alpha.core.ws.exception.CommonException;
+
 /**
  * Created by jzhou237 on 9/9/2016.
  */
@@ -8,26 +11,26 @@ public interface ITestCaseExecutor {
     /**
      * init request
      */
-    public void init();
+    void init(InterfaceInfo interfaceInfo);
 
     /**
      * request
      */
-    public void request();
+    void request() throws CommonException;
 
     /**
      * response
      */
-    public void response();
+    void response();
 
     /**
      * init request test case
      */
-    public void verify();
+    void verify();
 
     /**
      * last
      */
-    public void last();
+    void last();
 
 }

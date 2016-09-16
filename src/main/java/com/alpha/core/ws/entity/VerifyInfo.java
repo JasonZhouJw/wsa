@@ -1,6 +1,7 @@
 package com.alpha.core.ws.entity;
 
-import com.alpha.core.ws.utils.enums.OperationType;
+import com.alpha.core.ws.validation.enums.ConverterType;
+import com.alpha.core.ws.validation.enums.OperationType;
 
 import javax.persistence.*;
 
@@ -25,9 +26,13 @@ public class VerifyInfo {
     @Enumerated(EnumType.STRING)
     private OperationType operationType;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private ConverterType converterType;
+
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "validation_id")
-    private Validation validation;
+    @JoinColumn(name = "testcase_id")
+    private TestCase testCase;
 
     public Long getId() {
         return id;
@@ -59,5 +64,21 @@ public class VerifyInfo {
 
     public void setOperationType(OperationType operationType) {
         this.operationType = operationType;
+    }
+
+    public ConverterType getConverterType() {
+        return converterType;
+    }
+
+    public void setConverterType(ConverterType converterType) {
+        this.converterType = converterType;
+    }
+
+    public TestCase getTestCase() {
+        return testCase;
+    }
+
+    public void setTestCase(TestCase testCase) {
+        this.testCase = testCase;
     }
 }
