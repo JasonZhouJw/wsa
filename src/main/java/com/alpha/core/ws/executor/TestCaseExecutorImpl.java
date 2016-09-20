@@ -1,6 +1,7 @@
 package com.alpha.core.ws.executor;
 
 import com.alpha.core.ws.entity.InterfaceInfo;
+import com.alpha.core.ws.entity.RequestInfo;
 import com.alpha.core.ws.entity.TestCase;
 import com.alpha.core.ws.entity.VerifyResult;
 import com.alpha.core.ws.exception.CommonException;
@@ -36,6 +37,8 @@ public class TestCaseExecutorImpl implements ITestCaseExecutor, ILog {
 
     private List<TestCase> testCaseList = new ArrayList<TestCase>();
 
+    private Map<String, Object> responseMap = new HashMap<String, Object>();
+
     @Resource
     private VerifyResultRepository verifyResultRepository;
 
@@ -44,7 +47,6 @@ public class TestCaseExecutorImpl implements ITestCaseExecutor, ILog {
 
     @Override
     public void init(InterfaceInfo interfaceInfo) {
-        //TODO: 9/9/2016  get the wsdl data, propare the request data
         this.interfaceInfo = interfaceInfo;
         testCaseList = testCaseRepository.findByInterfaceId(this.interfaceInfo.getId());
         this.testCaseList.forEach(testCase -> {
@@ -58,8 +60,6 @@ public class TestCaseExecutorImpl implements ITestCaseExecutor, ILog {
 
     @Override
     public void request() throws CommonException {
-        //TODO: 9/9/2016  get the interface information and request the webservice, store the request data
-        //TODO: 9/9/2016  it will support other request type, so request handler should be use the factory model
         JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
         Class clazz = null;
         try {
@@ -76,46 +76,33 @@ public class TestCaseExecutorImpl implements ITestCaseExecutor, ILog {
         Object service = factory.create();
         Method targetMethod = ReflectUtil.getTargetMethod(clazz, interfaceInfo.getMethodName());
         if (targetMethod != null) {
-            this.testCaseList.forEach(testCase -> {
+            for (TestCase testCase : this.testCaseList) {
                 Parameter[] parameters = targetMethod.getParameters();
                 Object[] dataParameters = new Object[parameters.length];
                 for (int i = 0; i < parameters.length; i++) {
                     Parameter parameter = parameters[i];
-                    Object parameterObj = null;
-                    try {
-                        parameterObj = parameter.getType().newInstance();
-                    } catch (InstantiationException e) {
-                        LOGGER.error(e.getMessage(), e);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                    for (RequestInfo requestInfo : testCase.getRequestInfoList()) {
+                        if (requestInfo.getInput().getClassName().equals(parameter.getName())) {
+                            dataParameters[i] = requestInfo.getDataValue();
+                            break;
+                        }
                     }
-                    //TODO: 组装数据
-                    dataParameters[i] = parameterObj;
                 }
+                Object returnObj = null;
+                try {
+                    returnObj = targetMethod.invoke(service, dataParameters);
+                    this.responseMap.put(testCase.getName(), returnObj);
+                } catch (IllegalAccessException e) {
+                    LOGGER.error(e.getMessage(), e);
+                } catch (InvocationTargetException e) {
+                    LOGGER.error(e.getMessage(), e);
+                }
+                LOGGER.info(interfaceInfo.getWsdl().getFacadeClass() + Constants.DOT
+                        + interfaceInfo.getMethodName() + ":" + returnObj);
                 if (targetMethod.getReturnType() != null) {
-                    Object returnObj = null;
-                    try {
-                        returnObj = targetMethod.invoke(service, dataParameters);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                    //TODO:验证返回
-                    LOGGER.info(interfaceInfo.getWsdl().getFacadeClass() + Constants.DOT
-                            + interfaceInfo.getMethodName() + ":" + returnObj);
-                } else {
-                    try {
-                        targetMethod.invoke(service, dataParameters);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                    LOGGER.info(interfaceInfo.getWsdl().getFacadeClass() + Constants.DOT
-                            + interfaceInfo.getMethodName() + " Success");
+                    this.responseMap.put(testCase.getName(), returnObj);
                 }
-            });
+            }
         }
     }
 
@@ -127,11 +114,14 @@ public class TestCaseExecutorImpl implements ITestCaseExecutor, ILog {
     @Override
     public void verify() {
         // TODO: 9/9/2016 verify the response and store the result
+        this.responseMap.forEach((name, obj) -> {
 
+        });
     }
 
     @Override
     public void last() {
         // TODO: 9/9/2016 other work to do
     }
+
 }

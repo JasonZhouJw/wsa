@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Created by jzhou237 on 9/9/2016.
  */
 @Entity
-public class Operation implements Serializable{
+public class Operation implements Serializable {
 
     @Id
     @GeneratedValue
@@ -17,16 +17,16 @@ public class Operation implements Serializable{
     private String method;
 
     @ManyToOne
-    @JoinColumn(name="wsdl_id")
+    @JoinColumn(name = "wsdl_id")
     private Wsdl wsdl;
 
-    public Operation(){
+    public Operation() {
 
     }
 
-    public Operation(String method, Wsdl wsdl){
-        this.method=method;
-        this.wsdl=wsdl;
+    public Operation(String method, Wsdl wsdl) {
+        this.method = method;
+        this.wsdl = wsdl;
     }
 
     public Long getId() {
@@ -69,5 +69,13 @@ public class Operation implements Serializable{
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Operation{" +
+                "id=" + id +
+                ", method='" + method + '\'' +
+                '}';
     }
 }

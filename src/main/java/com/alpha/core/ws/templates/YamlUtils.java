@@ -30,4 +30,14 @@ public class YamlUtils implements ILog {
             LOGGER.error(e.getMessage(), e);
         }
     }
+
+    public static Object load(String value, Class clazz) {
+        Object obj = null;
+        try {
+            obj = Yaml.loadStreamOfType(value, clazz);
+        } catch (FileNotFoundException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+        return obj;
+    }
 }

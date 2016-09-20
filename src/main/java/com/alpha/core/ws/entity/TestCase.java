@@ -21,11 +21,26 @@ public class TestCase {
     @JoinColumn(name = "interface_id")
     private InterfaceInfo interfaceInfo;
 
+    /**
+     * YAML data will be instead of it
+     */
+    @Deprecated
     @OneToMany(cascade = CascadeType.DETACH)
     private List<RequestInfo> requestInfoList = new ArrayList<RequestInfo>();
 
+    /**
+     * YAML data will be instead of it
+     */
+    @Deprecated
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<VerifyInfo> verifyList = new ArrayList<VerifyInfo>();
+
+
+    @Column(length = 4000)
+    private String requestValue;// TODO: 9/20/2016 should be consider the data length
+
+    @Column(length = 4000)
+    private String verification;// TODO: 9/20/2016 should be consider the data length
 
     public Long getId() {
         return id;
@@ -57,5 +72,29 @@ public class TestCase {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<RequestInfo> getRequestInfoList() {
+        return requestInfoList;
+    }
+
+    public void setRequestInfoList(List<RequestInfo> requestInfoList) {
+        this.requestInfoList = requestInfoList;
+    }
+
+    public String getRequestValue() {
+        return requestValue;
+    }
+
+    public void setRequestValue(String requestValue) {
+        this.requestValue = requestValue;
+    }
+
+    public String getVerification() {
+        return verification;
+    }
+
+    public void setVerification(String verification) {
+        this.verification = verification;
     }
 }
