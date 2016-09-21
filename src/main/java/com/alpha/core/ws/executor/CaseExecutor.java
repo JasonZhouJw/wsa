@@ -7,11 +7,12 @@ import com.alpha.core.ws.exception.CommonException;
 import com.alpha.core.ws.exception.ValidationException;
 import com.alpha.core.ws.repository.TestCaseRepository;
 import com.alpha.core.ws.repository.VerifyResultRepository;
-import com.alpha.core.ws.utils.YamlUtils;
 import com.alpha.core.ws.utils.Constants;
 import com.alpha.core.ws.utils.ILog;
 import com.alpha.core.ws.utils.ReflectUtil;
+import com.alpha.core.ws.utils.YamlUtils;
 import com.alpha.core.ws.utils.enums.Errors;
+import com.alpha.core.ws.utils.enums.ResultType;
 import com.alpha.core.ws.validation.AbsVerification;
 import com.alpha.core.ws.validation.VerificationFactory;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
@@ -100,15 +101,15 @@ public class CaseExecutor implements ICaseExecutor, ILog {
         List<Map<String, String>> verificationMapList = (List<Map<String, String>>) YamlUtils.load(testCase.getVerification(), ArrayList.class);
         verificationMapList.forEach(verificationMap -> {
             AbsVerification verification = VerificationFactory.getVerification(verificationMap);
-           VerifyResult result= new VerifyResult(testCase);
+            VerifyResult result = new VerifyResult(testCase);
             try {
                 verification.verify(response);
             } catch (ValidationException e) {
-                result.setResult(false);
+                result.setResult(ResultType.FAIL);
                 result.setMessage(e.getMessage());
             } catch (CommonException e) {
                 LOGGER.error(e.getMessage(), e);
-                result.setResult(false);
+                result.setResult(ResultType.ERROR);
                 result.setMessage(e.getMessage());
             }
             this.resultMap.get(testCase.getName()).add(result);
@@ -117,7 +118,7 @@ public class CaseExecutor implements ICaseExecutor, ILog {
 
     @Override
     public void last() {
-        this.resultMap.forEach((name,verifyResultList)->{
+        this.resultMap.forEach((name, verifyResultList) -> {
             verifyResultRepository.save(verifyResultList);
         });
     }

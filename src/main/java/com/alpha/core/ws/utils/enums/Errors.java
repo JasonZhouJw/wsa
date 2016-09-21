@@ -6,9 +6,9 @@ package com.alpha.core.ws.utils.enums;
 public enum Errors {
 
     CLASS_NOT_FOUND("0001", "Class Not found."),
-    FIELD_NOT_FOUND("0002","Field Not Found."),
-    NULL_POINT("0003","The Object is null."),
-    VERIFY_FAIL("0004","Verify Fail."),
+    FIELD_NOT_FOUND("0002", "Field Not Found."),
+    NULL_POINT("0003", "The Object is null."),
+    VERIFY_FAIL("0004", "Verify Fail."),
     UNKNOWN("9999", "Unknown Error.");
 
     private String code;

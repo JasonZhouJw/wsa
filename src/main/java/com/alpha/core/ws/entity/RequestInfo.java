@@ -1,8 +1,8 @@
 package com.alpha.core.ws.entity;
 
 import com.alpha.core.ws.exception.CommonException;
-import com.alpha.core.ws.templates.YamlUtils;
 import com.alpha.core.ws.utils.ILog;
+import com.alpha.core.ws.utils.YamlUtils;
 import com.alpha.core.ws.utils.enums.Errors;
 
 import javax.persistence.*;

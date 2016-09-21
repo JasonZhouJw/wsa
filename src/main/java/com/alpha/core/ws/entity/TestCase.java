@@ -1,8 +1,6 @@
 package com.alpha.core.ws.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jzhou237 on 9/16/2016.

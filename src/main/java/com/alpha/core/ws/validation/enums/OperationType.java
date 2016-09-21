@@ -64,14 +64,6 @@ public enum OperationType {
         this.function = function;
     }
 
-    public String toString() {
-        return this.type;
-    }
-
-    public boolean compare(String expectedValue, String actualValue) {
-        return this.function.apply(expectedValue, actualValue);
-    }
-
     public static OperationType getOperationType(String operation) {
         OperationType result = OperationType.EQUAL;
         for (OperationType operationType : OperationType.values()) {
@@ -81,6 +73,14 @@ public enum OperationType {
             }
         }
         return result;
+    }
+
+    public String toString() {
+        return this.type;
+    }
+
+    public boolean compare(String expectedValue, String actualValue) {
+        return this.function.apply(expectedValue, actualValue);
     }
 
     public String getType() {

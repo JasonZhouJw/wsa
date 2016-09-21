@@ -1,6 +1,5 @@
-package com.alpha.core.ws.templates;
+package com.alpha.core.ws.utils;
 
-import com.alpha.core.ws.utils.ILog;
 import org.ho.yaml.Yaml;
 
 import java.io.File;
