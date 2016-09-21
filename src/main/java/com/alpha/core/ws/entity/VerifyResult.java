@@ -15,30 +15,27 @@ public class VerifyResult {
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private Date executedTime;
+    private Date executedTime = new Date();
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;
 
     @ManyToOne
-    @JoinColumn(name = "verify_info_id")
-    private VerifyInfo verifyInfo;
+    @JoinColumn(name = "test_case_id")
+    private TestCase testCase;
 
     @Column
-    private boolean result;
+    private boolean result=true;
 
-    @Column(length = 400)
+    @Column(length = 4000)
     private String message;
-
-    @Column(length = 400)
-    private String actualValue;
 
     public VerifyResult() {
     }
 
-    public VerifyResult(VerifyInfo verifyInfo) {
-        this.verifyInfo = verifyInfo;
+    public VerifyResult(TestCase testCase) {
+        this.testCase = testCase;
     }
 
     public Long getId() {
@@ -65,14 +62,6 @@ public class VerifyResult {
         this.updatedTime = updatedTime;
     }
 
-    public VerifyInfo getVerifyInfo() {
-        return verifyInfo;
-    }
-
-    public void setVerifyInfo(VerifyInfo verifyInfo) {
-        this.verifyInfo = verifyInfo;
-    }
-
     public boolean isResult() {
         return result;
     }
@@ -89,11 +78,11 @@ public class VerifyResult {
         this.message = message;
     }
 
-    public String getActualValue() {
-        return actualValue;
+    public TestCase getTestCase() {
+        return testCase;
     }
 
-    public void setActualValue(String actualValue) {
-        this.actualValue = actualValue;
+    public void setTestCase(TestCase testCase) {
+        this.testCase = testCase;
     }
 }

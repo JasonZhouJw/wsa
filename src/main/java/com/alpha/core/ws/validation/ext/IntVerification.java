@@ -1,6 +1,7 @@
-package com.alpha.core.yaml.demo;
+package com.alpha.core.ws.validation.ext;
 
 import com.alpha.core.ws.exception.CommonException;
+import com.alpha.core.ws.validation.AbsVerification;
 import org.apache.commons.lang.StringUtils;
 
 /**

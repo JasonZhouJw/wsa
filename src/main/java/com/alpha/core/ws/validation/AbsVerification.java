@@ -1,4 +1,4 @@
-package com.alpha.core.yaml.demo;
+package com.alpha.core.ws.validation;
 
 import com.alpha.core.ws.exception.CommonException;
 import com.alpha.core.ws.utils.ILog;
