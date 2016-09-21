@@ -1,5 +1,7 @@
 package com.alpha.core.ws.entity;
 
+import com.alpha.core.ws.utils.enums.ResultType;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -25,8 +27,9 @@ public class VerifyResult {
     @JoinColumn(name = "test_case_id")
     private TestCase testCase;
 
-    @Column
-    private boolean result=true;
+    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private ResultType result = ResultType.SUCCESS;
 
     @Column(length = 4000)
     private String message;
@@ -62,14 +65,6 @@ public class VerifyResult {
         this.updatedTime = updatedTime;
     }
 
-    public boolean isResult() {
-        return result;
-    }
-
-    public void setResult(boolean result) {
-        this.result = result;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -84,5 +79,13 @@ public class VerifyResult {
 
     public void setTestCase(TestCase testCase) {
         this.testCase = testCase;
+    }
+
+    public ResultType getResult() {
+        return result;
+    }
+
+    public void setResult(ResultType result) {
+        this.result = result;
     }
 }
