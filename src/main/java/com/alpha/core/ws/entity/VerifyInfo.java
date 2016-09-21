@@ -15,11 +15,11 @@ public class VerifyInfo {
     @GeneratedValue
     private Long id;
 
-    @Column(length=200)
+    @Column(length = 200)
     private String expectValue;
 
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name="field_id")
+    @JoinColumn(name = "field_id")
     private FieldInfo filedInfo;
 
     @Column

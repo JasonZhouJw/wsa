@@ -36,7 +36,7 @@ public class InterfaceInfo {
         this.methodName = method.getName();
         Class[] parameterTypes = method.getParameterTypes();
         for (Class parameterType : parameterTypes) {
-            input.add(new InputClass(new ClassInfo(parameterType),this));
+            input.add(new InputClass(new ClassInfo(parameterType), this));
         }
         output = new ClassInfo(method.getReturnType());
     }

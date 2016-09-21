@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * Created by jzhou237 on 9/9/2016.
  */
 @Repository
-public interface WsdlRepository extends JpaRepository<Wsdl,Long> {
+public interface WsdlRepository extends JpaRepository<Wsdl, Long> {
 }

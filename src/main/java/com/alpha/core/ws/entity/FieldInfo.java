@@ -9,7 +9,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
 /**
- *
  * @author ZHOUJINGWEI598
  * @version $Id: FieldInfoRepository.java, v 0.1 2016年4月15日 下午4:30:53 ZHOUJINGWEI598 Exp $
  */
@@ -23,7 +22,7 @@ public class FieldInfo {
     @Column(length = 200)
     private String name;
 
-    @Column(length=200)
+    @Column(length = 200)
     private String type;
 
     @OneToOne
@@ -55,13 +54,25 @@ public class FieldInfo {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @SuppressWarnings("rawtypes")
     public String getType() {
         return type;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public ClassInfo getChildClazz() {
         return childClazz;
+    }
+
+    public void setChildClazz(ClassInfo childClazz) {
+        this.childClazz = childClazz;
     }
 
     public long getId() {
@@ -70,18 +81,6 @@ public class FieldInfo {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setChildClazz(ClassInfo childClazz) {
-        this.childClazz = childClazz;
     }
 
     public boolean isHasChildClass() {

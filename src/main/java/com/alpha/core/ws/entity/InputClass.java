@@ -13,20 +13,20 @@ public class InputClass {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="interface_id")
+    @JoinColumn(name = "interface_id")
     private InterfaceInfo interfaceInfo;
 
     @ManyToOne
-    @JoinColumn(name="class_id")
+    @JoinColumn(name = "class_id")
     private ClassInfo classInfo;
 
-    public InputClass(){
+    public InputClass() {
 
     }
 
-    public InputClass(ClassInfo classinfo, InterfaceInfo interfaceInfo){
-        this.classInfo=classinfo;
-        this.interfaceInfo=interfaceInfo;
+    public InputClass(ClassInfo classinfo, InterfaceInfo interfaceInfo) {
+        this.classInfo = classinfo;
+        this.interfaceInfo = interfaceInfo;
     }
 
     public long getId() {

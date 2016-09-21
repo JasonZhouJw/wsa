@@ -1,12 +1,15 @@
 package com.alpha.core.ws.templates;
 
+import com.alpha.core.ws.entity.Wsdl;
+import org.ho.yaml.Yaml;
+import org.ho.yaml.YamlStream;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -41,24 +44,18 @@ public class YamlUtilsTest {
 //        operationList.add(new Operation("method2",wsdl));
 //        wsdl.setOperationList(operationList);
 //        YamlUtils.dump("c://tmp/person.yaml", wsdl);
-        List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-        Map<String, Object> mapData = new HashMap<String, Object>();
-        mapData.put("function", "string");
-        mapData.put("field", "name");
-        mapData.put("operation", "eq");
-        mapData.put("expect", "Test");
-        data.add(mapData);
-        mapData = new HashMap<String, Object>();
-        mapData.put("function", "int");
-        mapData.put("field", "age");
-        mapData.put("operation", "eq");
-        mapData.put("expect", 18);
-        data.add(mapData);
+        Object[] data =new Object[10];
+        data[0]="Number1";
+        Wsdl wsdl = new Wsdl();
+        wsdl.setAddress("address value");
+        data[1]=wsdl;
         YamlUtils.dump("c://tmp/person.yaml", data);
+        System.out.println(data.getClass());
+        System.out.println(data.getClass().getTypeName());
     }
 
     @Test
-    public void testLoad() {
+    public void testLoad() throws FileNotFoundException {
 //        YamlUtils.load("c://tmp/person.yaml", Wsdl.class, new Consumer<Object>() {
 //
 //            @Override
@@ -68,13 +65,20 @@ public class YamlUtilsTest {
 //            }
 //        });
 
+        YamlStream stream=Yaml.loadStream(new File("c://tmp/person.yaml"));
+        Iterator iter=stream.iterator();
+        while(iter.hasNext()){
+            Object obj=iter.next();
+            System.out.println(obj);
+            System.out.println(obj.getClass().getName());
+        }
 
         YamlUtils.load("c://tmp/person.yaml", ArrayList.class, new Consumer<Object>() {
 
             @Override
             public void accept(Object o) {
-                List wsdl = (List) o;
-                System.out.println(wsdl);
+//                List wsdl = (List) o;
+                System.out.println(o);
             }
         });
     }

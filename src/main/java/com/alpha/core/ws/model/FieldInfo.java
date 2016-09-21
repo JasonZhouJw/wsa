@@ -8,7 +8,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
 /**
- *
  * @author ZHOUJINGWEI598
  * @version $Id: FieldInfoRepository.java, v 0.1 2016年4月15日 下午4:30:53 ZHOUJINGWEI598 Exp $
  */

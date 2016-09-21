@@ -29,10 +29,6 @@ public enum ConverterType {
         this.function = function;
     }
 
-    public String convert(Object sourceObj) {
-        return this.function.apply(sourceObj);
-    }
-
     public static ConverterType getConverterType(String clazzType) {
         ConverterType type = NONE;
         ConverterType[] types = ConverterType.values();
@@ -43,6 +39,10 @@ public enum ConverterType {
             }
         }
         return type;
+    }
+
+    public String convert(Object sourceObj) {
+        return this.function.apply(sourceObj);
     }
 
     public String getType() {

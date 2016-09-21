@@ -72,6 +72,17 @@ public enum OperationType {
         return this.function.apply(expectedValue, actualValue);
     }
 
+    public static OperationType getOperationType(String operation) {
+        OperationType result = OperationType.EQUAL;
+        for (OperationType operationType : OperationType.values()) {
+            if (operationType.getType().equals(operation)) {
+                result = operationType;
+                break;
+            }
+        }
+        return result;
+    }
+
     public String getType() {
         return type;
     }

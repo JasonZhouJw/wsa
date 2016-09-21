@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * @author ZHOUJINGWEI598
  * @version $Id: ClassInfo.java, v 0.1 2016年4月15日 下午4:23:04 ZHOUJINGWEI598 Exp $
  */
@@ -73,8 +72,16 @@ public class ClassInfo {
         return fieldMap;
     }
 
+    public void setFieldMap(Map<String, FieldInfo> fieldMap) {
+        this.fieldMap = fieldMap;
+    }
+
     public String getClassName() {
         return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     public long getId() {
@@ -83,14 +90,6 @@ public class ClassInfo {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void setFieldMap(Map<String, FieldInfo> fieldMap) {
-        this.fieldMap = fieldMap;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
     }
 
     @Override

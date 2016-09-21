@@ -33,16 +33,16 @@ public class ValidationException extends CommonException {
         super(errors, message);
     }
 
-    @Override
-    public Throwable fillInStackTrace() {
-        return null;
-    }
-
     public ValidationException(Errors errors, Throwable cause) {
         super(errors, cause);
     }
 
     public ValidationException(Errors errors, String message, Throwable cause) {
         super(errors, message, cause);
+    }
+
+    @Override
+    public Throwable fillInStackTrace() {
+        return null;
     }
 }

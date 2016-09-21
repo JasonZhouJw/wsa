@@ -5,12 +5,15 @@ import com.alpha.core.ws.entity.RequestInfo;
 import com.alpha.core.ws.entity.TestCase;
 import com.alpha.core.ws.entity.VerifyResult;
 import com.alpha.core.ws.exception.CommonException;
+import com.alpha.core.ws.exception.ValidationException;
 import com.alpha.core.ws.repository.TestCaseRepository;
-import com.alpha.core.ws.repository.VerifyResultRepository;
+import com.alpha.core.ws.templates.YamlUtils;
 import com.alpha.core.ws.utils.Constants;
 import com.alpha.core.ws.utils.ILog;
 import com.alpha.core.ws.utils.ReflectUtil;
 import com.alpha.core.ws.utils.enums.Errors;
+import com.alpha.core.yaml.demo.AbsVerification;
+import com.alpha.core.yaml.demo.VerificationFactory;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -25,22 +28,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by jzhou237 on 9/9/2016.
+ * Test Case executor for one interface
+ * Base on YAML
+ * <p>
+ * include 3 steps, init, execute and last. The verify will be executed for each test case
  */
 @Component
 @Scope("prototype")
-public class TestCaseExecutorImpl implements ITestCaseExecutor, ILog {
+public class CaseExecutor implements ICaseExecutor, ILog {
 
     private Map<String, List<VerifyResult>> resultMap = new HashMap<String, List<VerifyResult>>();
 
     private InterfaceInfo interfaceInfo;
 
     private List<TestCase> testCaseList = new ArrayList<TestCase>();
-
-    private Map<String, Object> responseMap = new HashMap<String, Object>();
-
-    @Resource
-    private VerifyResultRepository verifyResultRepository;
 
     @Resource
     private TestCaseRepository testCaseRepository;
@@ -49,17 +50,13 @@ public class TestCaseExecutorImpl implements ITestCaseExecutor, ILog {
     public void init(InterfaceInfo interfaceInfo) {
         this.interfaceInfo = interfaceInfo;
         testCaseList = testCaseRepository.findByInterfaceId(this.interfaceInfo.getId());
-//        this.testCaseList.forEach(testCase -> {
-//            List<VerifyResult> verifyResultList = new ArrayList<VerifyResult>(testCase.getVerifyList().size());
-//            testCase.getVerifyList().forEach(verifyInfo -> {
-//                verifyResultList.add(new VerifyResult(verifyInfo));
-//            });
-//            this.resultMap.put(testCase.getName(), verifyResultList);
-//        });
+        this.testCaseList.forEach(testCase -> {
+            this.resultMap.put(testCase.getName(), new ArrayList<VerifyResult>());
+        });
     }
 
     @Override
-    public void request() throws CommonException {
+    public void execute() throws CommonException {
         JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
         Class clazz = null;
         try {
@@ -77,51 +74,42 @@ public class TestCaseExecutorImpl implements ITestCaseExecutor, ILog {
         Method targetMethod = ReflectUtil.getTargetMethod(clazz, interfaceInfo.getMethodName());
         if (targetMethod != null) {
             for (TestCase testCase : this.testCaseList) {
-                Parameter[] parameters = targetMethod.getParameters();
-                Object[] dataParameters = new Object[parameters.length];
-                for (int i = 0; i < parameters.length; i++) {
-                    Parameter parameter = parameters[i];
-//                    for (RequestInfo requestInfo : testCase.getRequestInfoList()) {
-//                        if (requestInfo.getInput().getClassName().equals(parameter.getName())) {
-//                            dataParameters[i] = requestInfo.getDataValue();
-//                            break;
-//                        }
-//                    }
-                }
-                Object returnObj = null;
+                Object[] dataParameters = ((ArrayList) YamlUtils.load(testCase.getRequestValue(), ArrayList.class)).toArray();
+                Object responseObj = null;
                 try {
-                    returnObj = targetMethod.invoke(service, dataParameters);
-                    this.responseMap.put(testCase.getName(), returnObj);
+                    responseObj = targetMethod.invoke(service, dataParameters);
+                    this.verify(testCase, responseObj);
                 } catch (IllegalAccessException e) {
                     LOGGER.error(e.getMessage(), e);
+                    throw new CommonException(e);
                 } catch (InvocationTargetException e) {
                     LOGGER.error(e.getMessage(), e);
+                    throw new CommonException(e);
                 }
                 LOGGER.info(interfaceInfo.getWsdl().getFacadeClass() + Constants.DOT
-                        + interfaceInfo.getMethodName() + ":" + returnObj);
-                if (targetMethod.getReturnType() != null) {
-                    this.responseMap.put(testCase.getName(), returnObj);
-                }
+                        + interfaceInfo.getMethodName() + ":" + responseObj);
             }
         }
     }
 
     @Override
-    public void response() {
-        // TODO: 9/9/2016  store the response and reconstruct the response for validation
-    }
-
-    @Override
-    public void verify() {
-        // TODO: 9/9/2016 verify the response and store the result
-        this.responseMap.forEach((name, obj) -> {
-
+    public void verify(TestCase testCase, Object response) {
+        List<Map<String, String>> verificationMapList = (List<Map<String, String>>) YamlUtils.load(testCase.getVerification(), ArrayList.class);
+        verificationMapList.forEach(verificationMap -> {
+            AbsVerification verification = VerificationFactory.getVerification(verificationMap);
+            try {
+                verification.verify(response);
+            } catch (ValidationException e) {
+                // TODO: 9/20/2016 need to modify the VerifyResult model
+                this.resultMap.get(testCase.getName()).add(new VerifyResult());
+            } catch (CommonException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
         });
     }
 
     @Override
     public void last() {
-        // TODO: 9/9/2016 other work to do
+        // TODO: 9/20/2016 store the results
     }
-
 }
