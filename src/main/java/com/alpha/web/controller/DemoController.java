@@ -12,6 +12,6 @@ public class DemoController {
     @GetMapping("/toDemo")
     public String greeting() {
         System.out.println("in");
-        return "demo/Demo";
+        return "demo/demo";
     }
 }
