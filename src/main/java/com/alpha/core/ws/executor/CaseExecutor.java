@@ -22,6 +22,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,8 +66,13 @@ public class CaseExecutor implements ICaseExecutor, ILog {
         JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
         Class clazz = null;
         try {
-            clazz = Class.forName(interfaceInfo.getWsdl().getFacadeClass());
+//            clazz = Class.forName(interfaceInfo.getWsdl().getFacadeClass());
+            ClassLoader clazzLoad = new URLClassLoader(new URL[]{new URL(interfaceInfo.getWsdl().getJarInfo().getPath())});
+            clazz = clazzLoad.loadClass(interfaceInfo.getWsdl().getFacadeClass());
         } catch (ClassNotFoundException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new CommonException(Errors.CLASS_NOT_FOUND);
+        } catch (MalformedURLException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommonException(Errors.CLASS_NOT_FOUND);
         }
