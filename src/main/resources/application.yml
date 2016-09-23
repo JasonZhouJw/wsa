@@ -8,3 +8,12 @@
 #      naming:
 #        physical-strategy: com.enigmabridge.hibernate.dialect.SQLiteDialect
 #    show-sql: true
+
+#spring:
+#  mvc:
+#    view:
+#      prefix: /templates/
+#      suffix: .html
+spring:
+  freemarker:
+    cache: false

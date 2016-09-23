@@ -8,5 +8,5 @@ import javax.jws.WebService;
 @WebService
 public interface IHello {
 
-    public String sayHello(String name);
+    String sayHello(String name);
 }

@@ -14,14 +14,14 @@ public interface ICaseExecutor {
      *
      * @param interfaceInfo
      */
-    public void init(InterfaceInfo interfaceInfo);
+    void init(InterfaceInfo interfaceInfo);
 
     /**
      * send the request and get response, execute the test case
      *
      * @throws CommonException
      */
-    public void execute() throws CommonException;
+    void execute() throws CommonException;
 
     /**
      * verify the response
@@ -29,10 +29,10 @@ public interface ICaseExecutor {
      * @param testCase
      * @param response
      */
-    public void verify(TestCase testCase, Object response);
+    void verify(TestCase testCase, Object response);
 
     /**
      * finished job
      */
-    public void last();
+    void last();
 }

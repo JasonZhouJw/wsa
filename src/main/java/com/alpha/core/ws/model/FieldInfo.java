@@ -21,7 +21,6 @@ public class FieldInfo {
     protected ClassInfo childClazz;
 
     protected boolean hasChildClass = false;
-    ;
 
     public FieldInfo() {
 
