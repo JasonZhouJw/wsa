@@ -1,7 +1,3 @@
-/**
- * 平安付
- * Copyright (c) 2013-2016 PingAnFu,Inc.All Rights Reserved.
- */
 package com.alpha.core.ws.entity;
 
 import javax.persistence.*;
@@ -9,10 +5,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author ZHOUJINGWEI598
- * @version $Id: ClassInfo.java, v 0.1 2016年4月15日 下午4:23:04 ZHOUJINGWEI598 Exp $
- */
 @Entity
 public class ClassInfo {
 

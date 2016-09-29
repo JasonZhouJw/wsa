@@ -1,17 +1,10 @@
 package com.alpha.core.ws.templates;
 
 import com.alpha.core.ws.entity.Wsdl;
-import com.alpha.core.ws.utils.YamlUtils;
-import org.ho.yaml.Yaml;
-import org.ho.yaml.YamlStream;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.function.Consumer;
 
 /**
  * Created by jzhou237 on 9/12/2016.
@@ -50,7 +43,7 @@ public class YamlUtilsTest {
         Wsdl wsdl = new Wsdl();
         wsdl.setAddress("address value");
         data[1]=wsdl;
-        YamlUtils.dump("c://tmp/person.yaml", data);
+//        YamlUtils.dump("c://tmp/person.yaml", data);
         System.out.println(data.getClass());
         System.out.println(data.getClass().getTypeName());
     }
@@ -66,22 +59,22 @@ public class YamlUtilsTest {
 //            }
 //        });
 
-        YamlStream stream=Yaml.loadStream(new File("c://tmp/person.yaml"));
-        Iterator iter=stream.iterator();
-        while(iter.hasNext()){
-            Object obj=iter.next();
-            System.out.println(obj);
-            System.out.println(obj.getClass().getName());
-        }
-
-        YamlUtils.load("c://tmp/person.yaml", ArrayList.class, new Consumer<Object>() {
-
-            @Override
-            public void accept(Object o) {
-//                List wsdl = (List) o;
-                System.out.println(o);
-            }
-        });
+//        YamlStream stream=Yaml.loadStream(new File("c://tmp/person.yaml"));
+//        Iterator iter=stream.iterator();
+//        while(iter.hasNext()){
+//            Object obj=iter.next();
+//            System.out.println(obj);
+//            System.out.println(obj.getClass().getName());
+//        }
+//
+//        YamlUtils.load("c://tmp/person.yaml", ArrayList.class, new Consumer<Object>() {
+//
+//            @Override
+//            public void accept(Object o) {
+////                List wsdl = (List) o;
+//                System.out.println(o);
+//            }
+//        });
     }
 
 }

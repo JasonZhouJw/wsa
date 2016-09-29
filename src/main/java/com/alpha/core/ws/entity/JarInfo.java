@@ -1,13 +1,12 @@
 package com.alpha.core.ws.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by jzhou237 on 2016-09-23.
- */
+
 @Entity
-public class JarInfo {
+public class JarInfo implements Serializable {
 
     @Id
     @GeneratedValue
@@ -25,6 +24,10 @@ public class JarInfo {
 
     @Column
     private boolean active;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "service_info_id")
+    private ServicesInfo servicesInfo;
 
     public Long getId() {
         return id;
@@ -64,5 +67,24 @@ public class JarInfo {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public ServicesInfo getServicesInfo() {
+        return servicesInfo;
+    }
+
+    public void setServicesInfo(ServicesInfo servicesInfo) {
+        this.servicesInfo = servicesInfo;
+    }
+
+    @Override
+    public String toString() {
+        return "JarInfo{" +
+                "id=" + id +
+                ", path='" + path + '\'' +
+                ", name='" + name + '\'' +
+                ", createdTime=" + createdTime +
+                ", active=" + active +
+                '}';
     }
 }

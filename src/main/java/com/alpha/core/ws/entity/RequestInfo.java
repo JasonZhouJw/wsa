@@ -2,8 +2,8 @@ package com.alpha.core.ws.entity;
 
 import com.alpha.core.ws.exception.CommonException;
 import com.alpha.core.ws.utils.ILog;
-import com.alpha.core.ws.utils.YamlUtils;
 import com.alpha.core.ws.utils.enums.Errors;
+import org.yaml.snakeyaml.Yaml;
 
 import javax.persistence.*;
 
@@ -70,7 +70,8 @@ public class RequestInfo implements ILog {
 
     public Object getDataValue() throws CommonException {
         try {
-            return isSimpleData() ? this.value : YamlUtils.load(this.value, Class.forName(this.input.getClassName()));
+            Yaml yaml = new Yaml();
+            return isSimpleData() ? this.value : yaml.loadAs(this.value, Class.forName(this.input.getClassName()));
         } catch (ClassNotFoundException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommonException(Errors.CLASS_NOT_FOUND, "[" + this.input.getClassName() + "] not found");

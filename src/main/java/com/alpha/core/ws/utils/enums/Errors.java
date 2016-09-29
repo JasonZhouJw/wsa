@@ -9,6 +9,8 @@ public enum Errors {
     FIELD_NOT_FOUND("0002", "Field Not Found."),
     NULL_POINT("0003", "The Object is null."),
     VERIFY_FAIL("0004", "Verify Fail."),
+    FILE_NOT_FOUND("0005", "File Not Found."),
+    IO_EXCEPTION("0006", "IO Exception."),
     UNKNOWN("9999", "Unknown Error.");
 
     private String code;

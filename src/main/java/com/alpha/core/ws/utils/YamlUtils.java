@@ -1,9 +1,10 @@
 package com.alpha.core.ws.utils;
 
-import org.ho.yaml.Yaml;
+import com.alpha.core.ws.exception.CommonException;
+import com.alpha.core.ws.utils.enums.Errors;
+import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.function.Consumer;
 
 /**
@@ -11,26 +12,29 @@ import java.util.function.Consumer;
  */
 public class YamlUtils implements ILog {
 
-    public static void dump(String fileName, Object target) {
-        File file = new File(fileName);
+    public static void dump(String fileName, Object target) throws CommonException {
         try {
-            Yaml.dump(target, file, true);
+            Yaml yaml = new Yaml();
+            FileWriter fw = new FileWriter(new File(fileName));
+            yaml.dump(target);
         } catch (FileNotFoundException e) {
             LOGGER.error(e.getMessage(), e);
+            throw new CommonException(Errors.FILE_NOT_FOUND, e);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new CommonException(Errors.IO_EXCEPTION, e);
         }
     }
 
-    public static void load(String fileName, Class clazz, Consumer<Object> consumer) {
-        File file = new File(fileName);
+    public static void load(String fileName, Consumer<Object> consumer) {
         try {
-            Object obj = Yaml.loadType(file, clazz);
+            File file = new File(fileName);
+            Yaml yaml = new Yaml();
+            Object obj = yaml.load(new FileReader(new File(fileName)));
             consumer.accept(obj);
         } catch (FileNotFoundException e) {
             LOGGER.error(e.getMessage(), e);
         }
     }
 
-    public static Object load(String value, Class clazz) {
-        return Yaml.loadType(value, clazz);
-    }
 }

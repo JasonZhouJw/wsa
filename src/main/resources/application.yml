@@ -14,6 +14,11 @@
 #    view:
 #      prefix: /templates/
 #      suffix: .html
-#spring:
-#  freemarker:
-#    cache: false
+spring:
+  freemarker:
+    cache: false
+
+# customer
+upload:
+  jar:
+    filePath: c:/tmp/
