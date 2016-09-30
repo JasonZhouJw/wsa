@@ -23,11 +23,11 @@ public class Wsdl implements Serializable {
     @Column(length = 200)
     private String facadeClass;
 
-    @ManyToOne
-    @JoinColumn(name = "jar_info_id")
-    private JarInfo jarInfo;
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
+    @JoinColumn(name = "service_info_id")
+    private ServicesInfo servicesInfo;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Operation> operationList = new ArrayList<Operation>();
 
     public String getWsdl() {
@@ -89,14 +89,6 @@ public class Wsdl implements Serializable {
         this.id = id;
     }
 
-    public JarInfo getJarInfo() {
-        return jarInfo;
-    }
-
-    public void setJarInfo(JarInfo jarInfo) {
-        this.jarInfo = jarInfo;
-    }
-
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -112,4 +104,11 @@ public class Wsdl implements Serializable {
         return builder.toString();
     }
 
+    public ServicesInfo getServicesInfo() {
+        return servicesInfo;
+    }
+
+    public void setServicesInfo(ServicesInfo servicesInfo) {
+        this.servicesInfo = servicesInfo;
+    }
 }

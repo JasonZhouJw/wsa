@@ -36,7 +36,7 @@ import java.util.Map;
  * <p>
  * include 3 steps, init, execute and last. The verify will be executed for each test case
  */
-@Component
+@Component("caseExecutor")
 @Scope("prototype")
 public class CaseExecutor implements ICaseExecutor, ILog {
 
@@ -69,13 +69,11 @@ public class CaseExecutor implements ICaseExecutor, ILog {
         Class clazz = null;
         try {
 //            clazz = Class.forName(interfaceInfo.getWsdl().getFacadeClass());
-            ClassLoader clazzLoad = new URLClassLoader(new URL[]{new URL(interfaceInfo.getWsdl().getJarInfo().getPath())});
+            ClassLoader clazzLoad = new URLClassLoader(new URL[]{new URL(interfaceInfo.getWsdl().getServicesInfo().getPath())});
             clazz = clazzLoad.loadClass(interfaceInfo.getWsdl().getFacadeClass());
         } catch (ClassNotFoundException e) {
-            LOGGER.error(e.getMessage(), e);
             throw new CommonException(Errors.CLASS_NOT_FOUND);
         } catch (MalformedURLException e) {
-            LOGGER.error(e.getMessage(), e);
             throw new CommonException(Errors.CLASS_NOT_FOUND);
         }
         if (clazz == null) {
@@ -93,11 +91,8 @@ public class CaseExecutor implements ICaseExecutor, ILog {
                     responseObj = targetMethod.invoke(service, dataParameters);
                     this.verify(testCase, responseObj);
                 } catch (IllegalAccessException e) {
-                    LOGGER.error(e.getMessage(), e);
-                    // TODO: 2016-09-21 how to handle the system exception
                     throw new CommonException(e);
                 } catch (InvocationTargetException e) {
-                    LOGGER.error(e.getMessage(), e);
                     throw new CommonException(e);
                 }
                 LOGGER.info(interfaceInfo.getWsdl().getFacadeClass() + Constants.DOT
@@ -112,6 +107,7 @@ public class CaseExecutor implements ICaseExecutor, ILog {
         verificationMapList.forEach(verificationMap -> {
             AbsVerification verification = VerificationFactory.getVerification(verificationMap);
             VerifyResult result = new VerifyResult(testCase);
+            result.setInterfaceInfo(this.interfaceInfo);
             try {
                 verification.verify(response);
             } catch (ValidationException e) {

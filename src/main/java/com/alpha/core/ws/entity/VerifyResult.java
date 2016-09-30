@@ -21,11 +21,15 @@ public class VerifyResult {
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedTime;
+    private Date updatedTime = new Date();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "test_case_id")
     private TestCase testCase;
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "interface_id")
+    private InterfaceInfo interfaceInfo;
 
     @Column(length = 20)
     @Enumerated(EnumType.STRING)
@@ -87,5 +91,13 @@ public class VerifyResult {
 
     public void setResult(ResultType result) {
         this.result = result;
+    }
+
+    public InterfaceInfo getInterfaceInfo() {
+        return interfaceInfo;
+    }
+
+    public void setInterfaceInfo(InterfaceInfo interfaceInfo) {
+        this.interfaceInfo = interfaceInfo;
     }
 }

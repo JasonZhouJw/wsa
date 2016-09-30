@@ -1,11 +1,9 @@
 package com.alpha.web.controller;
 
-import com.alpha.core.ws.entity.JarInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.yaml.snakeyaml.Yaml;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,9 +23,9 @@ public class CasesController {
     @RequestMapping("/addCase")
     public String addCase(@RequestParam("input") String input, @RequestParam("verify") String verify, HttpServletRequest
             request, HttpServletResponse response, Model model) {
-        Yaml yaml = new Yaml();
-        JarInfo jarinfo = yaml.loadAs(input, JarInfo.class);
-        System.out.println(jarinfo);
+//        Yaml yaml = new Yaml();
+//        JarInfo jarinfo = yaml.loadAs(input, JarInfo.class);
+//        System.out.println(jarinfo);
 //        YamlReader reader = new YamlReader(input);
 //        try {
 //            JarInfo jarinfo = reader.read(JarInfo.class);

@@ -13,14 +13,15 @@ public class InterfaceInfo {
     @GeneratedValue
     private long id;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @ElementCollection
     private List<InputClass> input = new ArrayList<InputClass>();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "output_Id")
     private ClassInfo output;
 
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "wsdl_id")
     private Wsdl wsdl;
 
@@ -32,7 +33,7 @@ public class InterfaceInfo {
     }
 
     @SuppressWarnings("rawtypes")
-    public InterfaceInfo(Wsdl wsdlInfo, Method method) {
+    public InterfaceInfo(Wsdl wsdl, Method method) {
         this.methodName = method.getName();
         Class[] parameterTypes = method.getParameterTypes();
         for (Class parameterType : parameterTypes) {

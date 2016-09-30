@@ -18,7 +18,7 @@ public class FieldInfo {
     @Column(length = 200)
     private String type;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "class_id")
     private ClassInfo childClazz;
 

@@ -17,6 +17,8 @@
 spring:
   freemarker:
     cache: false
+  jpa:
+    show-sql: true
 
 # customer
 upload:

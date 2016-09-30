@@ -12,6 +12,7 @@ public class ClassInfo {
     @GeneratedValue
     private long id;
 
+    @OneToMany(cascade = CascadeType.ALL)
     @ElementCollection
     @MapKeyColumn(name = "name")
     private Map<String, FieldInfo> fieldMap = new HashMap<String, FieldInfo>();

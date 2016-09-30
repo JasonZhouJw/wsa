@@ -18,8 +18,6 @@ public enum EnvType {
 
     @Override
     public String toString() {
-        return "EnvType{" +
-                "type='" + type + '\'' +
-                '}';
+        return type;
     }
 }

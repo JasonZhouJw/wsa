@@ -1,6 +1,7 @@
 package com.alpha.core.ws.entity;
 
 import com.alpha.core.ws.utils.enums.EnvType;
+import com.alpha.core.ws.utils.enums.ProtocolType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,6 +24,10 @@ public class ServicesInfo implements Serializable {
     @Enumerated(EnumType.STRING)
     private EnvType type;
 
+    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private ProtocolType protocolType;
+
     @Column
     private boolean active = true;
 
@@ -34,8 +39,8 @@ public class ServicesInfo implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;
 
-    @OneToOne
-    private JarInfo jarInfo;
+    @Column(length = 200)
+    private String path;
 
     public Long getId() {
         return id;
@@ -93,11 +98,19 @@ public class ServicesInfo implements Serializable {
         this.name = name;
     }
 
-    public JarInfo getJarInfo() {
-        return jarInfo;
+    public String getPath() {
+        return path;
     }
 
-    public void setJarInfo(JarInfo jarInfo) {
-        this.jarInfo = jarInfo;
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public ProtocolType getProtocolType() {
+        return protocolType;
+    }
+
+    public void setProtocolType(ProtocolType protocolType) {
+        this.protocolType = protocolType;
     }
 }

@@ -1,6 +1,7 @@
 package com.alpha.core.ws.parser;
 
-import com.alpha.core.ws.model.WsdlInfo;
+import com.alpha.core.ws.entity.Wsdl;
+import com.alpha.core.ws.exception.CommonException;
 import com.alpha.core.ws.utils.Constants;
 import com.alpha.core.ws.utils.ILog;
 import org.springframework.util.StringUtils;
@@ -15,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.util.Map.Entry;
@@ -22,24 +24,40 @@ import java.util.function.Consumer;
 
 public class WsdlParser implements ILog {
 
-    public static Set<String> getWsdl(String urlAddress) throws IOException {
+    public static Set<String> getWsdl(String urlAddress) throws CommonException {
         Set<String> wsdlSet = new TreeSet<String>();
-        URL url = new URL(urlAddress);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(urlConnection.getInputStream()));
-        String line = br.readLine();
-        String[] stringArray = line.split("<a href=\"");
-        for (int i = 1; i < stringArray.length; ++i) {
-            String wsdlUrl = stringArray[i].split("\">", 2)[0];
-            if (wsdlUrl.endsWith(Constants.WSDL_SUFFIX)) {
-                wsdlSet.add(wsdlUrl);
+        URL url = null;
+        BufferedReader br = null;
+        try {
+            url = new URL(urlAddress);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            br = new BufferedReader(
+                    new InputStreamReader(urlConnection.getInputStream()));
+            String line = br.readLine();
+            String[] stringArray = line.split("<a href=\"");
+            for (int i = 1; i < stringArray.length; ++i) {
+                String wsdlUrl = stringArray[i].split("\">", 2)[0];
+                if (wsdlUrl.endsWith(Constants.WSDL_SUFFIX)) {
+                    wsdlSet.add(wsdlUrl);
+                }
+            }
+        } catch (MalformedURLException e) {
+            throw new CommonException(e);
+        } catch (IOException e) {
+            throw new CommonException(e);
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    LOGGER.error(e.getMessage(), e);
+                }
             }
         }
         return wsdlSet;
     }
 
-    public static void readWsdl(String wsdlUrl, Consumer<WsdlInfo> consumer) {
+    public static void readWsdl(String wsdlUrl, Consumer<Wsdl> consumer) throws CommonException {
         try {
             WSDLFactory factory = WSDLFactory.newInstance();
             WSDLReader reader = factory.newWSDLReader();
@@ -56,7 +74,7 @@ public class WsdlParser implements ILog {
                 while (portIter.hasNext()) {
                     Entry<String, Port> portEntry = portIter.next();
                     Port port = portEntry.getValue();
-                    WsdlInfo wsdlInfo = new WsdlInfo();
+                    Wsdl wsdlInfo = new Wsdl();
                     List<ExtensibilityElement> extensibilityElementList = port
                             .getExtensibilityElements();
                     for (ExtensibilityElement extensibilityElement : extensibilityElementList) {
@@ -81,7 +99,7 @@ public class WsdlParser implements ILog {
             }
 
         } catch (WSDLException e) {
-            LOGGER.error(e.getMessage(), e);
+            throw new CommonException(e);
         }
     }
 
