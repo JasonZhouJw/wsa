@@ -38,11 +38,11 @@ public class YamlUtilsTest {
 //        operationList.add(new Operation("method2",wsdl));
 //        wsdl.setOperationList(operationList);
 //        YamlUtils.dump("c://tmp/person.yaml", wsdl);
-        Object[] data =new Object[10];
-        data[0]="Number1";
+        Object[] data = new Object[10];
+        data[0] = "Number1";
         Wsdl wsdl = new Wsdl();
         wsdl.setAddress("address value");
-        data[1]=wsdl;
+        data[1] = wsdl;
 //        YamlUtils.dump("c://tmp/person.yaml", data);
         System.out.println(data.getClass());
         System.out.println(data.getClass().getTypeName());

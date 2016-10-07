@@ -1,11 +1,13 @@
 package com.alpha.core.ws.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by jzhou237 on 9/16/2016.
  */
 @Entity
+@Table(indexes = {@Index(name = "idx_testcase_name_interface", columnList = "name,interface_id")})
 public class TestCase {
 
     @Id
@@ -16,7 +18,7 @@ public class TestCase {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "interface_id")
+    @JoinColumn(name = "interface_id", nullable = false)
     private InterfaceInfo interfaceInfo;
 
     @Column(length = 4000)
@@ -24,6 +26,17 @@ public class TestCase {
 
     @Column(length = 4000)
     private String verification;// TODO: 9/20/2016 should be consider the data length
+
+    @Column
+    private boolean active = true;
+
+    @Column(updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdTime = new Date();
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedTime;
 
     public Long getId() {
         return id;
@@ -63,5 +76,29 @@ public class TestCase {
 
     public void setVerification(String verification) {
         this.verification = verification;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }

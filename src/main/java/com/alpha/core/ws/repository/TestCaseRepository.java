@@ -16,4 +16,7 @@ public interface TestCaseRepository extends JpaRepository<TestCase, Long> {
 
     @Query("select testCase from TestCase testCase where testCase.interfaceInfo.id=:interfaceId")
     List<TestCase> findByInterfaceId(@Param("interfaceId") Long id);
+
+    @Query("select testCase from TestCase testCase where testCase.active=true")
+    List<TestCase> findAllActive();
 }
