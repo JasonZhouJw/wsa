@@ -9,7 +9,7 @@
     <#list testCaseList as e>
         <tr>
             <td>${e.id?if_exists}</td>
-            <td>${e.name?if_exists}</td>
+            <td><a href="/TestCase/toEditTestCase/${e.id?if_exists}">${e.name?if_exists}</a></td>
             <td>${e.requestValue?if_exists}</td>
             <td>${e.verification?if_exists}</td>
         </tr>

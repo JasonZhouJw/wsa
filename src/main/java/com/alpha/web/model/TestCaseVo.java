@@ -23,10 +23,12 @@ public class TestCaseVo {
 
     public static TestCaseVo toVo(TestCase testCase) {
         TestCaseVo vo = new TestCaseVo();
-        vo.setInterfaceInfoId(testCase.getInterfaceInfo().getId());
-        vo.setName(testCase.getName());
-        vo.setRequestValue(testCase.getRequestValue());
-        vo.setVerification(testCase.getVerification());
+        if (testCase != null) {
+            vo.setInterfaceInfoId(testCase.getInterfaceInfo().getId());
+            vo.setName(testCase.getName());
+            vo.setRequestValue(testCase.getRequestValue());
+            vo.setVerification(testCase.getVerification());
+        }
         return vo;
     }
 

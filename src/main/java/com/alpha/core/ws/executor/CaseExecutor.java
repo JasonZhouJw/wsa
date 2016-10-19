@@ -38,7 +38,7 @@ import java.util.Map;
  */
 @Component("caseExecutor")
 @Scope("prototype")
-public class CaseExecutor implements ICaseExecutor, ILog {
+public class CaseExecutor implements ILog, ICaseExecutor {
 
     private Map<String, List<VerifyResult>> resultMap = new HashMap<String, List<VerifyResult>>();
 
@@ -64,11 +64,17 @@ public class CaseExecutor implements ICaseExecutor, ILog {
     }
 
     @Override
+    public void init(TestCase testCase) {
+        this.testCaseList = new ArrayList<TestCase>();
+        this.testCaseList.add(testCase);
+        this.resultMap.put(testCase.getName(), new ArrayList<VerifyResult>());
+    }
+
+    @Override
     public void execute() throws CommonException {
         JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
         Class clazz = null;
         try {
-//            clazz = Class.forName(interfaceInfo.getWsdl().getFacadeClass());
             ClassLoader clazzLoad = new URLClassLoader(new URL[]{new URL(interfaceInfo.getWsdl().getServicesInfo().getPath())});
             clazz = clazzLoad.loadClass(interfaceInfo.getWsdl().getFacadeClass());
         } catch (ClassNotFoundException e) {

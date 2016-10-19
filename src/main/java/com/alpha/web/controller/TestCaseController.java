@@ -5,14 +5,17 @@ import com.alpha.core.ws.utils.BeanCopier;
 import com.alpha.web.model.InterfaceInfoVo;
 import com.alpha.web.model.TestCaseVo;
 import com.alpha.web.services.IInterfaceInfoService;
+import com.alpha.web.services.IServicesInfoService;
 import com.alpha.web.services.ITestCaseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by jzhou237 on 2016-10-06.
@@ -27,8 +30,11 @@ public class TestCaseController {
     @Resource
     private ITestCaseService testCaseService;
 
+    @Resource
+    private IServicesInfoService servicesInfoService;
+
     @RequestMapping("/toEditTestCase/{id}")
-    public String toEditView(Long id, ModelMap model) {
+    public String toEditView(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("interfaceList", InterfaceInfoVo.toVo(this.interfaceInfoService.findAll()));
         model.addAttribute("testCase", TestCaseVo.toVo(this.testCaseService.findById(id)));
         return "/TestCase/EditCase";
@@ -42,7 +48,16 @@ public class TestCaseController {
 
     @RequestMapping("/toView")
     public String toView(ModelMap model) {
-        model.addAttribute("testCaseList", BeanCopier.copyBean(this.testCaseService.findAllActive(), TestCaseVo.class));
+        List<TestCaseVo> testCaseVoList = BeanCopier.copyBean(this.testCaseService.findAllActive(), TestCaseVo.class);
+        if (testCaseVoList.isEmpty()) {
+            TestCaseVo testCaseVo = new TestCaseVo();
+            testCaseVo.setRequestValue("request value");
+            testCaseVo.setVerification("verification");
+            testCaseVo.setName("name");
+            testCaseVo.setId(10L);
+            testCaseVoList.add(testCaseVo);
+        }
+        model.addAttribute("testCaseList", testCaseVoList);
         return "/TestCase/View";
     }
 
@@ -61,6 +76,12 @@ public class TestCaseController {
             TestCase testCase = testCaseVo.toDo();
             this.testCaseService.save(testCase);
         }
+        return "redirect:toEditTestCase";
+    }
+
+    @RequestMapping("/execute")
+    public String execute(@PathVariable("id") Long id, ModelMap model) {
+        TestCase testCase = this.testCaseService.findById(id);
         return "redirect:toEditTestCase";
     }
 }

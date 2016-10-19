@@ -15,11 +15,11 @@ import java.util.Map;
 public class ExecutorConfig {
 
     @Resource(name = "caseExecutor")
-    private ICaseExecutor caseExecutor;
+    private IBatchCaseExecutor caseExecutor;
 
     @Bean(name = "executorMap")
-    public Map<ProtocolType, ICaseExecutor> getExecutor() {
-        Map<ProtocolType, ICaseExecutor> executorMap = new HashMap<ProtocolType, ICaseExecutor>();
+    public Map<ProtocolType, IBatchCaseExecutor> getBatchExecutor() {
+        Map<ProtocolType, IBatchCaseExecutor> executorMap = new HashMap<ProtocolType, IBatchCaseExecutor>();
         executorMap.put(ProtocolType.WEB_SERVICE, this.caseExecutor);
         return executorMap;
     }

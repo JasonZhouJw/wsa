@@ -17,6 +17,13 @@ public interface ICaseExecutor {
     void init(InterfaceInfo interfaceInfo);
 
     /**
+     * initial the test case
+     *
+     * @param testCase
+     */
+    void init(TestCase testCase);
+
+    /**
      * send the execute and get response, execute the test case
      *
      * @throws CommonException
