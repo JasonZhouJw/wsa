@@ -1,11 +1,12 @@
-package com.alpha.core.ws.exception;
+package com.alpha.web.exceptions;
 
-import com.alpha.core.ws.utils.enums.Errors;
+import com.alpha.web.model.common.Response;
 
 /**
  * Created by jzhou237 on 9/14/2016.
  */
-public class ValidationException extends CommonException {
+public class ValidationException extends WebException {
+
     public ValidationException() {
     }
 
@@ -25,20 +26,8 @@ public class ValidationException extends CommonException {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    public ValidationException(Errors errors) {
-        super(errors);
-    }
-
-    public ValidationException(Errors errors, String message) {
-        super(errors, message);
-    }
-
-    public ValidationException(Errors errors, Throwable cause) {
-        super(errors, cause);
-    }
-
-    public ValidationException(Errors errors, String message, Throwable cause) {
-        super(errors, message, cause);
+    public ValidationException(Response response) {
+        super(response);
     }
 
     @Override

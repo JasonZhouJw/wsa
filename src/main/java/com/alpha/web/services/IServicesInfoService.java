@@ -13,5 +13,9 @@ public interface IServicesInfoService {
 
     ServicesInfo save(ServicesInfo servicesInfo);
 
+    ServicesInfo update(ServicesInfo servicesInfo);
+
     List<ServicesInfo> find(ServicesInfo servicesInfo);
+
+    List<ServicesInfo> findActive();
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * Created by jzhou237 on 2016-10-06.
@@ -48,16 +47,7 @@ public class TestCaseController {
 
     @RequestMapping("/toView")
     public String toView(ModelMap model) {
-        List<TestCaseVo> testCaseVoList = BeanCopier.copyBean(this.testCaseService.findAllActive(), TestCaseVo.class);
-        if (testCaseVoList.isEmpty()) {
-            TestCaseVo testCaseVo = new TestCaseVo();
-            testCaseVo.setRequestValue("request value");
-            testCaseVo.setVerification("verification");
-            testCaseVo.setName("name");
-            testCaseVo.setId(10L);
-            testCaseVoList.add(testCaseVo);
-        }
-        model.addAttribute("testCaseList", testCaseVoList);
+        model.addAttribute("testCaseList", BeanCopier.copyBean(this.testCaseService.findAllActive(), TestCaseVo.class));
         return "/TestCase/View";
     }
 
@@ -82,6 +72,6 @@ public class TestCaseController {
     @RequestMapping("/execute")
     public String execute(@PathVariable("id") Long id, ModelMap model) {
         TestCase testCase = this.testCaseService.findById(id);
-        return "redirect:toEditTestCase";
+        return "redirect:toEditTestCase/" + id;
     }
 }

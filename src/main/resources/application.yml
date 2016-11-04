@@ -19,6 +19,10 @@ spring:
     cache: false
   jpa:
     show-sql: true
+  properties:
+    hibernate:
+      ejb:
+        interceptor: com.alpha.core.ws.utils.SearchInterceptor
 
 # customer
 upload:

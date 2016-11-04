@@ -1,6 +1,7 @@
 package com.alpha.core.ws.exception;
 
 import com.alpha.core.ws.utils.enums.Errors;
+import com.alpha.web.model.common.Response;
 
 /**
  * Created by jzhou237 on 9/14/2016.
@@ -10,6 +11,8 @@ public class CommonException extends Exception {
     private Errors errors;
 
     private String message;
+
+    private Response response;
 
     public CommonException() {
     }
@@ -48,6 +51,35 @@ public class CommonException extends Exception {
     public CommonException(Errors errors, String message, Throwable cause) {
         super(cause);
         this.errors = errors;
+        this.message = message;
+    }
+
+    public CommonException(Response response) {
+        this.response = response;
+    }
+
+    public Response getResponse() {
+        return response;
+    }
+
+    public void setResponse(Response response) {
+        this.response = response;
+    }
+
+    public Errors getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Errors errors) {
+        this.errors = errors;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
         this.message = message;
     }
 }

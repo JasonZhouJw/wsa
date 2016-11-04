@@ -1,7 +1,7 @@
 package com.alpha.core.ws.validation.ext;
 
 import com.alpha.core.ws.exception.CommonException;
-import com.alpha.core.ws.exception.ValidationException;
+import com.alpha.core.ws.exception.VerificationException;
 import com.alpha.core.ws.utils.enums.Errors;
 import com.alpha.core.ws.validation.AbsVerification;
 import com.alpha.core.ws.validation.IOperation;
@@ -47,7 +47,7 @@ public class IntVerification extends AbsVerification {
             }
         });
         if (!target.operate()) {
-            throw new ValidationException(Errors.VERIFY_FAIL, target.getMessage());
+            throw new VerificationException(Errors.VERIFY_FAIL, target.getMessage());
         }
     }
 

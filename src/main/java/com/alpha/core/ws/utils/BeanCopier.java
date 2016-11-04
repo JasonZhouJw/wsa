@@ -28,9 +28,11 @@ public class BeanCopier implements ILog {
 
     public static List copyBean(List original, Class targetClazz) {
         List targetList = new ArrayList();
-        original.forEach(element -> {
-            targetList.add(copyBean(element, targetClazz));
-        });
+        if (original != null) {
+            original.forEach(element -> {
+                targetList.add(copyBean(element, targetClazz));
+            });
+        }
         return targetList;
     }
 

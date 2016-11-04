@@ -15,7 +15,7 @@ public class ServicesInfo implements Serializable {
     private Long id;
 
     @Column(length = 200)
-    private String name;
+    private String aliasName;
 
     @Column(length = 400, nullable = false, unique = true)
     private String service;
@@ -90,12 +90,12 @@ public class ServicesInfo implements Serializable {
         this.active = active;
     }
 
-    public String getName() {
-        return name;
+    public String getAliasName() {
+        return aliasName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAliasName(String aliasName) {
+        this.aliasName = aliasName;
     }
 
     public String getPath() {

@@ -4,7 +4,7 @@ import com.alpha.core.ws.entity.InterfaceInfo;
 import com.alpha.core.ws.entity.TestCase;
 import com.alpha.core.ws.entity.VerifyResult;
 import com.alpha.core.ws.exception.CommonException;
-import com.alpha.core.ws.exception.ValidationException;
+import com.alpha.core.ws.exception.VerificationException;
 import com.alpha.core.ws.repository.TestCaseRepository;
 import com.alpha.core.ws.repository.VerifyResultRepository;
 import com.alpha.core.ws.utils.Constants;
@@ -116,7 +116,7 @@ public class CaseExecutor implements ILog, ICaseExecutor {
             result.setInterfaceInfo(this.interfaceInfo);
             try {
                 verification.verify(response);
-            } catch (ValidationException e) {
+            } catch (VerificationException e) {
                 result.setResult(ResultType.FAIL);
                 result.setMessage(e.getMessage());
             } catch (CommonException e) {

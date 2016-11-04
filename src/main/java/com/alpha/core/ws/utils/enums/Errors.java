@@ -11,6 +11,7 @@ public enum Errors {
     VERIFY_FAIL("0004", "Verify Fail."),
     FILE_NOT_FOUND("0005", "File Not Found."),
     IO_EXCEPTION("0006", "IO Exception."),
+    INVALIDATED_VALUE("0007", "Invalidated value."),
     UNKNOWN("9999", "Unknown Error.");
 
     private String code;
