@@ -64,7 +64,7 @@ public class YamlUtilsTest {
 //        while(iter.hasNext()){
 //            Object obj=iter.next();
 //            System.out.println(obj);
-//            System.out.println(obj.getClass().getName());
+//            System.out.println(obj.getClass().getDescription());
 //        }
 //
 //        YamlUtils.load("c://tmp/person.yaml", ArrayList.class, new Consumer<Object>() {

@@ -31,6 +31,8 @@ public class DefaultAspect implements ILog {
             if (throwable instanceof WebException) {
                 WebException webException = (WebException) throwable;
                 response = webException.getResponse();
+            } else {
+                response.addError(throwable.getMessage());
             }
         }
         Object[] args = joinPoint.getArgs();

@@ -17,7 +17,7 @@ public class ServicesInfo implements Serializable {
     @Column(length = 200)
     private String aliasName;
 
-    @Column(length = 400, nullable = false, unique = true)
+    @Column(length = 400, nullable = false, unique = true, updatable = false)
     private String service;
 
     @Column(length = 20)

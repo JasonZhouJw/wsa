@@ -5,12 +5,15 @@ package com.alpha.core.ws.utils.enums;
  */
 public enum ProtocolType {
 
-    WEB_SERVICE("WS");
+    WEB_SERVICE("WS", "Web Services");
 
     private String type;
 
-    ProtocolType(String type) {
+    private String description;
+
+    ProtocolType(String type, String description) {
         this.type = type;
+        this.description = description;
     }
 
     @Override
@@ -20,5 +23,9 @@ public enum ProtocolType {
 
     public String getType() {
         return type;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
