@@ -14,6 +14,9 @@ public class Wsdl implements Serializable {
     @GeneratedValue
     private Long id;
 
+    @Column
+    private boolean active = true;
+
     @Column(length = 200)
     private String wsdl;
 
@@ -110,5 +113,13 @@ public class Wsdl implements Serializable {
 
     public void setServicesInfo(ServicesInfo servicesInfo) {
         this.servicesInfo = servicesInfo;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

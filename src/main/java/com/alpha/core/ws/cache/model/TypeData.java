@@ -30,7 +30,7 @@ public class TypeData {
         return this.typeData;
     }
 
-    public void put(String key, String value) {
+    public void put(String key, Object value) {
         CacheData cacheData = this.getCacheDataForAdd(key);
         if (cacheData == null) {
             cacheData = new CacheData(key, value);
@@ -40,7 +40,7 @@ public class TypeData {
         this.typeData.put(key, cacheData);
     }
 
-    public String get(String key) {
+    public Object get(String key) {
         CacheData cacheData = this.typeData.get(key);
         return cacheData == null ? null : cacheData.getValue();
     }
@@ -63,8 +63,8 @@ public class TypeData {
         return cacheData;
     }
 
-    public void refresh(Supplier<Map<String, String>> supplier) {
-        Map<String, String> cacheData = supplier.get();
+    public void refresh(Supplier<Map<String, Object>> supplier) {
+        Map<String, Object> cacheData = supplier.get();
         this.typeData.clear();
         cacheData.forEach((key, value) -> {
             this.typeData.put(key, new CacheData(key, value));

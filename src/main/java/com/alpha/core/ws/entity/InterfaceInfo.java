@@ -28,6 +28,9 @@ public class InterfaceInfo {
     @Column(length = 200)
     private String methodName;
 
+    @Column
+    private boolean active = true;
+
     public InterfaceInfo() {
 
     }
@@ -80,6 +83,14 @@ public class InterfaceInfo {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public String getFullName() {
+        return this.wsdl != null ? this.wsdl.getFacadeClass() + "." + this.methodName : this.methodName;
     }
 
     @Override

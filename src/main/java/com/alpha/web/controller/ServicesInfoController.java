@@ -60,7 +60,7 @@ public class ServicesInfoController implements ILog {
     }
 
     @PostMapping("/uploadThirdJar/{id}")
-    public String upload(@PathVariable("id") Long id, @RequestParam MultipartFile file, ModelMap model) throws WebException {
+    public String doUpload(@PathVariable("id") Long id, @RequestParam MultipartFile file, ModelMap model) throws WebException {
         Response response = Response.init("thirdJar/jarView");
         ServicesInfo servicesInfo = this.servicesInfoService.findById(id);
         if (servicesInfo == null) {
@@ -87,8 +87,8 @@ public class ServicesInfoController implements ILog {
     }
 
     @PostMapping("/create")
-    public String createService(@ModelAttribute UploadInfoVo uploadInfoVo, ModelMap model,
-                                HttpServletRequest request, HttpServletResponse httpServletResponse) throws WebException {
+    public String doCreate(@ModelAttribute UploadInfoVo uploadInfoVo, ModelMap model,
+                           HttpServletRequest request, HttpServletResponse httpServletResponse) throws WebException {
         Response response = Response.init("servicesInfo/create");
         ValidationUtils.validate(uploadInfoVo, response);
         if (uploadInfoVo.getFile() == null || uploadInfoVo.getFile().isEmpty()) {
@@ -119,7 +119,7 @@ public class ServicesInfoController implements ILog {
     }
 
     @PostMapping("update/{id}")
-    public String updateCreate(@PathVariable("id") Long id, @ModelAttribute UploadInfoVo uploadInfoVo, ModelMap model) throws WebException {
+    public String doUpdate(@PathVariable("id") Long id, @ModelAttribute UploadInfoVo uploadInfoVo, ModelMap model) throws WebException {
         Response response = Response.init("servicesInfo/update");
         ValidationUtils.validate(uploadInfoVo, response);
         if (uploadInfoVo.getFile() == null || uploadInfoVo.getFile().isEmpty()) {
@@ -148,6 +148,17 @@ public class ServicesInfoController implements ILog {
         servicesInfo.setAliasName(uploadInfoVo.getAliasName());
         ServicesInfo savedServicesInfo = this.servicesInfoService.update(servicesInfo);
         executorService.execute(new AssembleWsdlRunnable(this.wsdlAssembleExecutor, savedServicesInfo));
+        return response.getView();
+    }
+
+    @GetMapping("refresh/{id}")
+    public String doRefresh(@PathVariable("id") Long id, ModelMap model) throws WebException {
+        Response response = Response.init("servicesInfo/update");
+        ServicesInfo servicesInfo = this.servicesInfoService.findById(id);
+        if (servicesInfo == null) {
+            throw new WebException("Object is not found.");
+        }
+        executorService.execute(new AssembleWsdlRunnable(this.wsdlAssembleExecutor, servicesInfo));
         return response.getView();
     }
 

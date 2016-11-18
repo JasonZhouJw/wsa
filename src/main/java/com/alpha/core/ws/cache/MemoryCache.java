@@ -27,23 +27,23 @@ public class MemoryCache {
         return this.dataMap.get(type);
     }
 
-    public void put(String type, String key, String value) {
+    public void put(String type, String key, Object value) {
         init(type).put(key, value);
     }
 
-    public String get(String type, String key) {
+    public Object get(String type, String key) {
         return init(type).get(key);
     }
 
-    public Map<String, String> get(String type) {
-        Map<String, String> dataMap = new HashMap<String, String>();
+    public Map<String, Object> get(String type) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
         init(type).getTypeData().forEach((key, cacheData) -> {
             dataMap.put(key, cacheData.getValue());
         });
         return dataMap;
     }
 
-    public void refresh(String type, Supplier<Map<String, String>> supplier) {
+    public void refresh(String type, Supplier<Map<String, Object>> supplier) {
         init(type).refresh(supplier);
     }
 

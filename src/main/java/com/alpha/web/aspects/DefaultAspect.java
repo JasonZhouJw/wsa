@@ -1,6 +1,8 @@
 package com.alpha.web.aspects;
 
 import com.alpha.core.ws.utils.ILog;
+import com.alpha.web.controller.common.BaseEditController;
+import com.alpha.web.controller.common.BaseViewController;
 import com.alpha.web.exceptions.WebException;
 import com.alpha.web.model.common.Response;
 import com.alpha.web.utils.ResponseType;
@@ -20,8 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class DefaultAspect implements ILog {
 
-    @Around("execution(* com.alpha.web.controller.*Controller.*(..))")
-    public String aroundMethod(ProceedingJoinPoint joinPoint) {
+    @Around("execution(* com.alpha.web.controller.*Controller.do*(..))")
+    public String aroundEditMethod(ProceedingJoinPoint joinPoint) {
         Response response = Response.initError("common/Error", ResponseType.UNKNOWN_ERROR);
         try {
             String result = (String) joinPoint.proceed();
@@ -39,7 +41,7 @@ public class DefaultAspect implements ILog {
         for (Object arg : args) {
             if (arg instanceof ModelMap) {
                 ModelMap map = (ModelMap) arg;
-                map.put(WebConstants.RESPONSE_KEY, response.getData());
+                map.addAttribute(WebConstants.RESPONSE_KEY, response.getData());
                 break;
             } else if (arg instanceof HttpServletRequest) {
                 HttpServletRequest request = (HttpServletRequest) arg;
@@ -48,5 +50,36 @@ public class DefaultAspect implements ILog {
             }
         }
         return response.getView();
+    }
+
+
+    @Around("execution(* com.alpha.web.controller.*Controller.to*(..))")
+    public String aroundViewMethod(ProceedingJoinPoint joinPoint) {
+        String result = null;
+        try {
+            ModelMap modelMap = null;
+            Object[] args = joinPoint.getArgs();
+            for (Object arg : args) {
+                if (arg instanceof ModelMap) {
+                    modelMap = (ModelMap) arg;
+                    break;
+                }
+            }
+            if (modelMap != null && joinPoint.getTarget() instanceof BaseViewController) {
+                ((BaseViewController) joinPoint.getTarget()).initView(modelMap);
+            }
+            if (modelMap != null && joinPoint.getTarget() instanceof BaseEditController) {
+                ((BaseEditController) joinPoint.getTarget()).initEdit(modelMap);
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+
+        try {
+            result = (String) joinPoint.proceed();
+        } catch (Throwable throwable) {
+            LOGGER.error("Error Notice:" + joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName(), throwable);
+        }
+        return result;
     }
 }

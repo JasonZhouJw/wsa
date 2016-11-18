@@ -12,6 +12,21 @@ import java.lang.reflect.Method;
 public class YamlUtilsTest {
 
     @Test
+    public void tttt() {
+        for (int i = 2; i < 100; i++) {
+            System.out.println(i + " Teams: " + getTeam(i));
+        }
+    }
+
+    private int getTeam(int num) {
+        if (num == 2) {
+            return 1;
+        }
+        int number = (num - num % 2) / 2;
+        return number + getTeam(number + num % 2);
+    }
+
+    @Test
     public void test_temp() throws Exception {
         YamlUtilsTest obj = new YamlUtilsTest();
         Method method = YamlUtilsTest.class.getMethod("testDump");

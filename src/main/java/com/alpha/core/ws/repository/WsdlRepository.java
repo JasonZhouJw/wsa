@@ -2,6 +2,8 @@ package com.alpha.core.ws.repository;
 
 import com.alpha.core.ws.entity.Wsdl;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,4 +11,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface WsdlRepository extends JpaRepository<Wsdl, Long> {
+
+    @Modifying
+    @Query("update Wsdl set active=false where servicesInfo.id=:servicesId")
+    int inactive(long servicesId);
 }

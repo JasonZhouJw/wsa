@@ -7,7 +7,7 @@ public class CacheData {
 
     private String type;
 
-    private String value;
+    private Object value;
 
     private int hit;
 
@@ -15,18 +15,18 @@ public class CacheData {
 
     }
 
-    public CacheData(String type, String value) {
+    public CacheData(String type, Object value) {
         this.type = type;
         this.value = value;
         this.hit = 0;
     }
 
-    public String getValue() {
+    public Object getValue() {
         this.hit++;
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Object value) {
         if (!this.value.equals(value)) {
             this.value = value;
         }
