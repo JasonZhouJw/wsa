@@ -1,7 +1,8 @@
-package com.alpha.web.services;
+package com.alpha.web.services.impl;
 
 import com.alpha.core.ws.entity.TestCase;
 import com.alpha.core.ws.repository.TestCaseRepository;
+import com.alpha.web.services.ITestCaseService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

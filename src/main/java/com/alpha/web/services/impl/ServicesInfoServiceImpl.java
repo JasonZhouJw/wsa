@@ -1,8 +1,9 @@
-package com.alpha.web.services;
+package com.alpha.web.services.impl;
 
 import com.alpha.core.ws.entity.ServicesInfo;
 import com.alpha.core.ws.repository.ServicesInfoRepository;
 import com.alpha.core.ws.utils.BeanCopier;
+import com.alpha.web.services.IServicesInfoService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

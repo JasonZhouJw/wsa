@@ -5,6 +5,7 @@
 <title>Add Case</title>
 </head>
 <body>
+${demo}
 <form method="POST" action="/TestCase/addTestCase" >
    <table>
     <tr>

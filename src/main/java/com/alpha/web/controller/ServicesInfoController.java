@@ -2,10 +2,10 @@ package com.alpha.web.controller;
 
 import com.alpha.core.ws.entity.ServicesInfo;
 import com.alpha.core.ws.executor.WsdlAssembleExecutor;
-import com.alpha.core.ws.utils.ILog;
 import com.alpha.core.ws.utils.enums.EnvType;
 import com.alpha.core.ws.utils.enums.Errors;
 import com.alpha.core.ws.utils.enums.ProtocolType;
+import com.alpha.web.controller.common.BaseEditController;
 import com.alpha.web.exceptions.WebException;
 import com.alpha.web.model.UploadInfoVo;
 import com.alpha.web.model.common.Response;
@@ -34,7 +34,7 @@ import java.util.concurrent.Executors;
  */
 @Controller
 @RequestMapping("/ServicesInfo")
-public class ServicesInfoController implements ILog {
+public class ServicesInfoController implements BaseEditController {
 
     @Value("${upload.jar.filePath}")
     private String filePath;
@@ -54,8 +54,6 @@ public class ServicesInfoController implements ILog {
 
     @GetMapping("/toCreate")
     public String toCreateView(ModelMap modelMap) {
-        modelMap.addAttribute("envTypes", EnvType.values());
-        modelMap.addAttribute("protocolTypes", ProtocolType.values());
         return "servicesInfo/create";
     }
 
@@ -162,4 +160,9 @@ public class ServicesInfoController implements ILog {
         return response.getView();
     }
 
+    @Override
+    public void initEdit(ModelMap modelMap) {
+        modelMap.addAttribute("envTypes", EnvType.values());
+        modelMap.addAttribute("protocolTypes", ProtocolType.values());
+    }
 }

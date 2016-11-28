@@ -1,7 +1,8 @@
-package com.alpha.web.services;
+package com.alpha.web.services.impl;
 
 import com.alpha.core.ws.entity.InterfaceInfo;
 import com.alpha.core.ws.repository.InterfaceInfoRepository;
+import com.alpha.web.services.IInterfaceInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
