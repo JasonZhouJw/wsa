@@ -5,6 +5,8 @@ import com.alpha.core.ws.repository.VerifyResultRepository;
 import com.alpha.core.ws.repository.search.SearchParam;
 import com.alpha.web.services.IVerifyResultService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +21,12 @@ public class VerifyResultServiceImpl implements IVerifyResultService {
     private VerifyResultRepository verifyResultRepository;
 
     @Override
-    public List<VerifyResult> search(VerifyResult verifyResult) {
-        SearchParam searchParam = new SearchParam("testCase.interfaceInfo.id", verifyResult.getTestCase().getInterfaceInfo().getId()).and("interfaceInfo.methodName", verifyResult.getInterfaceInfo().getMethodName());
+    public Page<VerifyResult> search(SearchParam searchParam, PageRequest pageRequest) {
+        return this.verifyResultRepository.findAll(searchParam.search(), pageRequest);
+    }
+
+    @Override
+    public List<VerifyResult> search(SearchParam searchParam) {
         return this.verifyResultRepository.findAll(searchParam.search());
     }
 }
