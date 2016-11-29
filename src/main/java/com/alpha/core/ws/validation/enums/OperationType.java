@@ -9,13 +9,13 @@ import java.util.function.BiFunction;
  */
 public enum OperationType {
 
-    EQUAL("EQ", "\"{0}\" value expect value is [{1}], but actual value is [{2}]", new BiFunction<String, String, Boolean>() {
+    EQUAL("EQUAL", "\"{0}\" value expect value is [{1}], but actual value is [{2}]", new BiFunction<String, String, Boolean>() {
         @Override
         public Boolean apply(String s, String s2) {
             return StringUtils.equals(s, s2);
         }
     }),
-    GREATER_THAN("GT", "\"{0}\" value expect value is greater than [{1}], but actual value is [{2}]", new BiFunction<String, String, Boolean>() {
+    GREATER_THAN("GREATER_THAN", "\"{0}\" value expect value is greater than [{1}], but actual value is [{2}]", new BiFunction<String, String, Boolean>() {
         @Override
         public Boolean apply(String s, String s2) {
             return s.compareTo(s2) > 0;

@@ -69,13 +69,13 @@ public class IntVerification extends AbsVerification {
 
     public enum OperationType {
 
-        EQUAL("EQ", "\"{0}\" value expect value is [{1}], but actual value is [{2}]", new BiFunction<Integer, Integer, Boolean>() {
+        EQUAL("EQUAL", "\"{0}\" value expect value is [{1}], but actual value is [{2}]", new BiFunction<Integer, Integer, Boolean>() {
             @Override
             public Boolean apply(Integer s, Integer s2) {
                 return s == s2;
             }
         }),
-        GREATER_THAN("GT", "\"{0}\" value expect value is greater than [{1}], but actual value is [{2}]", new BiFunction<Integer, Integer, Boolean>() {
+        GREATER_THAN("GREATER_THAN", "\"{0}\" value expect value is greater than [{1}], but actual value is [{2}]", new BiFunction<Integer, Integer, Boolean>() {
             @Override
             public Boolean apply(Integer s, Integer s2) {
                 return s.compareTo(s2) > 0;
