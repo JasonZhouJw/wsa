@@ -1,6 +1,9 @@
 package com.alpha.web.services;
 
 import com.alpha.core.ws.entity.VerifyResult;
+import com.alpha.core.ws.repository.search.SearchParam;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -9,6 +12,7 @@ import java.util.List;
  */
 public interface IVerifyResultService {
 
-    List<VerifyResult> search(VerifyResult verifyResult);
+    Page<VerifyResult> search(SearchParam searchParam, PageRequest pageRequest);
 
+    List<VerifyResult> search(SearchParam searchParam);
 }
