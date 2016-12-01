@@ -62,8 +62,8 @@ public class WsdlAssembleExecutor implements ILog {
         Map<String, Map<String, InterfaceInfo>> dataMap = new HashMap<String, Map<String, InterfaceInfo>>();
         final List<Wsdl> wsdlList = new ArrayList<Wsdl>();
         try {
-            for (String wsdlUrl : WsdlParser.getWsdl(servicesInfo.getService())) {
-                WsdlParser.readWsdl(wsdlUrl, new Consumer<Wsdl>() {
+            if (servicesInfo.isWsdl()) {
+                WsdlParser.readWsdl(servicesInfo.getService(), new Consumer<Wsdl>() {
                     public void accept(Wsdl t) {
                         if (t != null) {
                             t.setServicesInfo(servicesInfo);
@@ -71,6 +71,17 @@ public class WsdlAssembleExecutor implements ILog {
                         }
                     }
                 });
+            } else {
+                for (String wsdlUrl : WsdlParser.getWsdl(servicesInfo.getService())) {
+                    WsdlParser.readWsdl(wsdlUrl, new Consumer<Wsdl>() {
+                        public void accept(Wsdl t) {
+                            if (t != null) {
+                                t.setServicesInfo(servicesInfo);
+                                wsdlList.add(t);
+                            }
+                        }
+                    });
+                }
             }
         } catch (CommonException e) {
             LOGGER.error(e.getMessage(), e);

@@ -11,4 +11,6 @@ public class Constants {
     public static final String HTTP_SUFFIX = "/";
 
     public static final String WSDL_SUFFIX = "?wsdl";
+
+    public static final String WSDL_END = "wsdl";
 }

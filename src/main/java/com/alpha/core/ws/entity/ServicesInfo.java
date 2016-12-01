@@ -1,5 +1,6 @@
 package com.alpha.core.ws.entity;
 
+import com.alpha.core.ws.utils.Constants;
 import com.alpha.core.ws.utils.enums.EnvType;
 import com.alpha.core.ws.utils.enums.ProtocolType;
 
@@ -19,6 +20,9 @@ public class ServicesInfo implements Serializable {
 
     @Column(length = 400, nullable = false, unique = true, updatable = false)
     private String service;
+
+    @Column(length = 20)
+    private boolean isWsdl = false;
 
     @Column(length = 20)
     @Enumerated(EnumType.STRING)
@@ -55,6 +59,9 @@ public class ServicesInfo implements Serializable {
     }
 
     public void setService(String service) {
+        if (this.service.endsWith(Constants.WSDL_END)) {
+            this.isWsdl = true;
+        }
         this.service = service;
     }
 
@@ -112,5 +119,13 @@ public class ServicesInfo implements Serializable {
 
     public void setProtocolType(ProtocolType protocolType) {
         this.protocolType = protocolType;
+    }
+
+    public boolean isWsdl() {
+        return isWsdl;
+    }
+
+    public void setWsdl(boolean wsdl) {
+        isWsdl = wsdl;
     }
 }
