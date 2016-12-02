@@ -18,7 +18,7 @@ public class WsdlParserTest {
 
     @Test
     public void execute() throws Exception {
-        wsdlParser.execute(null, "http://localhost:8082/services/holidayService/holiday.wsdl");
+        wsdlParser.execute(null, "http://localhost:8080/services/hello?wsdl");
     }
 
 }
