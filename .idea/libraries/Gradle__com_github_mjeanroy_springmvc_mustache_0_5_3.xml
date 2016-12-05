@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.mjeanroy:springmvc-mustache:0.5.3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.mjeanroy/springmvc-mustache/0.5.3/b447910e6de5325e70e174d84f663e0cc8de9f32/springmvc-mustache-0.5.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.mjeanroy/springmvc-mustache/0.5.3/9194e4c7e3d1b8e0ec0173c63223868a1f301672/springmvc-mustache-0.5.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

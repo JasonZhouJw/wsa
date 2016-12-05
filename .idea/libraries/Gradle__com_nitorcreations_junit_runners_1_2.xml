@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.nitorcreations:junit-runners:1.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.nitorcreations/junit-runners/1.2/7642ee5a36bc5a69cd617cbd53b797a6da5809e9/junit-runners-1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.nitorcreations/junit-runners/1.2/39f6fc37f050ec4a177a3a4ba7ff5ea7e242248f/junit-runners-1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
