@@ -1,10 +1,16 @@
 package com.alpha.web.model.common;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.domain.Page;
 
 /**
  * Created by jzhou237 on 2016-11-29.
  */
+@Getter
+@Setter
+@ToString
 public class Pageable {
 
     private int current;
@@ -30,51 +36,4 @@ public class Pageable {
         return pageable;
     }
 
-    public int getCurrent() {
-        return current;
-    }
-
-    public void setCurrent(int current) {
-        this.current = current;
-    }
-
-    public int getNext() {
-        return next;
-    }
-
-    public void setNext(int next) {
-        this.next = next;
-    }
-
-    public int getPrevious() {
-        return previous;
-    }
-
-    public void setPrevious(int previous) {
-        this.previous = previous;
-    }
-
-    public long getTotalNum() {
-        return totalNum;
-    }
-
-    public void setTotalNum(long totalNum) {
-        this.totalNum = totalNum;
-    }
-
-    public int getTotalPage() {
-        return totalPage;
-    }
-
-    public void setTotalPage(int totalPage) {
-        this.totalPage = totalPage;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
 }
