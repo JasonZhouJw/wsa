@@ -1,14 +1,8 @@
-package com.alpha.web.utils;
+package com.alpha.web.common.utils;
 
-import com.alpha.web.exceptions.ValidationException;
-import com.alpha.web.model.common.Response;
-import org.apache.commons.collections.CollectionUtils;
-
-import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.Set;
 
 /**
  * Created by jzhou237 on 2016-11-02.
@@ -22,14 +16,14 @@ public class ValidationUtils {
         validator = factory.getValidator();
     }
 
-    public static void validate(Object target, Response response) throws ValidationException {
-        Set<ConstraintViolation<Object>> validateResult = validator.validate(target);
-        if (CollectionUtils.isNotEmpty(validateResult)) {
-            validateResult.forEach(item -> {
-                response.addError(item.getMessage());
-            });
-            throw new ValidationException(response);
-        }
-    }
+//    public static void validate(Object target, Response response) throws ValidationException {
+//        Set<ConstraintViolation<Object>> validateResult = validator.validate(target);
+//        if (CollectionUtils.isNotEmpty(validateResult)) {
+//            validateResult.forEach(item -> {
+//                response.addError(item.getMessage());
+//            });
+//            throw new ValidationException(response);
+//        }
+//    }
 
 }

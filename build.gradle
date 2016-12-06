@@ -10,6 +10,10 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.github.samueltbrown.cucumber" version "0.9"
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -27,32 +31,9 @@ repositories {
     mavenLocal()
 }
 
+apply from: "gradle/dependency.gradle"
+apply from: "gradle/common.gradle"
+apply from: "gradle/run.gradle"
+apply from: "gradle/ci.gradle"
 
-dependencies {
-    compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.springframework.boot:spring-boot-starter-data-rest')
-    compile('org.springframework.boot:spring-boot-devtools')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-web-services')
-    compile('org.springframework.boot:spring-boot-starter-freemarker')
-
-    compile 'mysql:mysql-connector-java:6.0.3'
-    compile 'wsdl4j:wsdl4j:1.6.3'
-
-    runtime 'org.hsqldb:hsqldb'
-
-    compile 'org.apache.cxf:cxf-spring-boot-starter-jaxws:3.1.7'
-
-    compile 'org.yaml:snakeyaml:1.17'
-
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'commons-io:commons-io:2.5'
-    compile 'commons-beanutils:commons-beanutils:1.9.2'
-
-    compile 'org.quartz-scheduler:quartz:2.2.3'
-
-    testCompile 'org.easymock:easymock:3.4'
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-}
 

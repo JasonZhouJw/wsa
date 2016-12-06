@@ -1,15 +1,16 @@
 package com.alpha.web.threads;
 
-import com.alpha.core.ws.entity.ServicesInfo;
-import com.alpha.core.ws.executor.WsdlAssembleExecutor;
-import com.alpha.core.ws.utils.ILog;
+import com.alpha.core.entity.ServicesInfo;
+import com.alpha.core.executor.WsdlAssembleExecutor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
 /**
  * Created by jzhou237 on 2016-09-30.
  */
-public class AssembleWsdlRunnable implements Runnable, ILog {
+@Slf4j
+public class AssembleWsdlRunnable implements Runnable {
 
     private String name;
 
@@ -24,9 +25,9 @@ public class AssembleWsdlRunnable implements Runnable, ILog {
 
     @Override
     public void run() {
-        LOGGER.info("Thread [" + this.name + "] start.");
+        log.info("Thread [" + this.name + "] start.");
         this.wsdlAssembleExecutor.execute(servicesInfo);
-        LOGGER.info("Thread [" + this.name + "] end.");
+        log.info("Thread [" + this.name + "] end.");
     }
 
     public String getName() {

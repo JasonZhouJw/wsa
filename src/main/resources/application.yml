@@ -19,6 +19,9 @@ spring:
     cache: false
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
   h2:
     console:
       enabled: true
