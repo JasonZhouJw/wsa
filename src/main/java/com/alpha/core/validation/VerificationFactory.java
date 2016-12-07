@@ -1,6 +1,6 @@
 package com.alpha.core.validation;
 
-import com.alpha.core.validation.ext.IntVerification;
+import com.alpha.core.validation.ext.NumberVerification;
 import com.alpha.core.validation.ext.StringVerification;
 
 import java.util.Map;
@@ -22,8 +22,8 @@ public class VerificationFactory {
         String function = configMap.get(FUNCTION);
         if (StringVerification.isString(function)) {
             return new StringVerification(configMap.get(FIELD), configMap.get(OPERATION), configMap.get(EXPECT));
-        } else if (IntVerification.isInteger(function)) {
-            return new IntVerification(configMap.get(FIELD), configMap.get(OPERATION), configMap.get(EXPECT));
+        } else if (NumberVerification.isNumber(function)) {
+            return new NumberVerification(configMap.get(FIELD), configMap.get(OPERATION), configMap.get(EXPECT));
         }
         return null;
     }

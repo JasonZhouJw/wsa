@@ -11,11 +11,11 @@ import java.util.HashSet;
  */
 public class CustomClassLoad extends ClassLoader {
 
-    private String basedir; // 需要该类加载器直接加载的类文件的基目录
-    private HashSet dynaclazns; // 需要由该类加载器直接加载的类名
+    private String basedir;
+    private HashSet dynaclazns;
 
     public CustomClassLoad(String basedir, String[] classes) {
-        super(null); // 指定父类加载器为 null
+        super(null);
         this.basedir = basedir;
         dynaclazns = new HashSet();
         loadClassByMe(classes);

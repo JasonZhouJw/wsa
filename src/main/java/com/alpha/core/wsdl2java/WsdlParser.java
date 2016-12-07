@@ -4,6 +4,7 @@ import com.alpha.core.common.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.tools.JavaCompiler;
@@ -19,13 +20,13 @@ import java.util.*;
 @Component
 public class WsdlParser {
 
-    //    @Value("${cxf.executor}")
+    @Value("${cxf.executor}")
     private String executor;
 
-    //    @Value("${cxf.javaPath}")
+    @Value("${cxf.javaPath}")
     private String javaPath;
 
-    //    @Value("${cxf.compilerPath}")
+    @Value("${cxf.compilerPath}")
     private String compilerPath;
 
     public void execute(String customPackage, String wsdl) {
@@ -52,7 +53,6 @@ public class WsdlParser {
             for (File file : files) {
                 if (file.isFile() && file.getName().endsWith(".java")) {
                     boolean result = false;
-//                    result = ToolProvider.getSystemJavaCompiler().run(null, null, null, "-d", this.compilerPath, file.getPath());
                     JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
                     StandardJavaFileManager standardJavaFileManager = javaCompiler.getStandardFileManager(null, null, null);
                     Iterable iterable = standardJavaFileManager.getJavaFileObjects(file);
@@ -111,15 +111,4 @@ public class WsdlParser {
         }
     }
 
-    public void setExecutor(String executor) {
-        this.executor = executor;
-    }
-
-    public void setJavaPath(String javaPath) {
-        this.javaPath = javaPath;
-    }
-
-    public void setCompilerPath(String compilerPath) {
-        this.compilerPath = compilerPath;
-    }
 }

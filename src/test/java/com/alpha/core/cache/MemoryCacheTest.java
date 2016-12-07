@@ -33,6 +33,7 @@ public class MemoryCacheTest {
     public void putAndGet() throws Exception {
         MemoryCache.getInstance().put("TEST", "key", "value");
         assertEquals("value", MemoryCache.getInstance().get("TEST", "key"));
+        assertEquals(1, 1);
     }
 
     @Test

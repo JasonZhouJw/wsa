@@ -1,4 +1,4 @@
-package com.alpha.web.threads;
+package com.alpha.web.services.threads;
 
 import com.alpha.core.entity.ServicesInfo;
 import com.alpha.core.executor.WsdlAssembleExecutor;

@@ -48,9 +48,9 @@ public class YamlUtilsTest {
 //        wsdl.setAddress("address value");
 //        wsdl.setFacadeClass("facade class value");
 //        wsdl.setId(1000L);
-//        List<Operation> operationList=new ArrayList<Operation>();
-//        operationList.add(new Operation("method1",wsdl));
-//        operationList.add(new Operation("method2",wsdl));
+//        List<StringOperation> operationList=new ArrayList<StringOperation>();
+//        operationList.add(new StringOperation("method1",wsdl));
+//        operationList.add(new StringOperation("method2",wsdl));
 //        wsdl.setOperationList(operationList);
 //        YamlUtils.dump("c://tmp/person.yaml", wsdl);
         Object[] data = new Object[10];

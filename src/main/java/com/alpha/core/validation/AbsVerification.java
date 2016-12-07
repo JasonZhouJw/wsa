@@ -25,7 +25,6 @@ public abstract class AbsVerification {
 
     public abstract void verify(Object actual) throws CommonException;
 
-
     protected void getTargetField(Object targetObj, BiConsumer<Field, Object> consumer) throws CommonException {
         this.getTargetField(this.field, targetObj, consumer);
     }
