@@ -7,18 +7,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * Created by jzhou237 on 2016-12-01.
+ * Created by jzhou237 on 2016-12-08.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WsdlParserTest {
+public class WsdlClassCompilerTest {
 
     @Autowired
-    private WsdlParser wsdlParser = new WsdlParser();
+    private WsdlClassCompiler wsdlClassCompiler;
 
     @Test
-    public void execute() throws Exception {
-        wsdlParser.execute("http://localhost:8080/services/hello?wsdl");
+    public void compile() throws Exception {
+        wsdlClassCompiler.compile();
     }
 
 }

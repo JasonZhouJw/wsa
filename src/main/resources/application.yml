@@ -37,7 +37,6 @@ spring:
 cxf:
   executor: c:/dev/apache-cxf-3.1.8/bin/wadl2java.bat
   javaPath: c:/tmp/src/
-  customPackage: com.services
   compilerPath: c:/tmp/classes/
 upload:
   jar:

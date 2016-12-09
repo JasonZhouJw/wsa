@@ -1,5 +1,7 @@
 package com.alpha.core.server;
 
+import com.alpha.core.server.entity.User;
+
 import javax.jws.WebService;
 
 /**
@@ -9,4 +11,8 @@ import javax.jws.WebService;
 public interface IHello {
 
     String sayHello(String name);
+
+    User say(User user);
+
+
 }

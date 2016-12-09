@@ -37,9 +37,10 @@ dependencies {
             "org.seleniumhq.selenium:selenium-java:2.53.1",
             "org.assertj:assertj-core:3.5.2",
             "com.nitorcreations:junit-runners:1.2",
-            "org.easymock:easymock:3.4",
-            gradleTestKit()
+//            gradleTestKit(),
+            "org.easymock:easymock:3.4"
     )
+
 
     runtime(
             'com.h2database:h2'
