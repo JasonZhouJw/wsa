@@ -1,7 +1,7 @@
 package com.alpha.services.threads;
 
 import com.alpha.services.entities.ServicesInfo;
-import com.alpha.services.repository.ServicesInfosRepository;
+import com.alpha.services.repository.ServicesInfoRepository;
 import com.alpha.wsdl2java.Wsdl2JavaGenerator;
 import com.alpha.wsdl2java.WsdlClassCompiler;
 import lombok.extern.slf4j.Slf4j;
@@ -23,14 +23,14 @@ public class AssembleWsdlRunnable implements Runnable {
 
     private Wsdl2JavaGenerator wsdl2JavaGenerator;
 
-    private ServicesInfosRepository servicesInfosRepository;
+    private ServicesInfoRepository servicesInfoRepository;
 
-    public AssembleWsdlRunnable(ServicesInfo servicesInfo, WsdlClassCompiler wsdlClassCompiler, Wsdl2JavaGenerator wsdl2JavaGenerator, ServicesInfosRepository servicesInfosRepository) {
+    public AssembleWsdlRunnable(ServicesInfo servicesInfo, WsdlClassCompiler wsdlClassCompiler, Wsdl2JavaGenerator wsdl2JavaGenerator, ServicesInfoRepository servicesInfoRepository) {
         this.name = UUID.randomUUID().toString();
         this.servicesInfo = servicesInfo;
         this.wsdl2JavaGenerator = wsdl2JavaGenerator;
         this.wsdlClassCompiler = wsdlClassCompiler;
-        this.servicesInfosRepository = servicesInfosRepository;
+        this.servicesInfoRepository = servicesInfoRepository;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class AssembleWsdlRunnable implements Runnable {
             log.error(e.getMessage(), e);
         }
         this.wsdlClassCompiler.compile();
-        this.servicesInfosRepository.save(this.servicesInfo);
+        this.servicesInfoRepository.save(this.servicesInfo);
         log.info("Thread [" + this.name + "] end.");
     }
 

@@ -34,7 +34,7 @@ public class ServicesInfo {
     @Column(nullable = false)
     private String interfaceClass;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicesInfo")
     private List<MethodInfo> methodInfoList = new ArrayList<>();
 
     @Column(updatable = false)

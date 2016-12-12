@@ -1,6 +1,6 @@
 package com.alpha.services.repository;
 
-import com.alpha.services.domain.ServicesInfos;
+import com.alpha.services.entities.ServicesInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * Created by jzhou237 on 2016-12-12.
  */
 @Repository
-public interface ServicesInfosRepository<ServicesInfos> extends JpaRepository<ServicesInfos, Long> {
+public interface ServicesInfoRepository extends JpaRepository<ServicesInfo, Long> {
 }
