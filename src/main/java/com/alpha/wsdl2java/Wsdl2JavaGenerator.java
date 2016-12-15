@@ -2,7 +2,6 @@ package com.alpha.wsdl2java;
 
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedInputStream;
@@ -15,12 +14,13 @@ import java.io.InputStreamReader;
  */
 @Slf4j
 @Component
+//@PropertySource(SYS_PROPERTIES)
 public class Wsdl2JavaGenerator {
 
-    @Value("${cxf.executor}")
+    //    @Value("${cxf.executor}")
     private String executor;
 
-    @Value("${cxf.javaPath}")
+    //    @Value("${cxf.javaPath}")
     private String javaPath;
 
     public void execute(String wsdl) throws IOException, InterruptedException {

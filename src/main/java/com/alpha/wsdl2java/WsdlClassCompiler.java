@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.tools.JavaCompiler;
@@ -25,10 +24,10 @@ import java.util.*;
 @Component
 public class WsdlClassCompiler {
 
-    @Value("${cxf.javaPath}")
+    //    @Value("${cxf.javaPath}")
     private String javaPath;
 
-    @Value("${cxf.compilerPath}")
+    //    @Value("${cxf.compilerPath}")
     private String compilerPath;
 
     public void compile() {

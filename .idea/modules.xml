@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/wsa.iml" filepath="$PROJECT_DIR$/.idea/modules/wsa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wsa-cucumber.iml" filepath="$PROJECT_DIR$/.idea/modules/wsa-cucumber.iml" group="wsa" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/wsa_main.iml" filepath="$PROJECT_DIR$/.idea/modules/wsa_main.iml" group="wsa" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/wsa_test.iml" filepath="$PROJECT_DIR$/.idea/modules/wsa_test.iml" group="wsa" />
     </modules>

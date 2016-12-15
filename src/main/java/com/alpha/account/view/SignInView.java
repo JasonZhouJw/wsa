@@ -6,7 +6,7 @@ import com.alpha.common.view.View;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,7 +19,7 @@ import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLAS
  */
 @Component
 @Scope(value = "request", proxyMode = TARGET_CLASS)
-@PropertySource(RESULT_MESSAGE_PROPERTIES)
+@ConfigurationProperties(RESULT_MESSAGE_PROPERTIES)
 @Setter
 @Getter
 public class SignInView extends ModelAndView implements View<AuthenticationResult> {

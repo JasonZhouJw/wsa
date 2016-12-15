@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static com.alpha.common.view.MessageSources.LABEL_TEXT_SHORT_NAME;
+import static com.alpha.common.view.PropertyResources.LABEL_TEXT_SHORT_NAME;
 
 /**
  * Created by jzhou237 on 2016-12-05.

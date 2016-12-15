@@ -14,7 +14,9 @@
       <entry name="!?*.aj" />
     </wildcardResourcePatterns>
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="false">
+      <profile default="true" name="Default" enabled="true">
+        <sourceOutputDir name="wsa_main" />
+        <sourceTestOutputDir name="wsa_test" />
         <processorPath useClasspath="true" />
       </profile>
     </annotationProcessing>
