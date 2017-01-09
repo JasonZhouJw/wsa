@@ -1,20 +1,14 @@
 package com.driver;
 
 import com.alpha.common.view.Params;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
-@Component
-@Scope("cucumber-glue")
+
 public class UiDriverWithHostName implements UiDriver {
 
     public static final String DELIMITER = ":";
-    @Value("${server.port}")
-    private String port = "8080";
-
     private final String hostName = "http://localhost";
     private final UiDriver originalDriver = new SeleniumWebDriver();
+    private String port = "8080";
 
     public UiDriverWithHostName() {
         System.out.println("initial");

@@ -3,14 +3,25 @@ package com.driver;
 import com.alpha.common.view.Params;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
 
 public class SeleniumWebDriver implements UiDriver {
 
     private static final int DEFAULT_TIME_OUT_IN_SECONDS = 10;
-    private final WebDriver webDriver = new FirefoxDriver();
+    private final WebDriver webDriver;
+
+    public SeleniumWebDriver() {
+        File pathToBinary = new File("C:\\Users\\jzhou237\\AppData\\Local\\Mozilla Firefox\\Firefox.exe");
+        FirefoxBinary ffBinary = new FirefoxBinary(pathToBinary);
+        FirefoxProfile firefoxProfile = new FirefoxProfile();
+        webDriver = new FirefoxDriver(ffBinary, firefoxProfile);
+    }
 
     @Override
     public void close() {
