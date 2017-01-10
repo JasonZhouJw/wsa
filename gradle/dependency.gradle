@@ -4,17 +4,17 @@ repositories {
 
 dependencies {
     compile(
-            "org.springframework.boot:spring-boot-starter-data-jpa:1.4.0.RELEASE",
-            "org.springframework.boot:spring-boot-starter-security:1.4.0.RELEASE",
-            "org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE",
+            "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}",
+            "org.springframework.boot:spring-boot-starter-security:${springBootVersion}",
+            "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
             "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}",
             "org.springframework.boot:spring-boot-starter-web-services:${springBootVersion}",
-            "org.springframework.boot:spring-boot-starter-mustache:1.4.0.RELEASE",
+            "org.springframework.boot:spring-boot-starter-mustache:${springBootVersion}",
             "mysql:mysql-connector-java:6.0.3",
 
             "com.github.mjeanroy:springmvc-mustache:0.5.3",
             "org.glassfish.jersey.core:jersey-client:2.23.2",
-            files("libs/moss-common-2.1.0.0.jar"),
+//            files("libs/moss-common-2.1.0.0.jar"),
             "org.projectlombok:lombok:1.16.10",
             "org.webjars:bootstrap:3.3.7-1",
             "org.webjars:jquery:3.1.0",
