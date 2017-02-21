@@ -22,7 +22,7 @@ public class Role {
 
     @JoinColumn(name = "user_id")
     @OneToOne(cascade = CascadeType.REFRESH)
-    private Users users;
+    private User user;
 
     @JoinColumn(name = "permission_id")
     @ManyToOne(targetEntity = Permission.class, cascade = CascadeType.REFRESH)

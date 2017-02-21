@@ -25,7 +25,7 @@ public class SignInPage {
 
     public void signIn(String userName, String password) {
         System.out.println(userName + ":" + password);
-//        driver.navigateTo(SIGN_IN);
+//        driver.navigateTo(LOGIN);
 //        driver.waitForTextPresent(headMessage);
 //        setPassword(password);
 //        setUserNameAndSubmit(userName);

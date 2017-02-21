@@ -1,5 +1,6 @@
 package com.alpha.common.config;
 
+import com.alpha.common.interceptor.AuthenticationInterceptor;
 import com.alpha.common.interceptor.ExposedResourceBundleMessageSource;
 import com.alpha.common.interceptor.LabelTextInterceptor;
 import com.alpha.common.view.ErrorMessage;
@@ -18,8 +19,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new AuthenticationInterceptor());
-//        registry.addInterceptor(new LayoutNavigationInterceptor());
+        registry.addInterceptor(new AuthenticationInterceptor());
+        registry.addInterceptor(new LayoutNavigationInterceptor());
 //        registry.addInterceptor(new ErrorMessageInterceptor(errorMessage));
         // TODO: 2016-12-05 modify the label interceptor
         registry.addInterceptor(new LabelTextInterceptor(new ExposedResourceBundleMessageSource()));

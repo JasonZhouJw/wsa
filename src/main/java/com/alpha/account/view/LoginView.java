@@ -6,7 +6,7 @@ import com.alpha.common.view.View;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,10 +19,10 @@ import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLAS
  */
 @Component
 @Scope(value = "request", proxyMode = TARGET_CLASS)
-@ConfigurationProperties(RESULT_MESSAGE_PROPERTIES)
+@PropertySource(RESULT_MESSAGE_PROPERTIES)
 @Setter
 @Getter
-public class SignInView extends ModelAndView implements View<AuthenticationResult> {
+public class LoginView extends ModelAndView implements View<AuthenticationResult> {
 
     @Value("${authentication.failed}")
     private String failedMessage;
@@ -30,8 +30,8 @@ public class SignInView extends ModelAndView implements View<AuthenticationResul
     @Value("${authentication.logout")
     private String logoutMessage;
 
-    public SignInView() {
-        this.setViewName(Urls.SIGN_IN);
+    public LoginView() {
+        this.setViewName(Urls.LOGIN);
     }
 
     private void setMessageAndType(String message, String type) {

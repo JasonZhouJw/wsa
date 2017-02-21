@@ -11,5 +11,7 @@ public class Urls {
 
     public static final String USER = ROOT + "user";
 
-    public static final String SIGN_IN = ROOT + "signin";
+    public static final String LOGIN = ROOT + "login";
+
+    public static final String LOGOUT = ROOT + "logout";
 }

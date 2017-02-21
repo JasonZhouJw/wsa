@@ -31,6 +31,7 @@ public class CustomClassLoad extends ClassLoader {
         try {
             return loadDirectly(name);
         } catch (IOException e) {
+            log.error(e.getMessage(), e);
             throw new ClassNotFoundException();
         }
     }
