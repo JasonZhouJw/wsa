@@ -1,3 +1,4 @@
+@user
 Feature: Home
 
   Scenario: HomeView

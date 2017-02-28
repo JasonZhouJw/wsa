@@ -1,8 +1,8 @@
-package com.pages;
+package com.cucumber.pages;
 
 
-import com.driver.UiDriver;
-import com.driver.UiElement;
+import com.cucumber.driver.UiDriver;
+import com.cucumber.driver.UiElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

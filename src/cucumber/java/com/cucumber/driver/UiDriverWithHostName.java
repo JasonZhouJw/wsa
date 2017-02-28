@@ -1,8 +1,11 @@
-package com.driver;
+package com.cucumber.driver;
 
 import com.alpha.common.view.Params;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-
+@Component
+@Scope("cucumber-glue")
 public class UiDriverWithHostName implements UiDriver {
 
     public static final String DELIMITER = ":";
