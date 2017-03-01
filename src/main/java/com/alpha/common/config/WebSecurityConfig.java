@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/css/**", "/webjars/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll() // TODO: 2017-01-25 need to remove
                 .antMatchers("/home").permitAll()
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 .and()
                 .formLogin().defaultSuccessUrl("/home").loginPage("/login").permitAll().successHandler(loginSuccessHandler)
                 .and()

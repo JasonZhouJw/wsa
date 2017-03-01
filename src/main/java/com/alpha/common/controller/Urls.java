@@ -5,7 +5,9 @@ package com.alpha.common.controller;
  */
 public class Urls {
 
-    public static final String ROOT = "/";
+    public static final String SEPARATOR = "/";
+
+    public static final String ROOT = SEPARATOR;
 
     public static final String HOME = ROOT + "home";
 
@@ -14,4 +16,6 @@ public class Urls {
     public static final String LOGIN = ROOT + "login";
 
     public static final String LOGOUT = ROOT + "logout";
+
+    public static final String CREATE_USER = USER + SEPARATOR + "create";
 }

@@ -9,26 +9,26 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import static com.alpha.common.controller.Urls.LOGIN;
 import static com.alpha.common.view.PropertyResources.LABEL_TEXT_FULL_NAME;
 
 
 @Component
 @Scope("cucumber-glue")
 @PropertySource(LABEL_TEXT_FULL_NAME)
-public class SignInPage {
+public class LoginPage {
 
     @Autowired
     UiDriver driver;
 
-    @Value("${signin.label.head}")
+    @Value("${label.head}")
     String headMessage;
 
-    public void signIn(String userName, String password) {
-        System.out.println(userName + ":" + password);
-//        driver.navigateTo(LOGIN);
-//        driver.waitForTextPresent(headMessage);
-//        setPassword(password);
-//        setUserNameAndSubmit(userName);
+    public void login(String userName, String password) {
+        driver.navigateTo(LOGIN);
+        driver.waitForTextPresent(headMessage);
+        setPassword(password);
+        setUserNameAndSubmit(userName);
     }
 
     private void setUserNameAndSubmit(String userName) {

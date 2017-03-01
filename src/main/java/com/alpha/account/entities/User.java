@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jzhou237 on 2016-12-05.
@@ -26,9 +28,9 @@ public class User {
     @Column(length = 200)
     private String password;
 
-    @Column(length = 11, unique = true, nullable = false)
-    private String phone;
+//    @Column(length = 11, unique = true, nullable = false)
+//    private String phone;
 
-    @OneToOne(mappedBy = "user")
-    private Role role;
+    @ManyToMany(targetEntity = Permission.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private List<Permission> permissions = new ArrayList<>();
 }

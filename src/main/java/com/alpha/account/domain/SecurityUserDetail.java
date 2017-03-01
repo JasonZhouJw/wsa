@@ -18,14 +18,14 @@ public class SecurityUserDetail extends User implements UserDetails {
         this.setId(user.getId());
         this.setName(user.getName());
         this.setPassword(user.getPassword());
-        this.setPhone(user.getPhone());
-        this.setRole(user.getRole());
+//        this.setPhone(user.getPhone());
+        this.setPermissions(user.getPermissions());
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorityList = new ArrayList();
-        this.getRole().getPermissions().forEach(permission -> {
+        this.getPermissions().forEach(permission -> {
             GrantedAuthority authority = new SimpleGrantedAuthority(permission.getName());
             authorityList.add(authority);
         });

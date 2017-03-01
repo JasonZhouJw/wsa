@@ -4,6 +4,7 @@ import com.alpha.WsaApplication;
 import com.cucumber.config.ApplicationConfigurations;
 import com.cucumber.config.CucumberConfiguration;
 import com.cucumber.driver.UiDriver;
+import com.cucumber.pages.LoginPage;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.junit.runner.RunWith;
@@ -29,10 +30,12 @@ public class Hooks {
     @Autowired
     private ApplicationConfigurations applicationConfigurations;
 
+    @Autowired
+    private LoginPage loginPage;
+
     @Before("@user")
     public void signIn() {
-        System.out.println("@User");
-//        signInPage.signIn("user", "password");
+        loginPage.login("admin", "admin");
     }
 
     @After

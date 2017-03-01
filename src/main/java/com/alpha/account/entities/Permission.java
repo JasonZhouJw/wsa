@@ -18,7 +18,7 @@ public class Permission {
     @GeneratedValue
     private Long id;
 
-    @Column(length = 40)
+    @Column(length = 40, unique = true)
     private String name;
 
     @Column(length = 200)
