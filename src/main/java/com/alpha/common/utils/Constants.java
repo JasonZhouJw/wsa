@@ -13,4 +13,13 @@ public class Constants {
     public static final String WSDL_SUFFIX = "?wsdl";
 
     public static final String WSDL_END = "wsdl";
+
+
+    public static final String INFO = "info";
+
+    public static final String WARNING = "warning";
+
+    public static final String ERROR = "error";
+
+    public static final String DANGER = "danger";
 }

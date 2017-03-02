@@ -11,11 +11,13 @@ public class Urls {
 
     public static final String HOME = ROOT + "home";
 
-    public static final String USER = ROOT + "user";
+    public static final String ACCOUNT = ROOT + "account";
 
     public static final String LOGIN = ROOT + "login";
 
     public static final String LOGOUT = ROOT + "logout";
 
-    public static final String CREATE_USER = USER + SEPARATOR + "create";
+    public static final String TO_CREATE_ACCOUNT = ACCOUNT + SEPARATOR + "toCreate";
+
+    public static final String CREATE_ACCOUNT = ACCOUNT + SEPARATOR + "create";
 }

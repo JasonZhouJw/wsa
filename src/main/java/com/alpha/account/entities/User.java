@@ -33,4 +33,5 @@ public class User {
 
     @ManyToMany(targetEntity = Permission.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private List<Permission> permissions = new ArrayList<>();
+
 }
