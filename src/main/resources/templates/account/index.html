@@ -1,0 +1,47 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">{{label.title}}</div>
+    {{^userList.0}}
+    <div class="panel-body">{{noDataMessage}}</div>
+    {{/userList.0}}
+    {{#userList.0}}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>{{label.type}}</th>
+            <th>{{label.description}}</th>
+        </tr>
+        </thead>
+        {{#userList}}
+        <tbody class="table-hover">
+        <tr>
+            <td class="text-left"><a href="{{updateUrl}}/{{id}}">{{id}}</a></td>
+            <td class="text-left">{{name}}</td>
+        </tr>
+        </tbody>
+        {{/userList}}
+    </table>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="col-md-4 media-middle">
+                    {{#previousPageUrl}}
+                    <a href="{{previousPageUrl}}">{{label.previousPage}}</a>
+                    {{/previousPageUrl}}
+                    {{^previousPageUrl}}
+                    <span>{{label.previousPage}}</span>
+                    {{/previousPageUrl}}
+                </div>
+                <div class="col-md-4 media-middle"><span>{{currentPage}}</span></div>
+                <div class="col-md-4 media-middle">
+                    {{#nextPageUrl}}
+                    <a href="{{nextPageUrl}}">{{label.nextPage}}</a>
+                    {{/nextPageUrl}}
+                    {{^nextPageUrl}}
+                    <span>{{label.nextPage}}</span>
+                    {{/nextPageUrl}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/userList.0}}
+</div>

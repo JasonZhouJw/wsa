@@ -13,7 +13,7 @@ import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLAS
 /**
  * Created by jzhou237 on 2017-03-01.
  */
-@Component("createView")
+@Component("accountCreateView")
 @Scope(value = "request", proxyMode = TARGET_CLASS)
 @PropertySource(LABEL_TEXT_FULL_NAME)
 public class CreateView extends BaseModelView {

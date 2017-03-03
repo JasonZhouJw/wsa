@@ -19,8 +19,6 @@ public abstract class BaseModelView extends ModelAndView {
 
     private List<Message> messageList = new ArrayList<>();
 
-    public abstract void success();
-
     public void addMessage(String message, String type) {
         setMessage(new Message(message, type));
     }

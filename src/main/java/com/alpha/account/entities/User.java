@@ -1,5 +1,7 @@
 package com.alpha.account.entities;
 
+import com.alpha.account.model.PermissionVo;
+import com.alpha.account.model.UserVo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -34,4 +36,13 @@ public class User {
     @ManyToMany(targetEntity = Permission.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private List<Permission> permissions = new ArrayList<>();
 
+
+    public UserVo toVo() {
+        UserVo userVo = new UserVo();
+        userVo.setName(this.getName());
+        userVo.setId(this.getId());
+        userVo.setPermissionVoList(new ArrayList<PermissionVo>());
+        permissions.forEach(permission -> userVo.getPermissionVoList().add(permission.toVo()));
+        return userVo;
+    }
 }

@@ -9,11 +9,14 @@ import com.alpha.account.repository.PermissionRepository;
 import com.alpha.account.repository.UserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by jzhou237 on 2016-12-06.
@@ -49,5 +52,18 @@ public class User implements IUser {
             user.setPermissions(permissionList);
         }
         return this.userRepository.save(user);
+    }
+
+    @Override
+    public void findAll(Pageable pageable, Consumer<Page<com.alpha.account.entities.User>> consumer) {
+        Page<com.alpha.account.entities.User> userPage = this.userRepository.findAll(pageable);
+        if (userPage != null) {
+            consumer.accept(userPage);
+        }
+    }
+
+    @Override
+    public com.alpha.account.entities.User findById(Long id) {
+        return this.userRepository.findOne(id);
     }
 }

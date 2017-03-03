@@ -1,5 +1,6 @@
 package com.alpha.account.entities;
 
+import com.alpha.account.model.PermissionVo;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -23,5 +24,14 @@ public class Permission {
 
     @Column(length = 200)
     private String url;
+
+
+    public PermissionVo toVo() {
+        PermissionVo permissionVo = new PermissionVo();
+        permissionVo.setId(this.getId());
+        permissionVo.setName(this.getName());
+        permissionVo.setUrl(this.getUrl());
+        return permissionVo;
+    }
 
 }
