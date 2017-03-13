@@ -8,7 +8,6 @@ import com.alpha.account.exception.UserNotFoundException;
 import com.alpha.account.exception.UserPasswordException;
 import com.alpha.account.model.UserVo;
 import com.alpha.account.repository.UserRepository;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -23,7 +22,7 @@ import java.util.function.Consumer;
  * Created by jzhou237 on 2016-12-06.
  */
 @Component
-public class UserDo implements IUserDo {
+public class UserImpl implements IUser {
 
     @Autowired
     private UserRepository userRepository;
@@ -36,12 +35,9 @@ public class UserDo implements IUserDo {
     }
 
     public User create(UserVo userVo) throws UserException {
-        if (!StringUtils.equals(userVo.getPassword(), userVo.getRepeatPassword())) {
-            throw new UserPasswordException("Password is not same.");
-        }
         User existUser = this.userRepository.findByName(userVo.getName());
         if (existUser != null) {
-            throw new UserExistException("UserDo Name [" + userVo.getName() + "] is existing.");
+            throw new UserExistException("User Name [" + userVo.getName() + "] is existing.");
         }
         User user = new User();
         BCryptPasswordEncoder bc = new BCryptPasswordEncoder(4);
@@ -71,10 +67,21 @@ public class UserDo implements IUserDo {
     public User update(UserVo userVo) throws UserNotFoundException {
         User updatedUser = this.userRepository.findOne(userVo.getId());
         if (updatedUser == null) {
-            throw new UserNotFoundException("UserDo ID [" + userVo.getId() + "] is not found.");
+            throw new UserNotFoundException("User ID [" + userVo.getId() + "] is not found.");
         }
         updatedUser.setActive(userVo.isActive());
         return this.userRepository.save(updatedUser);
+    }
+
+    @Override
+    public User changePassword(UserVo userVo) throws UserNotFoundException, UserPasswordException {
+        User user = this.userRepository.findOne(userVo.getId());
+        if (user == null) {
+            throw new UserNotFoundException("User ID [" + userVo.getId() + "] is not found.");
+        }
+        BCryptPasswordEncoder bc = new BCryptPasswordEncoder(4);
+        user.setPassword(bc.encode(userVo.getPassword()));
+        return this.userRepository.save(user);
     }
 
 }

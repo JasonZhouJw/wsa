@@ -1,11 +1,14 @@
 package com.alpha.account.controller;
 
-import com.alpha.account.domain.IUserDo;
+import com.alpha.account.domain.IUser;
 import com.alpha.account.entities.User;
 import com.alpha.account.exception.UserException;
 import com.alpha.account.exception.UserNotFoundException;
+import com.alpha.account.exception.UserPasswordException;
+import com.alpha.account.model.ChangePasswordVo;
 import com.alpha.account.model.CreateUserVo;
 import com.alpha.account.model.UserVo;
+import com.alpha.account.view.ChangePasswordView;
 import com.alpha.account.view.CreateView;
 import com.alpha.account.view.IndexView;
 import com.alpha.account.view.UpdateView;
@@ -16,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +53,11 @@ public class UserController {
     private PageView pageView;
 
     @Autowired
-    private IUserDo user;
+    private IUser user;
+
+    @Autowired
+    @Qualifier("changePasswordView")
+    private ChangePasswordView changePasswordView;
 
     @RequestMapping(ACCOUNT_INDEX)
     public ModelAndView toIndex() {
@@ -87,6 +95,20 @@ public class UserController {
         updateView.setAccount(updatedUser);
         updateView.success();
         return updateView;
+    }
+
+    @GetMapping(ACCOUNT_TO_CHANGE_PASSWORD + "/{id}")
+    public ModelAndView toChangePassword(@PathVariable("id") Long id) {
+        changePasswordView.setAccount(this.user.findById(id));
+        return changePasswordView;
+    }
+
+    @PostMapping(ACCOUNT_CHANGE_PASSWORD)
+    public ChangePasswordView changePassword(ChangePasswordVo userVo, HttpServletRequest request, HttpServletResponse response) throws UserNotFoundException, UserPasswordException, ValidationException {
+        ValidationUtils.validate(userVo);
+        changePasswordView.setAccount(user.changePassword(userVo));
+        changePasswordView.success();
+        return changePasswordView;
     }
 
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created by jzhou237 on 9/8/2016.
  */
-@Service
+@Service("demoUser")
 public class UserImpl implements IUser {
     @Override
     public String say(String name) {

@@ -7,16 +7,15 @@ import org.hibernate.validator.constraints.ScriptAssert;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by jzhou237 on 2017-03-09.
+ * Created by jzhou237 on 2017-03-13.
  */
-@ScriptAssert(lang = "javascript", script = "_this.getPassword()==_this.getRepeatPassword()", message = "password is not same.")
-public class CreateUserVo extends UserVo {
+@ScriptAssert(lang = "javascript", script = "_this.getPassword()==_this.getRepeatPassword()", message = "result.password.not.same")
+public class ChangePasswordVo extends UserVo {
 
     @Override
-    @NotNull(message = "Name is null.")
-    @NotEmpty(message = "account.create.result.name.empty")
-    public String getName() {
-        return super.getName();
+    @NotNull
+    public Long getId() {
+        return super.getId();
     }
 
     @Override

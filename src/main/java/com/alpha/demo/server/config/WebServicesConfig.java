@@ -3,6 +3,7 @@ package com.alpha.demo.server.config;
 import com.alpha.demo.server.IHello;
 import com.alpha.demo.server.IUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +20,7 @@ public class WebServicesConfig {
     private IHello hello;
 
     @Autowired
+    @Qualifier("demoUser")
     private IUser user;
 
     @Bean

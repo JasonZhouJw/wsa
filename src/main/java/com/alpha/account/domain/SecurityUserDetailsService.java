@@ -27,7 +27,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
             }
         }
         if (securityUserDetail == null) {
-            throw new UsernameNotFoundException("Can not find the UserDo named [" + username + "]");
+            throw new UsernameNotFoundException("Can not find the User named [" + username + "]");
         }
         return securityUserDetail;
     }

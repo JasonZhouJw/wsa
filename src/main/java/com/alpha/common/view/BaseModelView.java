@@ -3,6 +3,8 @@ package com.alpha.common.view;
 import com.alpha.common.model.Message;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -10,19 +12,29 @@ import java.util.List;
 
 import static com.alpha.common.utils.Constants.DANGER;
 import static com.alpha.common.utils.Constants.WARNING;
+import static com.alpha.common.view.PropertyResources.LABEL_TEXT_FULL_NAME;
 
 /**
  * Created by jzhou237 on 2017-03-02.
  */
 @Setter
 @Getter
+@PropertySource(LABEL_TEXT_FULL_NAME)
 public abstract class BaseModelView extends ModelAndView {
 
     public static final String MESSAGE_PARAM = "messages";
 
-    private boolean success = true;
+    private boolean hasError = false;
+
+    @Value("${label.success}")
+    private String success;
 
     private List<Message> messageList = new ArrayList<>();
+
+    public BaseModelView success() {
+        this.addMessage(this.success);
+        return this;
+    }
 
     public void addMessage(String message) {
         setMessage(new Message(message));
@@ -30,12 +42,12 @@ public abstract class BaseModelView extends ModelAndView {
 
     public void addWarning(String message) {
         setMessage(new Message(message, WARNING));
-        success = false;
+        hasError = true;
     }
 
     public void addDanger(String message) {
         setMessage(new Message(message, DANGER));
-        success = false;
+        hasError = true;
     }
 
     protected void setMessage(Message message) {
@@ -48,7 +60,7 @@ public abstract class BaseModelView extends ModelAndView {
     }
 
     public boolean hasError() {
-        return success;
+        return hasError;
     }
 
 }

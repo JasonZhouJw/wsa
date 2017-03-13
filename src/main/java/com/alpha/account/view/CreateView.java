@@ -25,8 +25,4 @@ public class CreateView extends BaseModelView {
         this.setViewName(ACCOUNT_CREATE);
     }
 
-    public void success() {
-        this.addMessage(success);
-    }
-
 }

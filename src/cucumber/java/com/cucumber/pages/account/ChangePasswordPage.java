@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import static com.alpha.common.controller.Urls.ACCOUNT_TO_UPDATE;
+import static com.alpha.common.controller.Urls.ACCOUNT_TO_CHANGE_PASSWORD;
 import static com.alpha.common.controller.Urls.SEPARATOR;
 import static com.alpha.common.view.PropertyResources.LABEL_TEXT_FULL_NAME;
 
@@ -19,7 +19,7 @@ import static com.alpha.common.view.PropertyResources.LABEL_TEXT_FULL_NAME;
 @Component
 @Scope("cucumber-glue")
 @PropertySource(LABEL_TEXT_FULL_NAME)
-public class UpdatePage {
+public class ChangePasswordPage {
 
     @Autowired
     private UiDriver uiDriver;
@@ -28,7 +28,7 @@ public class UpdatePage {
     private String success;
 
     public void navigate(String id) {
-        uiDriver.navigateTo(ACCOUNT_TO_UPDATE + SEPARATOR + id);
+        uiDriver.navigateTo(ACCOUNT_TO_CHANGE_PASSWORD + SEPARATOR + id);
     }
 
     public void inputTwicePassword(String password1, String password2) {
@@ -38,7 +38,11 @@ public class UpdatePage {
         element.submit();
     }
 
-    public void success(String message) {
+    public void success() {
         ResultVerify.ContainText(uiDriver.findElementByTag("body"), success);
+    }
+
+    public void fail(String message) {
+        ResultVerify.ContainText(uiDriver.findElementByTag("body"), message);
     }
 }
