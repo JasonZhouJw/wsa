@@ -41,3 +41,5 @@ cxf:
 upload:
   jar:
     filePath: c:/tmp/
+application:
+  perPageLimit: 20

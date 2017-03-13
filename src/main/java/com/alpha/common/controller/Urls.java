@@ -17,13 +17,13 @@ public class Urls {
 
     public static final String LOGOUT = ROOT + "logout";
 
-    public static final String TO_CREATE_ACCOUNT = ACCOUNT + SEPARATOR + "toCreate";
+    public static final String ACCOUNT_TO_CREATE = ACCOUNT + SEPARATOR + "toCreate";
 
-    public static final String CREATE_ACCOUNT = ACCOUNT + SEPARATOR + "create";
+    public static final String ACCOUNT_CREATE = ACCOUNT + SEPARATOR + "create";
 
     public static final String ACCOUNT_INDEX = ACCOUNT + SEPARATOR + "index";
 
-    public static final String TO_UPDATE_ACCOUNT = ACCOUNT + SEPARATOR + "toUpdate";
+    public static final String ACCOUNT_TO_UPDATE = ACCOUNT + SEPARATOR + "toUpdate";
 
     public static final String ACCOUNT_UPDATE = ACCOUNT + SEPARATOR + "update";
 }

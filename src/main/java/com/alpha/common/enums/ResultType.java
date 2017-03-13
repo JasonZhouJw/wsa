@@ -7,7 +7,7 @@ public enum ResultType {
 
     SUCCESS("SUCCESS"),
     FAIL("FAIL"),
-    ERROR("ERROR");
+    ERROR("DANGER");
 
     private String type;
 

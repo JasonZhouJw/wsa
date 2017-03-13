@@ -22,4 +22,5 @@ public class BeanCopierTest {
         System.out.println(month);
     }
 
+
 }

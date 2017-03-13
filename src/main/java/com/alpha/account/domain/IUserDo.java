@@ -1,6 +1,8 @@
 package com.alpha.account.domain;
 
+import com.alpha.account.entities.User;
 import com.alpha.account.exception.UserException;
+import com.alpha.account.exception.UserNotFoundException;
 import com.alpha.account.model.UserVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,13 +12,14 @@ import java.util.function.Consumer;
 /**
  * Created by jzhou237 on 2017-03-02.
  */
-public interface IUser {
-    com.alpha.account.entities.User login(String name, String password);
+public interface IUserDo {
+    User login(String name, String password);
 
-    com.alpha.account.entities.User create(UserVo userVo) throws UserException;
+    User create(UserVo userVo) throws UserException;
 
-    void findAll(com.alpha.account.entities.User user,Pageable pageable, Consumer<Page<com.alpha.account.entities.User>> consumer);
+    void findAll(User user, Pageable pageable, Consumer<Page<User>> consumer);
 
-    com.alpha.account.entities.User findById(Long id);
+    User findById(Long id);
 
+    User update(UserVo userVo) throws UserNotFoundException;
 }

@@ -86,7 +86,7 @@ public class ServicesInfoController {
 //        try {
 //            FileUtils.copyInputStreamToFile(uploadInfoVo.getFile().getInputStream(), destFile);
 //        } catch (IOException e) {
-//            throw new WebException(response.addError(e.getMessage()));
+//            throw new WebException(response.addDanger(e.getMessage()));
 //        }
 //        ServicesInfo servicesInfo = new ServicesInfo();
 //        servicesInfo.setService(uploadInfoVo.getService());
@@ -118,7 +118,7 @@ public class ServicesInfoController {
 //        try {
 //            FileUtils.copyInputStreamToFile(uploadInfoVo.getFile().getInputStream(), destFile);
 //        } catch (IOException e) {
-//            throw new WebException(response.addError(e.getMessage()));
+//            throw new WebException(response.addDanger(e.getMessage()));
 //        }
 //        ServicesInfo servicesInfo = this.servicesInfos.findById(id);
 //        if (servicesInfo == null) {

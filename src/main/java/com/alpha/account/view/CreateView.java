@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import static com.alpha.common.controller.Urls.CREATE_ACCOUNT;
+import static com.alpha.common.controller.Urls.ACCOUNT_CREATE;
 import static com.alpha.common.view.PropertyResources.LABEL_TEXT_FULL_NAME;
 import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
 
@@ -22,7 +22,7 @@ public class CreateView extends BaseModelView {
     private String success;
 
     public CreateView() {
-        this.setViewName(CREATE_ACCOUNT);
+        this.setViewName(ACCOUNT_CREATE);
     }
 
     public void success() {

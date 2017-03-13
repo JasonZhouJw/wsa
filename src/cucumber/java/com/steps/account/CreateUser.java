@@ -8,7 +8,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.alpha.common.controller.Urls.TO_CREATE_ACCOUNT;
+import static com.alpha.common.controller.Urls.ACCOUNT_TO_CREATE;
 
 /**
  * Created by jzhou237 on 2017-03-01.
@@ -23,7 +23,7 @@ public class CreateUser {
 
     @Given("^to createUser page$")
     public void to_createUser_page() throws Throwable {
-        uiDriver.navigateTo(TO_CREATE_ACCOUNT);
+        uiDriver.navigateTo(ACCOUNT_TO_CREATE);
     }
 
     @When("^input username \"([^\"]*)\" and input password  \"([^\"]*)\" twice$")

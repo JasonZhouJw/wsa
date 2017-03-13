@@ -1,13 +1,17 @@
 package com.alpha.account.controller;
 
-import com.alpha.account.domain.IUser;
+import com.alpha.account.domain.IUserDo;
+import com.alpha.account.entities.User;
 import com.alpha.account.exception.UserException;
+import com.alpha.account.exception.UserNotFoundException;
+import com.alpha.account.model.CreateUserVo;
 import com.alpha.account.model.UserVo;
 import com.alpha.account.view.CreateView;
 import com.alpha.account.view.IndexView;
 import com.alpha.account.view.UpdateView;
+import com.alpha.common.exceptions.ValidationException;
 import com.alpha.common.page.PageView;
-import com.alpha.common.utils.Constants;
+import com.alpha.common.utils.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,11 +49,11 @@ public class UserController {
     private PageView pageView;
 
     @Autowired
-    private IUser user;
+    private IUserDo user;
 
     @RequestMapping(ACCOUNT_INDEX)
     public ModelAndView toIndex() {
-        this.user.findAll(pageView.create(), (userPage) -> {
+        this.user.findAll(new User(), pageView.create(), (userPage) -> {
             indexView.setAccounts(userPage.getContent());
             pageView.display(userPage.getTotalPages());
         });
@@ -57,30 +61,32 @@ public class UserController {
     }
 
 
-    @RequestMapping(TO_CREATE_ACCOUNT)
+    @RequestMapping(ACCOUNT_TO_CREATE)
     public ModelAndView toCreate() {
         return createView;
     }
 
-    @PostMapping(CREATE_ACCOUNT)
-    public ModelAndView create(UserVo userVo, HttpServletResponse response, HttpServletRequest request) {
-        try {
-            com.alpha.account.entities.User savedUser = user.create(userVo);
-            createView.addObject("user", savedUser.toVo());
-            createView.success();
-        } catch (UserException e) {
-            log.warn(e.getMessage(), e);
-            createView.addMessage(e.getMessage(), Constants.WARNING);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            createView.addMessage(e.getMessage(), Constants.DANGER);
-        }
+    @PostMapping(ACCOUNT_CREATE)
+    public CreateView create(CreateUserVo userVo, HttpServletResponse response, HttpServletRequest request) throws UserException, ValidationException {
+        ValidationUtils.validate(userVo);
+        User savedUser = user.create(userVo);
+        createView.addObject("user", savedUser.toVo());
+        createView.success();
         return createView;
     }
 
-    @RequestMapping(TO_UPDATE_ACCOUNT + "/{id}")
+    @RequestMapping(ACCOUNT_TO_UPDATE + "/{id}")
     public ModelAndView toUpdate(@PathVariable("id") Long id) {
         updateView.setAccount(this.user.findById(id));
         return updateView;
     }
+
+    @PostMapping(ACCOUNT_UPDATE)
+    public UpdateView update(UserVo userVo, HttpServletRequest request, HttpServletResponse response) throws UserNotFoundException {
+        User updatedUser = user.update(userVo);
+        updateView.setAccount(updatedUser);
+        updateView.success();
+        return updateView;
+    }
+
 }

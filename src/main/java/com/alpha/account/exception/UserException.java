@@ -1,9 +1,11 @@
 package com.alpha.account.exception;
 
+import com.alpha.common.exceptions.DomainException;
+
 /**
  * Created by jzhou237 on 2017-03-02.
  */
-public class UserException extends Exception {
+public class UserException extends DomainException {
     public UserException() {
     }
 
@@ -23,9 +25,5 @@ public class UserException extends Exception {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    @Override
-    public synchronized Throwable fillInStackTrace() {
-        return null;
-    }
 
 }

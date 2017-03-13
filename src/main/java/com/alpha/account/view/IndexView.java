@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.alpha.common.controller.Urls.ACCOUNT_INDEX;
-import static com.alpha.common.controller.Urls.TO_UPDATE_ACCOUNT;
+import static com.alpha.common.controller.Urls.ACCOUNT_TO_UPDATE;
 import static com.alpha.common.view.PropertyResources.RESULT_MESSAGES_FULL_NAME;
 import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
 
@@ -28,7 +28,7 @@ public class IndexView extends BaseModelView implements ModelAndViewCombiner {
 
     public IndexView(@Value("${list.empty}") String noDataMessage) {
         addObject("noDataMessage", noDataMessage);
-        addObject("updateUrl", TO_UPDATE_ACCOUNT);
+        addObject("updateUrl", ACCOUNT_TO_UPDATE);
         this.setViewName(ACCOUNT_INDEX);
     }
 

@@ -30,6 +30,9 @@ public class User {
     @Column(length = 200)
     private String password;
 
+    @Column
+    private boolean active = true;
+
 //    @Column(length = 11, unique = true, nullable = false)
 //    private String phone;
 
@@ -45,4 +48,5 @@ public class User {
         permissions.forEach(permission -> userVo.getPermissionVoList().add(permission.toVo()));
         return userVo;
     }
+
 }
