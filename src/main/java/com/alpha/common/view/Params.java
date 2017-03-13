@@ -11,6 +11,14 @@ public class Params {
     private static final String PARAM_CONNECTOR = "=";
     private final Map<String, String> allParams = new HashMap<>();
 
+    public Params() {
+
+    }
+
+    public Params(String name, String value) {
+        this.add(name, value);
+    }
+
     public void add(String name, String value) {
         allParams.put(name, value);
     }
