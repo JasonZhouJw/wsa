@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  * Created by jzhou237 on 2017-03-01.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@Transactional
+//@Transactional
 @SpringBootTest
 public class UserRepositoryTest {
 
@@ -58,7 +57,7 @@ public class UserRepositoryTest {
     @Test
     public void findAll() throws Exception {
         User user = new User();
-        user.setActive(true);
+//        user.setActive(true);
 //        user.setName("admin");
         Page<User> result = userRepository.findAll(Example.of(user), new PageRequest(1, 10));
         assertEquals(1, result.getTotalElements());

@@ -2,19 +2,22 @@ package com.alpha.verifyresult.controller;
 
 import com.alpha.home.view.HomeView;
 import com.alpha.verifyresult.domain.VerifyResults;
+import com.alpha.verifyresult.view.IndexView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by jzhou237 on 2016-11-29.
  */
-//@RequestMapping("/VerifyResult")
-//@Controller
+@Controller
 public class VerifyResultController {
 
     @Autowired
     private HomeView homeView;
+
+    private IndexView indexView;
 
     @Autowired
     private VerifyResults verifyResults;

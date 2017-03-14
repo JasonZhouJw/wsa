@@ -15,8 +15,6 @@
 #      prefix: /templates/
 #      suffix: .html
 spring:
-  freemarker:
-    cache: false
   jpa:
     show-sql: true
     hibernate:
@@ -30,8 +28,6 @@ spring:
     username: sa
     password: sa
     driverClassName: org.h2.Driver
-
-#      path: /h2-console
 
 # customer
 cxf:

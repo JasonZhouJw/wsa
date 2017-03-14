@@ -30,4 +30,8 @@ public class Urls {
     public static final String ACCOUNT_TO_CHANGE_PASSWORD = ACCOUNT + SEPARATOR + "toChangePassword";
 
     public static final String ACCOUNT_CHANGE_PASSWORD = ACCOUNT + SEPARATOR + "changePassword";
+
+    public static final String VERIFY_RESULT = ROOT + "verifyResult";
+
+    public static final String VERIFY_RESULT_INDEX = VERIFY_RESULT + SEPARATOR + "index";
 }
