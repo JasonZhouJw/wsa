@@ -39,3 +39,5 @@ upload:
     filePath: c:/tmp/
 application:
   perPageLimit: 20
+quartz:
+  enabled: true

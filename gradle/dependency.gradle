@@ -13,6 +13,7 @@ dependencies {
             "org.springframework.boot:spring-boot-devtools:${springBootVersion}",
             "mysql:mysql-connector-java:6.0.3",
 
+
             "com.github.mjeanroy:springmvc-mustache:0.5.3",
             "org.glassfish.jersey.core:jersey-client:2.23.2",
 //            files("libs/moss-common-2.1.0.0.jar"),
@@ -26,7 +27,12 @@ dependencies {
             "wsdl4j:wsdl4j:1.6.3",
             "org.apache.cxf:cxf-spring-boot-starter-jaxws:3.1.10",
             "org.yaml:snakeyaml:1.17",
-            "org.checkerframework:checker:2.1.4"
+            "org.checkerframework:checker:2.1.4",
+            "org.quartz-scheduler:quartz:2.2.3",
+            "org.quartz-scheduler:quartz-jobs:2.2.3",
+//            "org.liquibase:liquibase-core",
+            "org.springframework:spring-context-support"
+
     )
 
     testCompile(
