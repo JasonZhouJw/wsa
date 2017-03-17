@@ -29,6 +29,9 @@ public class PageView extends ModelAndView implements View<Integer> {
     @Value("${application.perPageLimit}")
     private int perPageLimit;
 
+    @Value("${pagination.totalPage}")
+    private String totalPageMessage;
+
     public PageView(
             @Value("${pagination.currentPage}") String currentPageMessage,
             @Autowired CurrentPage currentPage) {
@@ -52,8 +55,10 @@ public class PageView extends ModelAndView implements View<Integer> {
 
     @Override
     public void display(Integer totalPageCount) {
-        if (currentPage.number() < totalPageCount)
+        addObject("totalPage", format(this.totalPageMessage, totalPageCount));
+        if (currentPage.number() < totalPageCount) {
             displayNextPageUrl();
+        }
     }
 
     private ModelAndView displayNextPageUrl() {

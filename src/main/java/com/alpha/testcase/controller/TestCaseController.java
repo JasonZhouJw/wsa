@@ -1,75 +1,81 @@
 package com.alpha.testcase.controller;
 
-import com.alpha.common.utils.BeanCopier;
+import com.alpha.common.exceptions.DataExistException;
+import com.alpha.common.exceptions.DataNotFoundException;
+import com.alpha.common.exceptions.ValidationException;
+import com.alpha.common.page.PageView;
+import com.alpha.common.utils.ValidationUtils;
 import com.alpha.services.domain.ServicesInfos;
-import com.alpha.testcase.domain.TestCases;
+import com.alpha.testcase.domain.TestCaseImpl;
 import com.alpha.testcase.entities.TestCase;
+import com.alpha.testcase.model.CreateTestCaseVo;
 import com.alpha.testcase.model.TestCaseVo;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.alpha.testcase.view.CreateView;
+import com.alpha.testcase.view.IndexView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import static com.alpha.common.controller.Urls.*;
 
 /**
  * Created by jzhou237 on 2016-10-06.
  */
-//@Controller
-@RequestMapping("/TestCase")
+@Controller
 public class TestCaseController {
 
-    @Resource
-    private TestCases testCases;
+    @Autowired
+    private TestCaseImpl testCases;
 
     @Resource
     private ServicesInfos servicesInfos;
 
-    @RequestMapping("/toEditTestCase/{id}")
-    public String toEditView(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("testCase", TestCaseVo.toVo(this.testCases.findById(id)));
-        return "/TestCase/EditCase";
+    @Autowired
+    private PageView pageView;
+
+    @Autowired
+    @Qualifier("testCaseCreateView")
+    private CreateView createView;
+
+    @Autowired
+    @Qualifier("testCaseIndexView")
+    private IndexView indexView;
+
+    @GetMapping(TEST_CASE_INDEX)
+    public ModelAndView index() {
+        this.testCases.findAll(new TestCase(), pageView.create(), (page) -> {
+            indexView.addTestCase(page.getContent());
+            pageView.display(page.getTotalPages());
+        });
+        return indexView.Combine(pageView);
     }
 
-    @RequestMapping("/toAddTestCase")
-    public String toAddView(ModelMap model) {
-//        model.addAttribute("interfaceList", InterfaceInfoVo.toVo(this.interfaceInfos.findAll()));
-        return "/TestCase/AddCase";
+    @GetMapping(TEST_CASE_TO_CREATE)
+    public ModelAndView toCreate() {
+        // TODO: 2017-03-17 add method drop down and group
+        return createView;
     }
 
-    @RequestMapping("/toView")
-    public String toView(ModelMap model) {
-        model.addAttribute("testCaseList", BeanCopier.copyBean(this.testCases.findAllActive(), TestCaseVo.class));
-        return "/TestCase/View";
+    @PostMapping(TEST_CASE_CREATE)
+    public CreateView create(CreateTestCaseVo testCaseVo) throws ValidationException, DataExistException, DataNotFoundException {
+        ValidationUtils.validate(testCaseVo);
+        createView.addTestCase(testCases.create(new TestCase(testCaseVo)));
+        return createView;
     }
 
-    @RequestMapping("/addTestCase")
-    public String doAdd(TestCaseVo testCaseVo, HttpServletResponse response, HttpServletRequest request) {
-        if (testCaseVo != null) {
-            TestCase testCase = testCaseVo.toDo();
-            this.testCases.save(testCase);
-        }
-        return "redirect:toAddTestCase";
+    @PostMapping(TEST_CASE_SEARCH)
+    public ModelAndView search(TestCaseVo testCaseVo) {
+        this.testCases.findAll(new TestCase(testCaseVo), pageView.create(), (page) -> {
+            indexView.addTestCase(page.getContent());
+            pageView.display(page.getTotalPages());
+            indexView.addObject("searchParam", testCaseVo);
+        });
+        return indexView.Combine(pageView);
     }
 
-    @RequestMapping("/editTestCase")
-    public String doEdit(TestCaseVo testCaseVo, HttpServletResponse response, HttpServletRequest request) {
-        if (testCaseVo != null) {
-            TestCase testCase = testCaseVo.toDo();
-            this.testCases.save(testCase);
-        }
-        return "redirect:toEditTestCase";
-    }
-
-    @RequestMapping("/execute")
-    public String doExecute(@PathVariable("id") Long id, ModelMap model) {
-        TestCase testCase = this.testCases.findById(id);
-        return "redirect:toEditTestCase/" + id;
-    }
-
-
-    public void initView(ModelMap modelMap) {
-        modelMap.addAttribute("demo", "demo");
-    }
 }

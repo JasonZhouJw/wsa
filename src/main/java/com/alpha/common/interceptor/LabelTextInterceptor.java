@@ -1,10 +1,13 @@
 package com.alpha.common.interceptor;
 
+import com.alpha.common.view.ILabel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -13,6 +16,7 @@ import static com.alpha.common.view.PropertyResources.LABEL_TEXT_SHORT_NAME;
 /**
  * Created by jzhou237 on 2016-12-05.
  */
+@Slf4j
 public class LabelTextInterceptor implements HandlerInterceptor {
     public static final String PREFIX = "label";
     public static final String VIEW_NAME_DELIMITER = "/";
@@ -29,9 +33,11 @@ public class LabelTextInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        allLabelMessageKeys(request).stream()
+        Set<String> labelKeySet = allLabelMessageKeys(request);
+        labelKeySet.stream()
                 .filter(key -> isLabelMessageKeyForView(key, modelAndView.getViewName()))
                 .forEach(key -> addLabelMessage(key, modelAndView, request));
+        replaceLabelInDataModel(labelKeySet, modelAndView, request);
     }
 
     private ModelAndView addLabelMessage(String key, ModelAndView modelAndView, HttpServletRequest request) {
@@ -52,6 +58,29 @@ public class LabelTextInterceptor implements HandlerInterceptor {
 
     private Set<String> allLabelMessageKeys(HttpServletRequest request) {
         return exposedResourceBundleMessageSource.getKeys(LABEL_TEXT_SHORT_NAME, request.getLocale());
+    }
+
+    private void replaceLabelInDataModel(Set<String> labelKeys, ModelAndView view, HttpServletRequest request) {
+        view.getModelMap().forEach((key, data) -> {
+            if (data instanceof Collection) {
+                ((Collection) data).forEach((element) -> {
+                    this.replaceLabel(labelKeys, element, request);
+                });
+            } else if (data.getClass().isArray()) {
+                Object[] targetArray = (Object[]) data;
+                for (int i = 0; i < targetArray.length; i++) {
+                    this.replaceLabel(labelKeys, targetArray[i], request);
+                }
+            } else {
+                this.replaceLabel(labelKeys, data, request);
+            }
+        });
+    }
+
+    private void replaceLabel(Set<String> labelKeys, Object target, HttpServletRequest request) {
+        if (target instanceof ILabel && labelKeys.contains(((ILabel) target).getLabelKey())) {
+            ((ILabel) target).setLabel(exposedResourceBundleMessageSource.getMessageOverrided(((ILabel) target).getLabelKey(), null, request.getLocale()));
+        }
     }
 
     @Override

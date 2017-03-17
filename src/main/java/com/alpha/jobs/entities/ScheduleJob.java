@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Slf4j
 @ToString(of = {"name", "group", "cronExpression", "jobClassName"})
 @Entity
-@Table(indexes = {@Index(name = "INDEX_NAME_GROUP", columnList = "name,group", unique = true)})
+@Table(indexes = {@Index(name = "INDEX_NAME_GROUP", columnList = "name,jobGroup", unique = true)})
 public class ScheduleJob {
 
     @Id
@@ -27,7 +27,7 @@ public class ScheduleJob {
     private String name;
 
     @Column
-    private String group;
+    private String jobGroup;
 
     @Column
     private boolean active;

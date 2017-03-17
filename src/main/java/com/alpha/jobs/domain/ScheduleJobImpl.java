@@ -27,16 +27,16 @@ public class ScheduleJobImpl implements IScheduleJob {
 
     private void refresh(ScheduleJob scheduleJob) throws JobClassNotFoundException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        TriggerKey triggerKey = TriggerKey.triggerKey(scheduleJob.getName(), scheduleJob.getGroup());
+        TriggerKey triggerKey = TriggerKey.triggerKey(scheduleJob.getName(), scheduleJob.getJobGroup());
         try {
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
             if (null == trigger) {
                 JobDetail jobDetail = JobBuilder.newJob(scheduleJob.getJobClass())
-                        .withIdentity(scheduleJob.getName(), scheduleJob.getGroup()).build();
+                        .withIdentity(scheduleJob.getName(), scheduleJob.getJobGroup()).build();
                 jobDetail.getJobDataMap().put("scheduleJob", scheduleJob);
                 CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleJob
                         .getCronExpression());
-                trigger = TriggerBuilder.newTrigger().withIdentity(scheduleJob.getName(), scheduleJob.getGroup())
+                trigger = TriggerBuilder.newTrigger().withIdentity(scheduleJob.getName(), scheduleJob.getJobGroup())
                         .withSchedule(scheduleBuilder).build();
                 scheduler.scheduleJob(jobDetail, trigger);
             } else {
@@ -66,7 +66,7 @@ public class ScheduleJobImpl implements IScheduleJob {
     }
 
     private ScheduleJob checkUnique(Long id, String name, String group) throws DataExistException {
-        ScheduleJob existScheduleJob = this.scheduleJobRepository.findByNameAndGroup(name, group);
+        ScheduleJob existScheduleJob = this.scheduleJobRepository.findByNameAndJobGroup(name, group);
         if (existScheduleJob != null && !existScheduleJob.getId().equals(id)) {
             throw new DataExistException();
         }
@@ -75,7 +75,7 @@ public class ScheduleJobImpl implements IScheduleJob {
 
     @Transactional
     protected ScheduleJob saveAndRefresh(ScheduleJob scheduleJob) throws JobClassNotFoundException, DataExistException {
-        this.checkUnique(-1L, scheduleJob.getName(), scheduleJob.getGroup());
+        this.checkUnique(-1L, scheduleJob.getName(), scheduleJob.getJobGroup());
         ScheduleJob savedScheduleJob = this.scheduleJobRepository.save(scheduleJob);
         this.refresh(savedScheduleJob);
         return savedScheduleJob;

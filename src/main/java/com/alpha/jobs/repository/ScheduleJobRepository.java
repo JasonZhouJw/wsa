@@ -16,5 +16,5 @@ public interface ScheduleJobRepository extends JpaRepository<ScheduleJob, Long> 
     @Query("select scheduleJob from ScheduleJob scheduleJob where scheduleJob.active=1")
     List<ScheduleJob> findAllActive();
 
-    ScheduleJob findByNameAndGroup(String name, String group);
+    ScheduleJob findByNameAndJobGroup(String name, String jobGroup);
 }

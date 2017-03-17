@@ -10,7 +10,7 @@ import static com.alpha.common.controller.Urls.VERIFY_RESULT_INDEX;
 /**
  * Created by jzhou237 on 2017-03-13.
  */
-@Component
+@Component("verifyResultIndexView")
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class IndexView extends BaseModelView {
 
