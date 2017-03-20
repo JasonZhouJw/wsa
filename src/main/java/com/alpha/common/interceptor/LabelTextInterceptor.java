@@ -1,6 +1,6 @@
 package com.alpha.common.interceptor;
 
-import com.alpha.common.view.ILabel;
+import com.alpha.common.model.ViewElement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -78,8 +78,8 @@ public class LabelTextInterceptor implements HandlerInterceptor {
     }
 
     private void replaceLabel(Set<String> labelKeys, Object target, HttpServletRequest request) {
-        if (target instanceof ILabel && labelKeys.contains(((ILabel) target).getLabelKey())) {
-            ((ILabel) target).setLabel(exposedResourceBundleMessageSource.getMessageOverrided(((ILabel) target).getLabelKey(), null, request.getLocale()));
+        if (target instanceof ViewElement && labelKeys.contains(((ViewElement) target).getLabel())) {
+            ((ViewElement) target).setLabel(exposedResourceBundleMessageSource.getMessageOverrided(((ViewElement) target).getLabel(), null, request.getLocale()));
         }
     }
 

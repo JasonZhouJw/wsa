@@ -94,7 +94,7 @@ public class TestCase {
     }
 
     public Example<TestCase> getExample() {
-        return Example.of(this, ExampleMatcher.matching().withIgnorePaths("createdTime", "caseGroup", "methodInfo"));
+        return Example.of(this, ExampleMatcher.matching().withIgnorePaths("createdTime", "updatedTime", "caseGroup", "methodInfo"));
     }
 
 }

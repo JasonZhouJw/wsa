@@ -1,42 +1,43 @@
 package com.alpha.common.enums;
 
-import com.alpha.common.view.ILabel;
+import com.alpha.common.model.Option;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * Created by jzhou237 on 2017-03-17.
  */
 @Getter
-public enum Active implements ILabel {
+public enum Active {
 
     TRUE(true, "label.active.true", 1),
     FALSE(false, "label.active.false", 0);
 
     private boolean active;
 
-    private String labelKey;
-
     private String label;
 
     private int realValue;
 
-    Active(boolean active, String labelKey, int realValue) {
+    Active(boolean active, String label, int realValue) {
         this.active = active;
-        this.labelKey = labelKey;
+        this.label = label;
         this.realValue = realValue;
     }
 
-    public Active getStatus(boolean active) {
+    public static List<Option> convert(Function function) {
+        List<Option> optionList = new ArrayList<>();
+        for (Active element : Active.values()) {
+            optionList.add(new Option(element.getLabel(), String.valueOf(element.getRealValue()), function));
+        }
+        return optionList;
+    }
+
+    public static Active getStatus(boolean active) {
         return active ? TRUE : FALSE;
     }
 
-    @Override
-    public String getLabelKey() {
-        return this.labelKey;
-    }
-
-    @Override
-    public void setLabel(String label) {
-        this.label = label;
-    }
 }

@@ -72,8 +72,8 @@ public class TestCaseController {
     public ModelAndView search(TestCaseVo testCaseVo) {
         this.testCases.findAll(new TestCase(testCaseVo), pageView.create(), (page) -> {
             indexView.addTestCase(page.getContent());
+            indexView.addSearchParam(testCaseVo);
             pageView.display(page.getTotalPages());
-            indexView.addObject("searchParam", testCaseVo);
         });
         return indexView.Combine(pageView);
     }

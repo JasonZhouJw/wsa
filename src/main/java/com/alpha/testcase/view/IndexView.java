@@ -4,6 +4,7 @@ import com.alpha.common.enums.Active;
 import com.alpha.common.view.BaseModelView;
 import com.alpha.common.view.ModelAndViewCombiner;
 import com.alpha.testcase.entities.TestCase;
+import com.alpha.testcase.model.TestCaseVo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -30,11 +31,16 @@ public class IndexView extends BaseModelView implements ModelAndViewCombiner {
     }
 
     private void searchCondition() {
-        this.addObject("activeList", Active.values());
+        this.addObject("activeList", Active.convert(null));
     }
 
     public void addTestCase(List<TestCase> content) {
         this.addObject("testCaseList", TestCase.toVo(content));
+    }
+
+    public void addSearchParam(TestCaseVo testCaseVo) {
+        this.addObject("searchParam", testCaseVo);
+        this.addObject("activeList", Active.convert(realValue -> realValue.equals(String.valueOf(Active.getStatus(testCaseVo.isActive()).getRealValue()))));
     }
 
     @Override

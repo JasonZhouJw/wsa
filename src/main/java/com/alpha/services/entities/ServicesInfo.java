@@ -1,8 +1,12 @@
 package com.alpha.services.entities;
 
+import com.alpha.common.model.Option;
+import com.alpha.services.model.ServicesInfoVo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,11 +29,14 @@ public class ServicesInfo {
     @Column(unique = true, nullable = false)
     private String wsdl;
 
-    @Column
-    private boolean wsdl2java = false;
+    @Column(length = 200)
+    private String name;
 
     @Column
-    private boolean active = false;
+    private Boolean wsdl2java = false;
+
+    @Column
+    private Boolean active = true;
 
     @Column(nullable = false)
     private String interfaceClass;
@@ -44,4 +51,44 @@ public class ServicesInfo {
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;
+
+    public static List<ServicesInfoVo> toVo(List<ServicesInfo> serviceInfoList, boolean hasChild) {
+        List<ServicesInfoVo> servicesInfoVoList = new ArrayList<>();
+        if (serviceInfoList != null) {
+            serviceInfoList.forEach(serviceInfo -> servicesInfoVoList.add(serviceInfo.toVo(hasChild)));
+        }
+        return servicesInfoVoList;
+    }
+
+    public static List<Option> convert(List<ServicesInfo> servicesInfoList) {
+        List<Option> optionList = new ArrayList<>();
+        if (servicesInfoList != null) {
+            servicesInfoList.forEach(servicesInfo -> {
+                Option option = new Option(servicesInfo.getInterfaceClass(), String.valueOf(servicesInfo.getId()));
+                option.setChild(MethodInfo.convert(servicesInfo.getMethodInfoList()));
+                optionList.add(option);
+            });
+        }
+        return optionList;
+    }
+
+    public ServicesInfoVo toVo(boolean hasChild) {
+        ServicesInfoVo servicesInfoVo = new ServicesInfoVo();
+        servicesInfoVo.setId(this.id);
+        servicesInfoVo.setWsdl(this.wsdl);
+        servicesInfoVo.setName(this.name);
+        servicesInfoVo.setWsdl2java(this.wsdl2java);
+        servicesInfoVo.setActive(this.active);
+        servicesInfoVo.setUpdatedTime(this.updatedTime);
+        servicesInfoVo.setCreatedTime(this.createdTime);
+        if (hasChild) {
+            servicesInfoVo.setMethodInfoList(MethodInfo.toVo(this.methodInfoList, false));
+        }
+        return servicesInfoVo;
+    }
+
+    public Example<ServicesInfo> getExample() {
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("createdTime", "updatedTime");
+        return Example.of(this);
+    }
 }

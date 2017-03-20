@@ -8,4 +8,5 @@ public interface ILabel {
     String getLabelKey();
 
     void setLabel(String label);
+
 }
