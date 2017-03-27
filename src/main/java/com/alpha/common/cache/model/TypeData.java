@@ -1,9 +1,9 @@
 package com.alpha.common.cache.model;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 /**
@@ -13,7 +13,7 @@ public class TypeData {
 
     private static final int MAX_NUM = 100000;
 
-    private Map<String, CacheData> typeData = new HashMap<String, CacheData>();
+    private ConcurrentHashMap<String, CacheData> typeData = new ConcurrentHashMap<String, CacheData>();
 
     private int hit = 0;
 

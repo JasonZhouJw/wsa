@@ -5,7 +5,6 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Created by jzhou237 on 2017-03-17.
@@ -28,10 +27,10 @@ public enum Active {
         this.realValue = realValue;
     }
 
-    public static List<Option> convert(Function function) {
+    public static List<Option> options() {
         List<Option> optionList = new ArrayList<>();
         for (Active element : Active.values()) {
-            optionList.add(new Option(element.getLabel(), String.valueOf(element.getRealValue()), function));
+            optionList.add(new Option(element.getLabel(), String.valueOf(element.getRealValue())));
         }
         return optionList;
     }

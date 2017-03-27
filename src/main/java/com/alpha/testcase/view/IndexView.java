@@ -31,7 +31,7 @@ public class IndexView extends BaseModelView implements ModelAndViewCombiner {
     }
 
     private void searchCondition() {
-        this.addObject("activeList", Active.convert(null));
+        this.addObject("activeList", Active.options());
     }
 
     public void addTestCase(List<TestCase> content) {
@@ -40,7 +40,7 @@ public class IndexView extends BaseModelView implements ModelAndViewCombiner {
 
     public void addSearchParam(TestCaseVo testCaseVo) {
         this.addObject("searchParam", testCaseVo);
-        this.addObject("activeList", Active.convert(realValue -> realValue.equals(String.valueOf(Active.getStatus(testCaseVo.isActive()).getRealValue()))));
+        this.addObject("activeList", Active.options());
     }
 
     @Override

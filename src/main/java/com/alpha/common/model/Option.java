@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -16,8 +15,6 @@ import java.util.function.Function;
 public class Option extends ViewElement {
 
     private String selected;
-
-    private List<Option> child;
 
     public Option(String label, String value, Function<String, Boolean> function) {
         super(label, value);

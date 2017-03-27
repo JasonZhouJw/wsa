@@ -4,6 +4,7 @@ import com.alpha.common.cache.model.TypeData;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 /**
@@ -11,7 +12,7 @@ import java.util.function.Supplier;
  */
 public class MemoryCache {
 
-    private Map<String, TypeData> dataMap = new HashMap<String, TypeData>();
+    private ConcurrentHashMap<String, TypeData> dataMap = new ConcurrentHashMap<String, TypeData>();
 
     private MemoryCache() {
     }

@@ -2,6 +2,7 @@ package com.alpha.common.config;
 
 import com.alpha.common.interceptor.AuthenticationInterceptor;
 import com.alpha.common.interceptor.ExposedResourceBundleMessageSource;
+import com.alpha.common.interceptor.JsonResponseInterceptor;
 import com.alpha.common.interceptor.LabelTextInterceptor;
 import com.alpha.common.view.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthenticationInterceptor());
         registry.addInterceptor(new LayoutNavigationInterceptor());
-//        registry.addInterceptor(new ErrorMessageInterceptor(errorMessage));
+        registry.addInterceptor(new JsonResponseInterceptor());
         // TODO: 2016-12-05 modify the label interceptor
         registry.addInterceptor(new LabelTextInterceptor(new ExposedResourceBundleMessageSource()));
         super.addInterceptors(registry);

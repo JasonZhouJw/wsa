@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Slf4j
-@ToString(of = {"name", "group", "cronExpression", "jobClassName"})
+@ToString(of = {"name", "jobGroup", "cronExpression", "jobClassName"})
 @Entity
 @Table(indexes = {@Index(name = "INDEX_NAME_GROUP", columnList = "name,jobGroup", unique = true)})
 public class ScheduleJob {

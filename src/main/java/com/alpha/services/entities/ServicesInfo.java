@@ -64,9 +64,7 @@ public class ServicesInfo {
         List<Option> optionList = new ArrayList<>();
         if (servicesInfoList != null) {
             servicesInfoList.forEach(servicesInfo -> {
-                Option option = new Option(servicesInfo.getInterfaceClass(), String.valueOf(servicesInfo.getId()));
-                option.setChild(MethodInfo.convert(servicesInfo.getMethodInfoList()));
-                optionList.add(option);
+                optionList.add(new Option(servicesInfo.getInterfaceClass(), String.valueOf(servicesInfo.getId())));
             });
         }
         return optionList;

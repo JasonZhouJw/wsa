@@ -1,3 +1,10 @@
+<script>
+    $(document).ready(function(){
+    Object.create(Application).Init({{{jsonData}}})
+});
+
+
+</script>
 <div class="panel panel-default">
     <div class="panel-heading">{{label.title}}</div>
 
@@ -11,9 +18,9 @@
                 <div class="form-group">
                     <label for="active">Active:</label>
                     <select id="active" name="active" class="form-control">
-                        {{#activeList}}
-                        <option value="{{value}}" {{selected}}>{{label}}</option>
-                        {{/activeList}}
+                        <!--{{#activeList}}-->
+                        <!--<option value="{{value}}" {{selected}}>{{label}}</option>-->
+                        <!--{{/activeList}}-->
                     </select>
                 </div>
                 <button type="submit" class="btn btn-default">{{label.search}}</button>
