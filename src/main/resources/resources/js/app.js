@@ -1,25 +1,25 @@
 var Application={
 
-    ActiveTemplate:{
-        'options':'<option value="{{value}}"{{#selected}} selected="selected"{{/selected}}>{{label}}</option>',
+    DropDownTemplate:{
+        'option':'<option value="{{value}}"{{#selected}} selected="selected"{{/selected}}>{{label}}</option>',
         'dropBox':'{{#options}}{{>option}}{{/options}}'
     },
 
     Init:function(data){
-        this.Active(data.activeList, data.searchParam);
-        console.log(data);
-//
+        this.DropDown("active",data.activeList, data.searchParam, function(option, selected){
+            return option.value==String(selected.active);
+        });
     },
 
-    Active: function (statusList, searchParam){
-        if(searchParam){
-            statusList.forEach(function (status){
-                        if(status.value== searchParam.active){
-                            status.selected=true;
-                        }
-                    });
+    DropDown: function (id, options, selected, condition){
+        if(selected){
+            options.forEach(function (option){
+                if(condition && condition(option, selected)){
+                    option.selected=true;
+                }
+            });
         }
-        $('#active').append(Mustache.render(this.ActiveTemplate.dropBox, statusList, this.ActiveTemplate));
+        $('#'+id).append(Mustache.render(this.DropDownTemplate.dropBox, {'options':options}, this.DropDownTemplate));
     }
 
 

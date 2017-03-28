@@ -30,7 +30,7 @@ public enum Active {
     public static List<Option> options() {
         List<Option> optionList = new ArrayList<>();
         for (Active element : Active.values()) {
-            optionList.add(new Option(element.getLabel(), String.valueOf(element.getRealValue())));
+            optionList.add(new Option(element.getLabel(), String.valueOf(element.isActive())));
         }
         return optionList;
     }
