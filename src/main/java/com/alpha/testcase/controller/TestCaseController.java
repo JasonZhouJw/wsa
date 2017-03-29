@@ -57,7 +57,6 @@ public class TestCaseController {
 
     @GetMapping(TEST_CASE_TO_CREATE)
     public ModelAndView toCreate() {
-        // TODO: 2017-03-17 add method drop down and group
         return createView;
     }
 

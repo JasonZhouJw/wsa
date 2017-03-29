@@ -3,6 +3,8 @@ package com.alpha.testcase.view;
 import com.alpha.common.view.BaseModelView;
 import com.alpha.services.domain.IServicesInfo;
 import com.alpha.services.entities.ServicesInfo;
+import com.alpha.testcase.domain.ICaseGroup;
+import com.alpha.testcase.entities.CaseGroup;
 import com.alpha.testcase.entities.TestCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -20,9 +22,12 @@ public class CreateView extends BaseModelView {
 
     private final IServicesInfo servicesInfo;
 
+    private final ICaseGroup caseGroup;
+
     @Autowired
-    public CreateView(IServicesInfo servicesInfo) {
+    public CreateView(IServicesInfo servicesInfo, ICaseGroup caseGroup) {
         this.servicesInfo = servicesInfo;
+        this.caseGroup = caseGroup;
         this.setViewName(TEST_CASE_CREATE);
         this.init();
     }
@@ -33,5 +38,6 @@ public class CreateView extends BaseModelView {
 
     public void init() {
         this.addObject("servicesInfoList", ServicesInfo.toVo(this.servicesInfo.findAllActive(), true));
+        this.addObject("caseGroupList", CaseGroup.toVo(this.caseGroup.findAllActive()));
     }
 }

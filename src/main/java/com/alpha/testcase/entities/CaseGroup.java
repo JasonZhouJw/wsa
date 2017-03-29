@@ -1,7 +1,9 @@
 package com.alpha.testcase.entities;
 
+import com.alpha.testcase.model.CaseGroupVo;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Example;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class CaseGroup {
     private String name;
 
     @Column
-    private boolean active = true;
+    private Boolean active = true;
 
     @OneToMany(mappedBy = "caseGroup")
     private List<TestCase> testCaseList = new ArrayList<>();
@@ -35,5 +37,25 @@ public class CaseGroup {
 
     public CaseGroup() {
 
+    }
+
+    public static List<CaseGroupVo> toVo(List<CaseGroup> caseGroupList) {
+        List<CaseGroupVo> caseGroupVoList = new ArrayList<>();
+        if (caseGroupList != null) {
+            caseGroupList.forEach(caseGroup -> caseGroupVoList.add(caseGroup.toVo()));
+        }
+        return caseGroupVoList;
+    }
+
+    public Example<CaseGroup> getExample() {
+        return Example.of(this);
+    }
+
+    public CaseGroupVo toVo() {
+        CaseGroupVo caseGroupVo = new CaseGroupVo();
+        caseGroupVo.setActive(this.active);
+        caseGroupVo.setId(this.id);
+        caseGroupVo.setName(this.name);
+        return caseGroupVo;
     }
 }

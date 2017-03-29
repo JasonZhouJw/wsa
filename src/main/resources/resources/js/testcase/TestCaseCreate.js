@@ -1,7 +1,5 @@
 var TestCaseCreate={
 
-    application:null,
-
     Init:function(data){
         this.application=Object.create(Application).Init(data);
         this.ServicesInfoDropDown(data.servicesInfoList, data.testCase);
