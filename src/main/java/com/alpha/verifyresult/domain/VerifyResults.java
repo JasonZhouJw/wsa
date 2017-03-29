@@ -12,10 +12,10 @@ public class VerifyResults {
 //    private VerifyResultRepository verifyResultRepository;
 //
 //    public Page<VerifyResult> search(SearchParam searchParam, PageRequest pageRequest) {
-//        return this.verifyResultRepository.findAll(searchParam.search(), pageRequest);
+//        return this.verifyResultRepository.findAllEgner(searchParam.search(), pageRequest);
 //    }
 //
 //    public List<VerifyResult> search(SearchParam searchParam) {
-//        return this.verifyResultRepository.findAll(searchParam.search());
+//        return this.verifyResultRepository.findAllEgner(searchParam.search());
 //    }
 }

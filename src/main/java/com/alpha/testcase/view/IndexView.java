@@ -13,8 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-import static com.alpha.common.controller.Urls.TEST_CASE_INDEX;
-import static com.alpha.common.controller.Urls.TEST_CASE_TO_UPDATE;
+import static com.alpha.common.controller.Urls.*;
 
 /**
  * Created by jzhou237 on 2017-03-16.
@@ -26,6 +25,7 @@ public class IndexView extends BaseModelView implements ModelAndViewCombiner {
     public IndexView(@Value("${list.empty}") String noDataMessage) {
         addObject("noDataMessage", noDataMessage);
         addObject("updateUrl", TEST_CASE_TO_UPDATE);
+        addObject("addUrl", TEST_CASE_TO_CREATE);
         this.setViewName(TEST_CASE_INDEX);
         this.searchCondition();
     }

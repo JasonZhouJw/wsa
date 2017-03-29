@@ -29,7 +29,7 @@ public class MethodInfo {
     private String method;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "services_info_id")
     private ServicesInfo servicesInfo;
 
     public MethodInfo() {

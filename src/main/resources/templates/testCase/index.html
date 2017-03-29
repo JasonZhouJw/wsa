@@ -1,12 +1,16 @@
 <script>
     $(document).ready(function(){
-    Object.create(Application).Init({{{jsonData}}})
+    Object.create(TestCaseIndex).Init({{{jsonData}}})
 });
 
 
 </script>
 <div class="panel panel-default">
-    <div class="panel-heading">{{label.title}}</div>
+    <div class="panel-heading">
+        <h3 class="panel-title pull-left">{{label.title}}</h3>
+        <a type="button" href="{{addUrl}}" class="btn btn-info pull-right">{{label.add.case.button}}</a>
+        <div class="clearfix"></div>
+    </div>
 
     <div class="panel-body">
         <div class="panel-title">
@@ -16,11 +20,8 @@
                            placeholder="{{label.name}}">
                 </div>
                 <div class="form-group">
-                    <label for="active">Active:</label>
+                    <label for="active">{{label.active}}</label>
                     <select id="active" name="active" class="form-control">
-                        <!--{{#activeList}}-->
-                        <!--<option value="{{value}}" {{selected}}>{{label}}</option>-->
-                        <!--{{/activeList}}-->
                     </select>
                 </div>
                 <button type="submit" class="btn btn-default">{{label.search}}</button>
@@ -44,8 +45,8 @@
             {{#testCaseList}}
             <tbody class="table-hover">
             <tr>
-                <td class="text-left">{{id}}</td>
-                <td class="text-left">{{name}}</td>
+                <td class="text-left"><a href="{{updateUrl}}/{{id}}">{{id}}</a></td>
+                <td class="text-left"><a href="{{updateUrl}}/{{id}}">{{name}}</a></td>
                 <td class="text-left">{{methodName}}</td>
                 <td class="text-left">{{groupName}}</td>
                 <td class="text-left">{{active}}</td>

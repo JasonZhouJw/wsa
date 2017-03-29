@@ -18,10 +18,11 @@ import static com.alpha.common.controller.Urls.TEST_CASE_CREATE;
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CreateView extends BaseModelView {
 
-    @Autowired
-    private IServicesInfo servicesInfo;
+    private final IServicesInfo servicesInfo;
 
-    public CreateView() {
+    @Autowired
+    public CreateView(IServicesInfo servicesInfo) {
+        this.servicesInfo = servicesInfo;
         this.setViewName(TEST_CASE_CREATE);
         this.init();
     }
@@ -31,6 +32,6 @@ public class CreateView extends BaseModelView {
     }
 
     public void init() {
-        this.addObject("servicesInfoList", ServicesInfo.convert(this.servicesInfo.findAllActive()));
+        this.addObject("servicesInfoList", ServicesInfo.toVo(this.servicesInfo.findAllActive(), true));
     }
 }

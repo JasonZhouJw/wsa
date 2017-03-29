@@ -1,14 +1,15 @@
 var Application={
 
+    data:{},
+
     DropDownTemplate:{
         'option':'<option value="{{value}}"{{#selected}} selected="selected"{{/selected}}>{{label}}</option>',
         'dropBox':'{{#options}}{{>option}}{{/options}}'
     },
 
     Init:function(data){
-        this.DropDown("active",data.activeList, data.searchParam, function(option, selected){
-            return option.value==String(selected.active);
-        });
+        this.data=data;
+        return this;
     },
 
     DropDown: function (id, options, selected, condition){

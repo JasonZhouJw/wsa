@@ -87,6 +87,6 @@ public class ServicesInfo {
 
     public Example<ServicesInfo> getExample() {
         ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("createdTime", "updatedTime");
-        return Example.of(this);
+        return Example.of(this, matcher);
     }
 }

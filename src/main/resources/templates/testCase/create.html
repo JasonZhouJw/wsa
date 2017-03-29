@@ -1,0 +1,47 @@
+<script>
+    $(document).ready(function(){
+        Object.create(TestCaseCreate).Init({{{jsonData}}});
+    });
+
+</script>
+<div class="container">
+    <form method="post" action="create">
+        <h2>{{label.head}}</h2>
+        {{#messages}}
+        <div class="alert alert-{{type}}" role="alert">
+            {{message}}
+        </div>
+        {{/messages}}
+
+        <div class="form-group">
+            <label for="name">{{label.name}}:</label>
+            <input type="text" class="form-control" id="name" placeholder="{{label.name}}" name="name" autofocus
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="servicesInfo">{{label.servicesInfo}}</label>
+            <select id="servicesInfo" name="groupId" class="form-control">
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="methodInfo">{{label.methodInfo}}</label>
+            <select id="methodInfo" name="methodId" class="form-control">
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="request">{{label.request}}:</label>
+            <textarea class="form-control" rows="10" id="request" name="requestValue" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="verification">{{label.verification}}:</label>
+            <textarea class="form-control" rows="10" id="verification" name="verification" required></textarea>
+        </div>
+
+        <button class="btn btn-lg btn-primary" type="submit">{{label.submit}}</button>
+        <a class="btn btn-lg btn-primary" href="../index">{{label.return}}</a>
+    </form>
+</div>
