@@ -10,7 +10,7 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}",
             "org.springframework.boot:spring-boot-starter-web-services:${springBootVersion}",
             "org.springframework.boot:spring-boot-starter-mustache:${springBootVersion}",
-            "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}",
+//            "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}",
             "org.springframework.boot:spring-boot-devtools:${springBootVersion}",
             "mysql:mysql-connector-java:6.0.3",
 
@@ -33,7 +33,10 @@ dependencies {
             "org.quartz-scheduler:quartz-jobs:2.2.3",
 //            "org.liquibase:liquibase-core",
             "org.springframework:spring-context-support",
-            "com.alibaba:fastjson:1.2.28"
+
+            "com.fasterxml.jackson.core:jackson-databind:2.8.7",
+            "com.fasterxml.jackson.core:jackson-core:2.8.7",
+            "com.fasterxml.jackson.core:jackson-annotations:2.8.7"
 
     )
 
