@@ -18,14 +18,14 @@ import static com.alpha.common.controller.Urls.TEST_CASE_CREATE;
  */
 @Component("testCaseCreateView")
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class CreateView extends BaseModelView {
+public class TestCaseCreateView extends BaseModelView {
 
     private final IServicesInfo servicesInfo;
 
     private final ICaseGroup caseGroup;
 
     @Autowired
-    public CreateView(IServicesInfo servicesInfo, ICaseGroup caseGroup) {
+    public TestCaseCreateView(IServicesInfo servicesInfo, ICaseGroup caseGroup) {
         this.servicesInfo = servicesInfo;
         this.caseGroup = caseGroup;
         this.setViewName(TEST_CASE_CREATE);

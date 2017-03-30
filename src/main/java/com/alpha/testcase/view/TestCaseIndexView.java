@@ -20,9 +20,9 @@ import static com.alpha.common.controller.Urls.*;
  */
 @Component("testCaseIndexView")
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class IndexView extends BaseModelView implements ModelAndViewCombiner {
+public class TestCaseIndexView extends BaseModelView implements ModelAndViewCombiner {
 
-    public IndexView(@Value("${list.empty}") String noDataMessage) {
+    public TestCaseIndexView(@Value("${list.empty}") String noDataMessage) {
         addObject("noDataMessage", noDataMessage);
         addObject("updateUrl", TEST_CASE_TO_UPDATE);
         addObject("addUrl", TEST_CASE_TO_CREATE);

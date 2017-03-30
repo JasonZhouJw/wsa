@@ -42,7 +42,7 @@ public class TestCase {
     private String verification;// TODO: 9/20/2016 should be consider the data length
 
     @ManyToOne
-    @JoinColumn(name = "groupId")
+    @JoinColumn(name = "group_id")
     private CaseGroup caseGroup;
 
     @Column

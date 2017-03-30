@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CaseGroupRepository extends JpaRepository<CaseGroup, Long> {
+    CaseGroup findByName(String name);
 }

@@ -2,6 +2,7 @@ package com.alpha.testcase.domain;
 
 import com.alpha.common.exceptions.DataExistException;
 import com.alpha.common.exceptions.DataNotFoundException;
+import com.alpha.testcase.entities.CaseGroup;
 import com.alpha.testcase.entities.TestCase;
 import com.alpha.testcase.repository.TestCaseRepository;
 import org.hibernate.Hibernate;
@@ -48,6 +49,11 @@ public class TestCaseImpl implements ITestCase {
     public TestCase create(TestCase testCase) throws DataExistException, DataNotFoundException {
         this.checkUnique(0L, testCase.getName());
         return this.testCaseRepository.save(testCase);
+    }
+
+    @Override
+    public void inactive(CaseGroup caseGroup) {
+        this.testCaseRepository.inactiveByGroup(caseGroup.getId());
     }
 
     private void checkUnique(Long id, String name) throws DataExistException, DataNotFoundException {

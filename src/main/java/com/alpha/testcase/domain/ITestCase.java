@@ -2,6 +2,7 @@ package com.alpha.testcase.domain;
 
 import com.alpha.common.exceptions.DataExistException;
 import com.alpha.common.exceptions.DataNotFoundException;
+import com.alpha.testcase.entities.CaseGroup;
 import com.alpha.testcase.entities.TestCase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,4 +24,6 @@ public interface ITestCase {
     TestCase findById(Long id);
 
     TestCase create(TestCase testCase) throws DataExistException, DataNotFoundException;
+
+    void inactive(CaseGroup caseGroup);
 }

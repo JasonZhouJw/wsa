@@ -10,8 +10,8 @@ import com.alpha.testcase.domain.TestCaseImpl;
 import com.alpha.testcase.entities.TestCase;
 import com.alpha.testcase.model.CreateTestCaseVo;
 import com.alpha.testcase.model.TestCaseVo;
-import com.alpha.testcase.view.CreateView;
-import com.alpha.testcase.view.IndexView;
+import com.alpha.testcase.view.TestCaseCreateView;
+import com.alpha.testcase.view.TestCaseIndexView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -40,41 +40,41 @@ public class TestCaseController {
 
     @Autowired
     @Qualifier("testCaseCreateView")
-    private CreateView createView;
+    private TestCaseCreateView testCaseCreateView;
 
     @Autowired
     @Qualifier("testCaseIndexView")
-    private IndexView indexView;
+    private TestCaseIndexView testCaseIndexView;
 
     @GetMapping(TEST_CASE_INDEX)
     public ModelAndView index() {
         this.testCases.findAll(new TestCase(), pageView.create(), (page) -> {
-            indexView.addTestCase(page.getContent());
+            testCaseIndexView.addTestCase(page.getContent());
             pageView.display(page.getTotalPages());
         });
-        return indexView.Combine(pageView);
+        return testCaseIndexView.Combine(pageView);
     }
 
     @GetMapping(TEST_CASE_TO_CREATE)
     public ModelAndView toCreate() {
-        return createView;
+        return testCaseCreateView;
     }
 
     @PostMapping(TEST_CASE_CREATE)
-    public CreateView create(CreateTestCaseVo testCaseVo) throws ValidationException, DataExistException, DataNotFoundException {
+    public TestCaseCreateView create(CreateTestCaseVo testCaseVo) throws ValidationException, DataExistException, DataNotFoundException {
         ValidationUtils.validate(testCaseVo);
-        createView.addTestCase(testCases.create(new TestCase(testCaseVo)));
-        return createView;
+        testCaseCreateView.addTestCase(testCases.create(new TestCase(testCaseVo)));
+        return testCaseCreateView;
     }
 
     @PostMapping(TEST_CASE_SEARCH)
     public ModelAndView search(TestCaseVo testCaseVo) {
         this.testCases.findAll(new TestCase(testCaseVo), pageView.create(), (page) -> {
-            indexView.addTestCase(page.getContent());
-            indexView.addSearchParam(testCaseVo);
+            testCaseIndexView.addTestCase(page.getContent());
+            testCaseIndexView.addSearchParam(testCaseVo);
             pageView.display(page.getTotalPages());
         });
-        return indexView.Combine(pageView);
+        return testCaseIndexView.Combine(pageView);
     }
 
 }
