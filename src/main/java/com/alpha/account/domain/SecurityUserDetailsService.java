@@ -1,5 +1,6 @@
 package com.alpha.account.domain;
 
+import com.alpha.account.entities.User;
 import com.alpha.account.repository.UserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SecurityUserDetail securityUserDetail = null;
         if (StringUtils.isNotEmpty(username)) {
-            com.alpha.account.entities.User user = this.userRepository.findByName(username);
+            User user = this.userRepository.findByName(username);
             if (user != null) {
                 securityUserDetail = new SecurityUserDetail(user);
             }

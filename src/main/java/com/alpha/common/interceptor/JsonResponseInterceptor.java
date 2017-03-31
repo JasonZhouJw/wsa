@@ -23,6 +23,9 @@ public class JsonResponseInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        if (modelAndView == null) {
+            return;
+        }
         Map<String, Object> filterData = new HashMap<String, Object>();
         // TODO: 2017-03-28 all response data exclude BindingResult will be convert to JSON and store in ModelAndView.
         modelAndView.getModelMap().forEach((key, value) -> {

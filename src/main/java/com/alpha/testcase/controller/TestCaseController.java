@@ -67,7 +67,7 @@ public class TestCaseController {
         return testCaseCreateView;
     }
 
-    @PostMapping(TEST_CASE_SEARCH)
+    @GetMapping(TEST_CASE_SEARCH)
     public ModelAndView search(TestCaseVo testCaseVo) {
         this.testCases.findAll(new TestCase(testCaseVo), pageView.create(), (page) -> {
             testCaseIndexView.addTestCase(page.getContent());

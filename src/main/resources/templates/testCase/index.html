@@ -14,7 +14,7 @@
 
     <div class="panel-body">
         <div class="panel-title">
-            <form class="form-inline" method="post" action="search">
+            <form class="form-inline" method="get" action="search">
                 <div class="form-group">
                     <input type="text" class="form-control" id="name" name="name" value="{{searchParam.name}}"
                            placeholder="{{label.name}}">
@@ -31,7 +31,7 @@
         {{^testCaseList.0}}
         {{noDataMessage}}
         {{/testCaseList.0}}
-        {{#testCaseList}}
+        {{#testCaseList.0}}
         <table class="table table-hover">
             <thead>
             <tr>
@@ -54,6 +54,7 @@
             </tbody>
             {{/testCaseList}}
         </table>
+        {{/testCaseList.0}}
     </div>
     <div class="panel-footer">
         <div class="row">
@@ -79,5 +80,4 @@
             </div>
         </div>
     </div>
-    {{/testCaseList}}
 </div>

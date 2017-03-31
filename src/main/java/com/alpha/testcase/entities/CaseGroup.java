@@ -9,6 +9,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.alpha.common.utils.ReflectUtil.*;
+
 /**
  * Created by jzhou237 on 2017-03-16.
  */
@@ -45,6 +47,14 @@ public class CaseGroup {
             caseGroupList.forEach(caseGroup -> caseGroupVoList.add(caseGroup.toVo()));
         }
         return caseGroupVoList;
+    }
+
+    public static CaseGroup valueOf(CaseGroupVo caseGroupVo) {
+        CaseGroup caseGroup = new CaseGroup();
+        setLongNotNull(caseGroupVo::getId, caseGroup::setId);
+        setStringNotNull(caseGroupVo::getName, caseGroup::setName);
+        setBooleanNotNull(caseGroupVo::getActive, caseGroup::setActive);
+        return caseGroup;
     }
 
     public Example<CaseGroup> getExample() {

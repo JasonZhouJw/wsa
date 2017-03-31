@@ -17,6 +17,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        if (modelAndView == null) {
+            return;
+        }
         modelAndView.addObject("user", request.getRemoteUser());
     }
 

@@ -19,7 +19,14 @@ public class LayoutNavigationInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        if (modelAndView == null) {
+            return;
+        }
         modelAndView.addObject("homeUrl", Urls.HOME);
+        modelAndView.addObject("caseGroupUrl", Urls.CASE_GROUP_INDEX);
+        modelAndView.addObject("testCaseUrl", Urls.TEST_CASE_INDEX);
+        modelAndView.addObject("accountUrl", Urls.ACCOUNT_INDEX);
+        modelAndView.addObject("verifyResultUrl", Urls.VERIFY_RESULT_INDEX);
     }
 
     @Override

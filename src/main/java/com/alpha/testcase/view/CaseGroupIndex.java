@@ -23,6 +23,7 @@ public class CaseGroupIndex extends BaseModelView {
         this.addObject("noDataMessage", noDataMessage);
         this.addObject("updateUrl", CASE_GROUP_TO_UPDATE);
         this.addObject("addUrl", CASE_GROUP_TO_CREATE);
+        this.addObject("searchTestCase", TEST_CASE_SEARCH);
     }
 
     public void setCaseGroup(List<CaseGroup> caseGroupList) {

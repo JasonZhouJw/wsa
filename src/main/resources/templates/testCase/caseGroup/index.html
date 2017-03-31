@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title pull-left">{{label.title}}</h3>
-        <a type="button" href="{{addUrl}}" class="btn btn-info pull-right">{{label.add.case.button}}</a>
+        <a type="button" href="{{addUrl}}" class="btn btn-info pull-right">{{label.add.case.group.button}}</a>
         <div class="clearfix"></div>
     </div>
 
@@ -10,13 +10,14 @@
         {{^caseGroupList.0}}
         {{noDataMessage}}
         {{/caseGroupList.0}}
-        {{#caseGroupList}}
+        {{#caseGroupList.0}}
         <table class="table table-hover">
             <thead>
             <tr>
                 <th>{{label.id}}</th>
                 <th>{{label.name}}</th>
                 <th>{{label.active}}</th>
+                <th></th>
             </tr>
             </thead>
             {{#caseGroupList}}
@@ -25,34 +26,11 @@
                 <td class="text-left"><a href="{{updateUrl}}/{{id}}">{{id}}</a></td>
                 <td class="text-left"><a href="{{updateUrl}}/{{id}}">{{name}}</a></td>
                 <td class="text-left">{{active}}</td>
+                <td class="text-left"><a href="{{searchTestCase}}?groupId={{id}}">{{label.search.test.case}}</a></td>
             </tr>
             </tbody>
             {{/caseGroupList}}
         </table>
+        {{/caseGroupList.0}}
     </div>
-    <div class="panel-footer">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="col-md-4 media-middle">
-                    {{#previousPageUrl}}
-                    <a href="{{previousPageUrl}}">{{label.previousPage}}</a>
-                    {{/previousPageUrl}}
-                    {{^previousPageUrl}}
-                    <span>{{label.previousPage}}</span>
-                    {{/previousPageUrl}}
-                </div>
-                <div class="col-md-4 media-middle"><span>{{currentPage}}</span></div>
-                <div class="col-md-4 media-middle"><span>{{totalPage}}</span></div>
-                <div class="col-md-4 media-middle">
-                    {{#nextPageUrl}}
-                    <a href="{{nextPageUrl}}">{{label.nextPage}}</a>
-                    {{/nextPageUrl}}
-                    {{^nextPageUrl}}
-                    <span>{{label.nextPage}}</span>
-                    {{/nextPageUrl}}
-                </div>
-            </div>
-        </div>
-    </div>
-    {{/caseGroupList}}
 </div>
