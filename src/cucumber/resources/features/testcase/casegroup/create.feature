@@ -2,7 +2,7 @@ Feature: Create case Group
 
   Scenario: success
     Given navigate to createCaseGroup page
-    When input name "name"
+    When input name "temp"
     Then createCasePage display "Success"
 
   Scenario: return

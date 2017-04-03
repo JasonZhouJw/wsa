@@ -1,6 +1,7 @@
 package com.cucumber.driver;
 
 import com.alpha.common.view.Params;
+import com.cucumber.driver.elements.WebTable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -59,5 +60,10 @@ public class UiDriverWithHostName implements UiDriver {
     @Override
     public void waitForTextPresent(String text) {
         originalDriver.waitForTextPresent(text);
+    }
+
+    @Override
+    public WebTable findTableByTag(String tag) {
+        return originalDriver.findTableByTag(tag);
     }
 }

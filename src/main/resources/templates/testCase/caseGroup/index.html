@@ -20,16 +20,16 @@
                 <th></th>
             </tr>
             </thead>
-            {{#caseGroupList}}
             <tbody class="table-hover">
+            {{#caseGroupList}}
             <tr>
                 <td class="text-left"><a href="{{updateUrl}}/{{id}}">{{id}}</a></td>
                 <td class="text-left"><a href="{{updateUrl}}/{{id}}">{{name}}</a></td>
                 <td class="text-left">{{active}}</td>
                 <td class="text-left"><a href="{{searchTestCase}}?groupId={{id}}">{{label.search.test.case}}</a></td>
             </tr>
-            </tbody>
             {{/caseGroupList}}
+            </tbody>
         </table>
         {{/caseGroupList.0}}
     </div>

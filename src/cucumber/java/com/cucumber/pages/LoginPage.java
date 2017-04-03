@@ -21,7 +21,7 @@ public class LoginPage {
     @Autowired
     UiDriver driver;
 
-    @Value("${label.head}")
+    @Value("${label.login.head}")
     String headMessage;
 
     public void login(String userName, String password) {

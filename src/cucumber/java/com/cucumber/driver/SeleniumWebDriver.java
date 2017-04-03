@@ -1,6 +1,7 @@
 package com.cucumber.driver;
 
 import com.alpha.common.view.Params;
+import com.cucumber.driver.elements.WebTable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -66,5 +67,10 @@ public class SeleniumWebDriver implements UiDriver {
                 return findElementByTag("body").getText().contains(text);
             }
         });
+    }
+
+    @Override
+    public WebTable findTableByTag(String tag) {
+        return new WebTable(webDriver.findElement(By.tagName(tag)));
     }
 }

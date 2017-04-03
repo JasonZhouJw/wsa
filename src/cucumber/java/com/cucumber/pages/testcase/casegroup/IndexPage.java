@@ -1,6 +1,8 @@
 package com.cucumber.pages.testcase.casegroup;
 
+import com.alpha.testcase.entities.CaseGroup;
 import com.cucumber.driver.UiDriver;
+import com.cucumber.driver.elements.WebTable;
 import com.cucumber.verify.ResultVerify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -25,5 +27,10 @@ public class IndexPage {
 
     public void displayNoData() {
         ResultVerify.ContainText(uiDriver.findElementByTag("body"), "There is no data yet");
+    }
+
+    public void showData(Integer row, Integer column, CaseGroup savedCaseGroup) {
+        WebTable table = uiDriver.findTableByTag("tbody");
+        ResultVerify.ContainText(table.getCell(row, column), savedCaseGroup.getName());
     }
 }

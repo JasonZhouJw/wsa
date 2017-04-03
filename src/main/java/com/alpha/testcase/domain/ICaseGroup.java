@@ -18,4 +18,6 @@ public interface ICaseGroup {
     List<CaseGroup> findAll();
 
     CaseGroup inactive(CaseGroup caseGroup) throws DataExistException, DataNotFoundException;
+
+    CaseGroup findOne(Long id) throws DataNotFoundException;
 }

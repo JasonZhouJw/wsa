@@ -26,6 +26,7 @@ public class CreateCaseGroupPage {
 
     public void inputNameAndSubmit(String name) {
         UiElement element = uiDriver.findElementByName("name");
+        element.sendKeys(name);
         element.submit();
     }
 

@@ -2,6 +2,7 @@ package com.cucumber.driver;
 
 
 import com.alpha.common.view.Params;
+import com.cucumber.driver.elements.WebTable;
 
 public interface UiDriver {
     void close();
@@ -19,4 +20,6 @@ public interface UiDriver {
     UiElement findElementById(String id);
 
     void waitForTextPresent(String text);
+
+    WebTable findTableByTag(String tag);
 }

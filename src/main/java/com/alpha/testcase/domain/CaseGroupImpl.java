@@ -5,6 +5,7 @@ import com.alpha.common.exceptions.DataNotFoundException;
 import com.alpha.testcase.entities.CaseGroup;
 import com.alpha.testcase.repository.CaseGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +39,7 @@ public class CaseGroupImpl implements ICaseGroup {
     public List<CaseGroup> findAll() {
         CaseGroup caseGroup = new CaseGroup();
         caseGroup.setActive(null);
-        return this.caseGroupRepository.findAll(caseGroup.getExample());
+        return this.caseGroupRepository.findAll(caseGroup.getExample(), new Sort(Sort.Direction.DESC, "id"));
     }
 
     @Override
@@ -65,5 +66,17 @@ public class CaseGroupImpl implements ICaseGroup {
             throw new DataExistException();
         }
         return existCaseGroup;
+    }
+
+    @Override
+    public CaseGroup findOne(Long id) throws DataNotFoundException {
+        CaseGroup caseGroup = null;
+        if (id != null || id > 0L) {
+            caseGroup = this.caseGroupRepository.findOne(id);
+        }
+        if (caseGroup == null) {
+            throw new DataNotFoundException();
+        }
+        return caseGroup;
     }
 }
