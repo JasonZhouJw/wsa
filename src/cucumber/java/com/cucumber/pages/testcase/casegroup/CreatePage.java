@@ -1,8 +1,8 @@
 package com.cucumber.pages.testcase.casegroup;
 
 import com.cucumber.driver.UiDriver;
-import com.cucumber.driver.UiElement;
-import com.cucumber.verify.ResultVerify;
+import com.cucumber.driver.elements.UiElement;
+import com.cucumber.pages.AbstractPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -12,13 +12,12 @@ import static com.alpha.common.controller.Urls.CASE_GROUP_TO_CREATE;
 /**
  * Created by jzhou237 on 2017-03-31.
  */
-@Component
+@Component("caseGroupCreatePage")
 @Scope("cucumber-glue")
-public class CreateCaseGroupPage {
+public class CreatePage extends AbstractPage {
 
     @Autowired
     private UiDriver uiDriver;
-
 
     public void navigate() {
         uiDriver.navigateTo(CASE_GROUP_TO_CREATE);
@@ -30,16 +29,5 @@ public class CreateCaseGroupPage {
         element.submit();
     }
 
-    public void displayMessage(String message) {
-        ResultVerify.ContainText(uiDriver.findElementByTag("body"), message);
-    }
 
-    public void back() {
-        UiElement element = uiDriver.findElementById("return");
-        element.submit();
-    }
-
-    public void previous(String message) {
-        ResultVerify.ContainText(uiDriver.findElementByTag("body"), message);
-    }
 }

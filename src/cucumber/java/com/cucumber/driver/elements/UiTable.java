@@ -1,7 +1,5 @@
 package com.cucumber.driver.elements;
 
-import com.cucumber.driver.SeleniumWebElement;
-import com.cucumber.driver.UiElement;
 import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -12,27 +10,22 @@ import java.util.List;
 /**
  * Created by jzhou237 on 2017-04-03.
  */
-public class WebTable {
+public class UiTable {
 
     private WebElement table;
 
     private boolean hasAllData = false;
 
-    private List<WebRow> rowList = new ArrayList<>();
+    private List<UiRow> rowList = new ArrayList<>();
 
-    public WebTable(WebElement element) {
+    public UiTable(WebElement element) {
         this.table = element;
     }
 
     public void getAllData() {
         List<WebElement> rows = table.findElements(By.tagName("tr"));
         for (int i = 0; i < rows.size(); i++) {
-            WebRow webRow = new WebRow(i);
-            List<WebElement> columns = rows.get(i).findElements(By.tagName("td"));
-            for (WebElement column : columns) {
-                webRow.addColumn(column);
-            }
-            rowList.add(webRow);
+            rowList.add(new UiRow(rows.get(i)));
         }
         hasAllData = true;
     }
@@ -42,7 +35,7 @@ public class WebTable {
         if (CollectionUtils.isNotEmpty(rows)) {
             List<WebElement> columns = rows.get(row).findElements(By.tagName("td"));
             if (CollectionUtils.isNotEmpty(columns)) {
-                return new SeleniumWebElement(columns.get(column));
+                return new UiElement(columns.get(column));
             }
         }
         return null;

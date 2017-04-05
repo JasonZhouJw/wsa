@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * Created by jzhou237 on 2017-04-03.
  */
 @Repository
-public interface CaseGroupForTextRepository extends CaseGroupRepository {
+public interface CaseGroupForTestRepository extends CaseGroupRepository {
 
     @Modifying
     @Query("delete from CaseGroup caseGroup where caseGroup.name=:name")

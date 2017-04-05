@@ -1,16 +1,19 @@
-package com.cucumber.driver;
+package com.cucumber.driver.elements;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class SeleniumSelect implements UiSelect {
+/**
+ * Created by jzhou237 on 2017-04-05.
+ */
+public class UiSelect {
+
     private final WebElement element;
 
-    public SeleniumSelect(WebElement element) {
+    public UiSelect(WebElement element) {
         this.element = element;
     }
 
-    @Override
     public void selectByVisibleText(String text) {
         new Select(element).selectByVisibleText(text);
     }

@@ -1,7 +1,7 @@
 package com.steps.account;
 
+import com.cucumber.asserts.WebAssert;
 import com.cucumber.driver.UiDriver;
-import com.cucumber.verify.ResultVerify;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,6 @@ public class Index {
 
     @Then("^list the all uses$")
     public void list_the_all_uses() throws Throwable {
-        ResultVerify.ContainText(uiDriver.findElementByTag("table"), "admin");
+        WebAssert.ContainText(uiDriver.findElementByTag("table"), "admin");
     }
 }

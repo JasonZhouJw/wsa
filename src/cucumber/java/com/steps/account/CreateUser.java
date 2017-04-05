@@ -1,8 +1,8 @@
 package com.steps.account;
 
+import com.cucumber.asserts.WebAssert;
 import com.cucumber.driver.UiDriver;
 import com.cucumber.pages.CreateAccountPage;
-import com.cucumber.verify.ResultVerify;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -33,6 +33,6 @@ public class CreateUser {
 
     @Then("^show message \"([^\"]*)\"$")
     public void show_message(String arg1) throws Throwable {
-        ResultVerify.ContainText(uiDriver.findElementByTag("body"), "Success");
+        WebAssert.ContainText(uiDriver.findElementByTag("body"), "Success");
     }
 }

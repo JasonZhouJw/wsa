@@ -40,4 +40,12 @@ public class ValidationException extends WebException {
     public Throwable fillInStackTrace() {
         return null;
     }
+
+    public String getAllMessage() {
+        StringBuffer stringBuffer = new StringBuffer();
+        this.messages.forEach(message -> {
+            stringBuffer.append(message);
+        });
+        return stringBuffer.toString();
+    }
 }

@@ -27,7 +27,7 @@ public class JsonResponseInterceptor implements HandlerInterceptor {
             return;
         }
         Map<String, Object> filterData = new HashMap<String, Object>();
-        // TODO: 2017-03-28 all response data exclude BindingResult will be convert to JSON and store in ModelAndView.
+        // all response data exclude BindingResult will be convert to JSON and store in ModelAndView.
         modelAndView.getModelMap().forEach((key, value) -> {
             if (!key.startsWith("org.springframework.validation.BindingResult")) {
                 filterData.put(key, value);

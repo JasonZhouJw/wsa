@@ -1,8 +1,8 @@
 package com.cucumber.pages.testcase;
 
+import com.cucumber.asserts.WebAssert;
 import com.cucumber.driver.UiDriver;
-import com.cucumber.driver.UiElement;
-import com.cucumber.verify.ResultVerify;
+import com.cucumber.driver.elements.UiElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class IndexPage {
 
 
     public void noData(String message) {
-        ResultVerify.ContainText(uiDriver.findElementByTag("body"), message);
+        WebAssert.ContainText(uiDriver.findElementByTag("body"), message);
     }
 
     public void searchByNameAndActive(String name, String active) {

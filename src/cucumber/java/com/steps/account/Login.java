@@ -8,7 +8,7 @@ import cucumber.api.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.alpha.common.controller.Urls.LOGIN;
-import static com.cucumber.verify.ResultVerify.ContainText;
+import static com.cucumber.asserts.WebAssert.ContainText;
 
 /**
  * Created by jzhou237 on 2017-03-01.

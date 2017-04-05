@@ -2,7 +2,10 @@ package com.alpha.testcase.domain;
 
 import com.alpha.common.exceptions.DataExistException;
 import com.alpha.common.exceptions.DataNotFoundException;
+import com.alpha.common.exceptions.DomainException;
+import com.alpha.common.view.ResultHandler;
 import com.alpha.testcase.entities.CaseGroup;
+import com.alpha.testcase.model.CaseGroupVo;
 import com.alpha.testcase.repository.CaseGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -24,9 +27,14 @@ public class CaseGroupImpl implements ICaseGroup {
     private ITestCase testCase;
 
     @Override
-    public CaseGroup save(CaseGroup caseGroup) throws DataExistException, DataNotFoundException {
-        this.checkExist(caseGroup);
-        return this.caseGroupRepository.save(caseGroup);
+    public void save(CaseGroup caseGroup, ResultHandler<CaseGroup, CaseGroupVo> resultHandler) {
+        try {
+            this.checkExist(caseGroup);
+            CaseGroup savedCaseGroup = this.caseGroupRepository.save(caseGroup);
+            resultHandler.success(savedCaseGroup);
+        } catch (DomainException e) {
+            resultHandler.fail(caseGroup.toVo(), e.getMessage());
+        }
     }
 
     @Override

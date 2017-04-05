@@ -2,7 +2,10 @@ package com.cucumber.driver;
 
 
 import com.alpha.common.view.Params;
-import com.cucumber.driver.elements.WebTable;
+import com.cucumber.driver.elements.UiElement;
+import com.cucumber.driver.elements.UiLink;
+import com.cucumber.driver.elements.UiSelect;
+import com.cucumber.driver.elements.UiTable;
 
 public interface UiDriver {
     void close();
@@ -21,5 +24,8 @@ public interface UiDriver {
 
     void waitForTextPresent(String text);
 
-    WebTable findTableByTag(String tag);
+    UiTable findTableByTag(String tag);
+
+    UiLink findLinkById(String id);
+
 }

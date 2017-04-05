@@ -27,7 +27,7 @@ public abstract class BaseModelView extends ModelAndView {
     private boolean hasError = false;
 
     @Value("${label.success}")
-    private String success;
+    protected String success;
 
     private List<Message> messageList = new ArrayList<>();
 
@@ -56,6 +56,10 @@ public abstract class BaseModelView extends ModelAndView {
             messageList = new ArrayList<>();
         }
         messageList.add(message);
+        this.addObject(MESSAGE_PARAM, messageList);
+    }
+
+    protected void setMessage(List<Message> messageList) {
         this.addObject(MESSAGE_PARAM, messageList);
     }
 

@@ -8,7 +8,7 @@
 
 </script>
 <div class="container">
-    <form method="post" action="create">
+    <form method="post" action="{{update}}">
         <h2>{{label.head}}</h2>
         {{#messages}}
         <div class="alert alert-{{type}}" role="alert">
@@ -16,6 +16,11 @@
         </div>
         {{/messages}}
 
+        <div class="form-group">
+            <input type="text" class="form-control" id="id" placeholder="{{label.name}}" name="id"
+                   value="{{caseGroup.id}}" hidden="true"
+                   required>
+        </div>
         <div class="form-group">
             <label for="name">{{label.name}}:</label>
             <input type="text" class="form-control" id="name" placeholder="{{label.name}}" name="name"

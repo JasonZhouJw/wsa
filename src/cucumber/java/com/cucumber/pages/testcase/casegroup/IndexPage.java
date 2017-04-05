@@ -1,10 +1,9 @@
 package com.cucumber.pages.testcase.casegroup;
 
 import com.alpha.testcase.entities.CaseGroup;
-import com.cucumber.driver.UiDriver;
-import com.cucumber.driver.elements.WebTable;
-import com.cucumber.verify.ResultVerify;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cucumber.asserts.WebAssert;
+import com.cucumber.driver.elements.UiTable;
+import com.cucumber.pages.AbstractPage;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -13,24 +12,16 @@ import static com.alpha.common.controller.Urls.CASE_GROUP_INDEX;
 /**
  * Created by jzhou237 on 2017-03-30.
  */
-@Component
+@Component("caseGroupIndexPage")
 @Scope("cucumber-glue")
-public class IndexPage {
-
-    @Autowired
-    private UiDriver uiDriver;
-
+public class IndexPage extends AbstractPage {
 
     public void navigate() {
         uiDriver.navigateTo(CASE_GROUP_INDEX);
     }
 
-    public void displayNoData() {
-        ResultVerify.ContainText(uiDriver.findElementByTag("body"), "There is no data yet");
-    }
-
     public void showData(Integer row, Integer column, CaseGroup savedCaseGroup) {
-        WebTable table = uiDriver.findTableByTag("tbody");
-        ResultVerify.ContainText(table.getCell(row, column), savedCaseGroup.getName());
+        UiTable table = uiDriver.findTableByTag("tbody");
+        WebAssert.ContainText(table.getCell(row, column), savedCaseGroup.getName());
     }
 }

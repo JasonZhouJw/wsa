@@ -1,8 +1,8 @@
 package com.cucumber.pages.account;
 
+import com.cucumber.asserts.WebAssert;
 import com.cucumber.driver.UiDriver;
-import com.cucumber.driver.UiElement;
-import com.cucumber.verify.ResultVerify;
+import com.cucumber.driver.elements.UiElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -39,10 +39,10 @@ public class ChangePasswordPage {
     }
 
     public void success() {
-        ResultVerify.ContainText(uiDriver.findElementByTag("body"), success);
+        WebAssert.ContainText(uiDriver.findElementByTag("body"), success);
     }
 
     public void fail(String message) {
-        ResultVerify.ContainText(uiDriver.findElementByTag("body"), message);
+        WebAssert.ContainText(uiDriver.findElementByTag("body"), message);
     }
 }

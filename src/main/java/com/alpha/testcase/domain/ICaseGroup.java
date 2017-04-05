@@ -2,7 +2,9 @@ package com.alpha.testcase.domain;
 
 import com.alpha.common.exceptions.DataExistException;
 import com.alpha.common.exceptions.DataNotFoundException;
+import com.alpha.common.view.ResultHandler;
 import com.alpha.testcase.entities.CaseGroup;
+import com.alpha.testcase.model.CaseGroupVo;
 
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
  */
 public interface ICaseGroup {
 
-    CaseGroup save(CaseGroup caseGroup) throws DataExistException, DataNotFoundException;
+    void save(CaseGroup caseGroup, ResultHandler<CaseGroup, CaseGroupVo> resultHandler);
 
     List<CaseGroup> findAllActive();
 
