@@ -34,6 +34,7 @@ public class Urls {
     public static final String TEST_CASE_TO_UPDATE = TEST_CASE + SEPARATOR + "toUpdate";
     public static final String TEST_CASE_UPDATE = TEST_CASE + SEPARATOR + "update";
     public static final String TEST_CASE_SEARCH = TEST_CASE + SEPARATOR + "search";
+    public static final String TEST_CASE_EXECUTE = TEST_CASE + SEPARATOR + "execute";
 
 
     public static final String CASE_GROUP = TEST_CASE + SEPARATOR + "caseGroup";
@@ -42,4 +43,5 @@ public class Urls {
     public static final String CASE_GROUP_UPDATE = CASE_GROUP + SEPARATOR + "update";
     public static final String CASE_GROUP_TO_CREATE = CASE_GROUP + SEPARATOR + "toCreate";
     public static final String CASE_GROUP_CREATE = CASE_GROUP + SEPARATOR + "create";
+
 }

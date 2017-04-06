@@ -2,8 +2,11 @@ package com.alpha.testcase.domain;
 
 import com.alpha.common.exceptions.DataExistException;
 import com.alpha.common.exceptions.DataNotFoundException;
+import com.alpha.common.view.ResultHandler;
 import com.alpha.testcase.entities.CaseGroup;
 import com.alpha.testcase.entities.TestCase;
+import com.alpha.testcase.model.TestCaseVo;
+import com.alpha.testcase.model.UpdateTestCaseVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,11 +22,13 @@ public interface ITestCase {
 
     List<TestCase> findAllActive();
 
-    TestCase update(TestCase testCase) throws DataExistException, DataNotFoundException;
+    TestCase findById(Long id) throws DataNotFoundException;
 
-    TestCase findById(Long id);
-
-    TestCase create(TestCase testCase) throws DataExistException, DataNotFoundException;
+    void create(TestCase testCase, ResultHandler<TestCase, TestCaseVo> resultHandler) throws DataExistException, DataNotFoundException;
 
     void inactive(CaseGroup caseGroup);
+
+    void update(UpdateTestCaseVo testCaseVo, ResultHandler<TestCase, TestCaseVo> resultHandler);
+
+    void execute(TestCaseVo testCaseVo, ResultHandler<TestCase, TestCaseVo> resultHandler);
 }

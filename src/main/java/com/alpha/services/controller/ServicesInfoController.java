@@ -61,7 +61,7 @@ public class ServicesInfoController {
 //                    throw new WebException(e.getMessage());
 //                }
 //                servicesInfo.setPath(path);
-//                this.servicesInfos.save(servicesInfo);
+//                this.servicesInfos.create(servicesInfo);
 //                executorService.execute(new AssembleWsdlRunnable(this.wsdlAssembleExecutor, servicesInfo));
 //            }
 //        }
@@ -94,7 +94,7 @@ public class ServicesInfoController {
 //        servicesInfo.setProtocolType(uploadInfoVo.getProtocolType());
 //        servicesInfo.setType(uploadInfoVo.getEnvType());
 //        servicesInfo.setAliasName(uploadInfoVo.getAliasName());
-//        ServicesInfo savedServicesInfo = this.servicesInfos.save(servicesInfo);
+//        ServicesInfo savedServicesInfo = this.servicesInfos.create(servicesInfo);
 //        executorService.execute(new AssembleWsdlRunnable(this.wsdlAssembleExecutor, savedServicesInfo));
 //        return "servicesInfo/create";
         return null;

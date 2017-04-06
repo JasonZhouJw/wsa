@@ -29,6 +29,11 @@ public class Result<T> {
         this.messageList.add(new Message(message));
     }
 
+    public Result(T t, String message, String type) {
+        this.result = t;
+        this.messageList.add(new Message(message, type));
+    }
+
     public Result(T t, List<String> messageList, String type) {
         this.result = t;
         messageList.forEach(message -> {

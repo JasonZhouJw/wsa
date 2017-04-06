@@ -81,6 +81,18 @@ public class TestCase {
         return testCaseVoList;
     }
 
+    public static TestCase valueOf(TestCaseVo testCaseVo) {
+        TestCase testCase = new TestCase();
+        testCase.id = testCaseVo.getId();
+        testCase.name = testCaseVo.getName();
+        testCase.requestValue = testCaseVo.getRequestValue();
+        testCase.verification = testCaseVo.getVerification();
+        testCase.caseGroup = new CaseGroup(testCaseVo.getGroupId());
+        testCase.methodInfo = new MethodInfo(testCaseVo.getMethodId());
+        testCase.active = testCaseVo.isActive();
+        return testCase;
+    }
+
     public TestCaseVo toVo() {
         TestCaseVo testCaseVo = new TestCaseVo();
         testCaseVo.setId(this.id);
@@ -97,4 +109,13 @@ public class TestCase {
         return Example.of(this, ExampleMatcher.matching().withIgnorePaths("createdTime", "updatedTime", "caseGroup", "methodInfo"));
     }
 
+    public void copyValue(TestCaseVo testCaseVo) {
+        this.name = testCaseVo.getName();
+        this.requestValue = testCaseVo.getRequestValue();
+        this.verification = testCaseVo.getVerification();
+        this.methodInfo = new MethodInfo(testCaseVo.getMethodId());
+        this.caseGroup = new CaseGroup(testCaseVo.getGroupId());
+        this.updatedTime = new Date();
+        this.active = testCaseVo.isActive();
+    }
 }

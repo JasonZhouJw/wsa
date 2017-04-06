@@ -13,7 +13,9 @@ import java.util.List;
  */
 public interface ICaseGroup {
 
-    void save(CaseGroup caseGroup, ResultHandler<CaseGroup, CaseGroupVo> resultHandler);
+    void create(CaseGroup caseGroup, ResultHandler<CaseGroup, CaseGroupVo> resultHandler);
+
+    void update(CaseGroupVo caseGroupVo, ResultHandler<CaseGroup, CaseGroupVo> resultHandler);
 
     List<CaseGroup> findAllActive();
 

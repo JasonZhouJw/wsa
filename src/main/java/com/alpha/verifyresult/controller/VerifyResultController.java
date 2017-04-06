@@ -1,7 +1,7 @@
 package com.alpha.verifyresult.controller;
 
 import com.alpha.home.view.HomeView;
-import com.alpha.verifyresult.domain.VerifyResults;
+import com.alpha.verifyresult.domain.VerifyResultImpl;
 import com.alpha.verifyresult.view.IndexView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,7 +23,7 @@ public class VerifyResultController {
     private IndexView indexView;
 
     @Autowired
-    private VerifyResults verifyResults;
+    private VerifyResultImpl verifyResult;
 
     @GetMapping("/toView")
     public ModelAndView toView() {
@@ -33,9 +33,9 @@ public class VerifyResultController {
 //    @RequestMapping("/toView")
 //    public String toView(ModelMap modelMap) {
 //        PageRequest pageRequest = new PageRequest(0, 50);
-//        Page<VerifyResult> pageable = this.verifyResultService.search(new SearchParam(), pageRequest);
+//        Page<VerifyResultImpl> pageable = this.verifyResultService.search(new SearchParam(), pageRequest);
 //        modelMap.addAttribute("pageable", Pageable.toPageable(pageable));
 //        modelMap.addAttribute("verifyResultList", VerifyResultVo.toVo(pageable.getContent()));
-//        return "/VerifyResult/View";
+//        return "/VerifyResultImpl/View";
 //    }
 }

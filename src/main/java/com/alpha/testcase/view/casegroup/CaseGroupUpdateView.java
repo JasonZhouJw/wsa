@@ -1,4 +1,4 @@
-package com.alpha.testcase.view;
+package com.alpha.testcase.view.casegroup;
 
 import com.alpha.common.enums.Active;
 import com.alpha.common.model.Result;

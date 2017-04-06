@@ -9,8 +9,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.alpha.common.utils.ReflectUtil.*;
-
 /**
  * Created by jzhou237 on 2017-03-16.
  */
@@ -51,9 +49,9 @@ public class CaseGroup {
 
     public static CaseGroup valueOf(CaseGroupVo caseGroupVo) {
         CaseGroup caseGroup = new CaseGroup();
-        setLongNotNull(caseGroupVo::getId, caseGroup::setId);
-        setStringNotNull(caseGroupVo::getName, caseGroup::setName);
-        setBooleanNotNull(caseGroupVo::getActive, caseGroup::setActive);
+        caseGroup.setId(caseGroupVo.getId());
+        caseGroup.setName(caseGroupVo.getName());
+        caseGroup.setActive(caseGroupVo.getActive());
         return caseGroup;
     }
 
@@ -67,5 +65,10 @@ public class CaseGroup {
         caseGroupVo.setId(this.id);
         caseGroupVo.setName(this.name);
         return caseGroupVo;
+    }
+
+    public void copyValue(CaseGroupVo caseGroupVo) {
+        this.name = caseGroupVo.getName();
+        this.active = caseGroupVo.getActive();
     }
 }

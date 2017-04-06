@@ -27,13 +27,23 @@ public class CaseGroupImpl implements ICaseGroup {
     private ITestCase testCase;
 
     @Override
-    public void save(CaseGroup caseGroup, ResultHandler<CaseGroup, CaseGroupVo> resultHandler) {
+    public void create(CaseGroup caseGroup, ResultHandler<CaseGroup, CaseGroupVo> resultHandler) {
         try {
-            this.checkExist(caseGroup);
-            CaseGroup savedCaseGroup = this.caseGroupRepository.save(caseGroup);
-            resultHandler.success(savedCaseGroup);
+            this.checkExist(caseGroup.getId(), caseGroup.getName());
+            resultHandler.success(this.caseGroupRepository.save(caseGroup));
         } catch (DomainException e) {
             resultHandler.fail(caseGroup.toVo(), e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(CaseGroupVo caseGroupVo, ResultHandler<CaseGroup, CaseGroupVo> resultHandler) {
+        try {
+            CaseGroup updatedCaseGroup = this.checkExist(caseGroupVo.getId(), caseGroupVo.getName());
+            updatedCaseGroup.copyValue(caseGroupVo);
+            resultHandler.success(this.caseGroupRepository.save(updatedCaseGroup));
+        } catch (DomainException e) {
+            resultHandler.fail(caseGroupVo, e.getMessage());
         }
     }
 
@@ -53,27 +63,10 @@ public class CaseGroupImpl implements ICaseGroup {
     @Override
     @Transactional
     public CaseGroup inactive(CaseGroup caseGroup) throws DataExistException, DataNotFoundException {
-        CaseGroup existCaseGroup = this.checkExist(caseGroup);
+        CaseGroup existCaseGroup = this.checkExist(caseGroup.getId(), caseGroup.getName());
         existCaseGroup.setActive(false);
         testCase.inactive(caseGroup);
         return this.caseGroupRepository.save(existCaseGroup);
-    }
-
-    private CaseGroup checkExist(CaseGroup caseGroup) throws DataNotFoundException, DataExistException {
-        CaseGroup existCaseGroup = null;
-        if (caseGroup.getId() != null && caseGroup.getId() >= 0) {
-            existCaseGroup = this.caseGroupRepository.findOne(caseGroup.getId());
-            if (existCaseGroup == null) {
-                throw new DataNotFoundException();
-            } else if (caseGroup.getName() == null || caseGroup.getName().equals(existCaseGroup.getName())) {
-                return existCaseGroup;
-            }
-        }
-        existCaseGroup = this.caseGroupRepository.findByName(caseGroup.getName());
-        if (existCaseGroup != null) {
-            throw new DataExistException();
-        }
-        return existCaseGroup;
     }
 
     @Override
@@ -86,5 +79,22 @@ public class CaseGroupImpl implements ICaseGroup {
             throw new DataNotFoundException();
         }
         return caseGroup;
+    }
+
+    private CaseGroup checkExist(Long id, String name) throws DataNotFoundException, DataExistException {
+        CaseGroup existCaseGroup = null;
+        if (id != null && id >= 0) {
+            existCaseGroup = this.caseGroupRepository.findOne(id);
+            if (existCaseGroup == null) {
+                throw new DataNotFoundException();
+            } else if (name == null || name.equals(existCaseGroup.getName())) {
+                return existCaseGroup;
+            }
+        }
+        existCaseGroup = this.caseGroupRepository.findByName(name);
+        if (existCaseGroup != null) {
+            throw new DataExistException();
+        }
+        return existCaseGroup;
     }
 }

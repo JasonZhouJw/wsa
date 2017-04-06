@@ -18,7 +18,7 @@ import static com.alpha.common.controller.Urls.*;
 /**
  * Created by jzhou237 on 2017-03-16.
  */
-@Component("testCaseIndexView")
+@Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class TestCaseIndexView extends BaseModelView implements ModelAndViewCombiner {
 

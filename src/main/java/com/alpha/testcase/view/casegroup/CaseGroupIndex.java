@@ -1,4 +1,4 @@
-package com.alpha.testcase.view;
+package com.alpha.testcase.view.casegroup;
 
 import com.alpha.common.view.BaseModelView;
 import com.alpha.testcase.entities.CaseGroup;
