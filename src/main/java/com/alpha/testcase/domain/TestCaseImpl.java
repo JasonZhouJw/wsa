@@ -8,7 +8,6 @@ import com.alpha.common.view.ResultHandler;
 import com.alpha.testcase.entities.CaseGroup;
 import com.alpha.testcase.entities.TestCase;
 import com.alpha.testcase.model.TestCaseVo;
-import com.alpha.testcase.model.UpdateTestCaseVo;
 import com.alpha.testcase.repository.TestCaseRepository;
 import com.alpha.verifyresult.domain.IVerifyResult;
 import com.alpha.wsdl2java.executors.ServiceExecutor;
@@ -76,7 +75,7 @@ public class TestCaseImpl implements ITestCase {
     }
 
     @Override
-    public void update(UpdateTestCaseVo testCaseVo, ResultHandler<TestCase, TestCaseVo> resultHandler) {
+    public void update(TestCaseVo testCaseVo, ResultHandler<TestCase, TestCaseVo> resultHandler) {
         try {
             TestCase updatedTestCase = this.checkUnique(testCaseVo.getId(), testCaseVo.getName());
             updatedTestCase.copyValue(testCaseVo);
@@ -103,25 +102,20 @@ public class TestCaseImpl implements ITestCase {
     @Transactional
     @Override
     public void execute(TestCaseVo testCaseVo, ResultHandler<TestCase, TestCaseVo> resultHandler) {
-        TestCase savedTestCase = null;
-        try {
-            TestCase updatedTestCase = this.checkUnique(testCaseVo.getId(), testCaseVo.getName());
-            updatedTestCase.copyValue(testCaseVo);
-            savedTestCase = this.testCaseRepository.save(updatedTestCase);
-        } catch (DomainException e) {
-            resultHandler.fail(testCaseVo, e.getMessage());
-        }
-
-        try {
-            ServiceExecutor executor = new ServiceExecutor(savedTestCase.getMethodInfo().getServicesInfo().getInterfaceClass(), savedTestCase.getMethodInfo().getMethod());
-            executor.execute(savedTestCase);
-            verifyResult.saveResult(executor.getResultMap());
-        } catch (CommonException e) {
-            log.error(e.getMessage(), e);
-            resultHandler.fail(testCaseVo, e.getMessage());
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            resultHandler.fail(testCaseVo, e.getMessage());
+        this.update(testCaseVo, resultHandler);
+        if (resultHandler.isSuccess()) {
+            TestCase savedTestCase = resultHandler.getSuccessObj();
+            try {
+                ServiceExecutor executor = new ServiceExecutor(savedTestCase.getMethodInfo().getServicesInfo().getInterfaceClass(), savedTestCase.getMethodInfo().getMethod());
+                executor.execute(savedTestCase);
+                verifyResult.saveResult(executor.getResultMap());
+            } catch (CommonException e) {
+                log.error(e.getMessage(), e);
+                resultHandler.fail(testCaseVo, e.getMessage());
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                resultHandler.fail(testCaseVo, e.getMessage());
+            }
         }
 
     }

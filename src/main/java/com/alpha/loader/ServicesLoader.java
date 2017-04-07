@@ -2,15 +2,14 @@ package com.alpha.loader;
 
 import com.alpha.loader.entities.ServicesClass;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by jzhou237 on 2016-12-12.
  */
 public class ServicesLoader {
 
-    private Map<String, ServicesClass> servicesClassMap = new HashMap<>();
+    private ConcurrentHashMap<String, ServicesClass> servicesClassMap = new ConcurrentHashMap<>();
 
     private ServicesLoader() {
 

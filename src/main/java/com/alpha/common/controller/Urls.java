@@ -44,4 +44,7 @@ public class Urls {
     public static final String CASE_GROUP_TO_CREATE = CASE_GROUP + SEPARATOR + "toCreate";
     public static final String CASE_GROUP_CREATE = CASE_GROUP + SEPARATOR + "create";
 
+    public static final String SERVICES_INFO = ROOT + "servicesInfo";
+    public static final String SERVICES_INFO_INDEX = SERVICES_INFO + SEPARATOR + "index";
+
 }

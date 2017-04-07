@@ -4,7 +4,7 @@ import com.alpha.common.exceptions.DataNotFoundException;
 import com.alpha.common.exceptions.ValidationException;
 import com.alpha.common.page.PageView;
 import com.alpha.common.utils.ValidationUtils;
-import com.alpha.services.domain.ServicesInfos;
+import com.alpha.services.domain.IServicesInfo;
 import com.alpha.testcase.domain.TestCaseImpl;
 import com.alpha.testcase.entities.TestCase;
 import com.alpha.testcase.model.CreateTestCaseVo;
@@ -35,7 +35,7 @@ public class TestCaseController {
     private TestCaseImpl testCases;
 
     @Resource
-    private ServicesInfos servicesInfos;
+    private IServicesInfo servicesInfo;
 
     @Autowired
     private PageView pageView;
@@ -109,7 +109,7 @@ public class TestCaseController {
         return this.testCaseUpdateView;
     }
 
-    @PostMapping
+    @PostMapping(TEST_CASE_EXECUTE)
     public TestCaseExecuteView execute(UpdateTestCaseVo testCaseVo) {
         try {
             ValidationUtils.validate(testCaseVo);

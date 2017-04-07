@@ -6,7 +6,6 @@ import com.alpha.common.view.ResultHandler;
 import com.alpha.testcase.entities.CaseGroup;
 import com.alpha.testcase.entities.TestCase;
 import com.alpha.testcase.model.TestCaseVo;
-import com.alpha.testcase.model.UpdateTestCaseVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -28,7 +27,7 @@ public interface ITestCase {
 
     void inactive(CaseGroup caseGroup);
 
-    void update(UpdateTestCaseVo testCaseVo, ResultHandler<TestCase, TestCaseVo> resultHandler);
+    void update(TestCaseVo testCaseVo, ResultHandler<TestCase, TestCaseVo> resultHandler);
 
     void execute(TestCaseVo testCaseVo, ResultHandler<TestCase, TestCaseVo> resultHandler);
 }
