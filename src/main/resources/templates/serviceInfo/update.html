@@ -1,0 +1,27 @@
+<div class="container">
+    <form method="post" action="create">
+        <h2>{{label.head}}</h2>
+        {{#messages}}
+        <div class="alert alert-{{type}}" role="alert">
+            {{message}}
+        </div>
+        {{/messages}}
+
+        <div class="form-group">
+            <label for="name">{{label.name}}:</label>
+            <input type="text" class="form-control" id="name" placeholder="{{label.name}}" name="name" autofocus
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="wsdl">{{label.wsdl}}:</label>
+            <input type="text" class="form-control" id="wsdl" placeholder="{{label.name}}" name="wsdl" required>
+        </div>
+
+        <button class="btn btn-lg btn-primary" id="create" type="submit">{{label.submit}}</button>
+        <button class="btn btn-lg btn-primary" id="createAndAssemble" type="submit" formaction="createAndAssemble">
+            {{label.saveAndAssemble}}
+        </button>
+        <a class="btn btn-lg btn-primary" id="return" href="{{indexUrl}}">{{label.return}}</a>
+    </form>
+</div>

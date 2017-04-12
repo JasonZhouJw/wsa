@@ -2,7 +2,7 @@ package com.alpha.services.view;
 
 import com.alpha.common.view.BaseModelView;
 import com.alpha.common.view.ModelAndViewCombiner;
-import com.alpha.services.entities.ServicesInfo;
+import com.alpha.services.entities.ServiceInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -22,14 +22,14 @@ public class ServicesInfoIndexView extends BaseModelView implements ModelAndView
 
     public ServicesInfoIndexView(@Value("${list.empty}") String noDataMessage) {
         addObject("noDataMessage", noDataMessage);
-        addObject("updateUrl", TEST_CASE_TO_UPDATE);
-        addObject("addUrl", TEST_CASE_TO_CREATE);
-        addObject("search", TEST_CASE_SEARCH);
-        this.setViewName(SERVICES_INFO_INDEX);
+        addObject("updateUrl", SERVICE_INFO_TO_UPDATE);
+        addObject("addUrl", SERVICE_INFO_TO_CREATE);
+        addObject("search", SERVICE_INFO_SEARCH);
+        this.setViewName(SERVICE_INFO_INDEX);
     }
 
-    public void setServicesInfo(List<ServicesInfo> servicesInfoList) {
-        this.addObject("servicesInfoList", ServicesInfo.toVo(servicesInfoList, false));
+    public void setServicesInfo(List<ServiceInfo> serviceInfoList) {
+        this.addObject("serviceInfoList", ServiceInfo.toVo(serviceInfoList, false));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ServicesInfoIndexView extends BaseModelView implements ModelAndView
         return this;
     }
 
-    public void setSearchCondition(ServicesInfo condition) {
+    public void setSearchCondition(ServiceInfo condition) {
         this.addObject("searchParam", condition.toVo(false));
     }
 }
