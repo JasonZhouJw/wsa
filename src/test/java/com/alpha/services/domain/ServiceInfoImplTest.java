@@ -1,6 +1,6 @@
 package com.alpha.services.domain;
 
-import com.alpha.services.entities.ServicesInfo;
+import com.alpha.services.entities.ServiceInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +17,17 @@ import static org.junit.Assert.assertNotNull;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class ServicesInfoImplTest {
+public class ServiceInfoImplTest {
 
     @Autowired
-    private IServicesInfo servicesInfo;
+    private IServiceInfo servicesInfo;
 
     @Test
     public void findAllActive() throws Exception {
-        List<ServicesInfo> servicesInfoList = servicesInfo.findAllActive();
-        assertEquals(2, servicesInfoList.size());
-        assertEquals(2, servicesInfoList.get(0).getMethodInfoList().size());
-        assertNotNull(servicesInfoList.get(0).getMethodInfoList().get(0).getMethod());
+        List<ServiceInfo> serviceInfoList = servicesInfo.findAllActive();
+        assertEquals(2, serviceInfoList.size());
+        assertEquals(2, serviceInfoList.get(0).getMethodInfoList().size());
+        assertNotNull(serviceInfoList.get(0).getMethodInfoList().get(0).getMethod());
     }
 
 }

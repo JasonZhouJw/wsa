@@ -106,7 +106,7 @@ public class TestCaseImpl implements ITestCase {
         if (resultHandler.isSuccess()) {
             TestCase savedTestCase = resultHandler.getSuccessObj();
             try {
-                ServiceExecutor executor = new ServiceExecutor(savedTestCase.getMethodInfo().getServicesInfo().getInterfaceClass(), savedTestCase.getMethodInfo().getMethod());
+                ServiceExecutor executor = new ServiceExecutor(savedTestCase.getMethodInfo().getServiceInfo().getWsdl(), savedTestCase.getMethodInfo().getMethod());
                 executor.execute(savedTestCase);
                 verifyResult.saveResult(executor.getResultMap());
             } catch (CommonException e) {

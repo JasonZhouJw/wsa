@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class ServicesInfoVo {
+public class ServiceInfoVo {
 
     private Long id;
 
@@ -24,9 +24,9 @@ public class ServicesInfoVo {
 
     private Date updatedTime;
 
-    private Boolean wsdl2java;
+    private Boolean wsdl2java = false;
 
-    private Boolean active;
+    private Boolean active = true;
 
     private List<MethodInfoVo> methodInfoList = new ArrayList<>();
 

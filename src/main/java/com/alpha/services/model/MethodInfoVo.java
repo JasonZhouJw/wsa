@@ -14,5 +14,5 @@ public class MethodInfoVo {
 
     private String method;
 
-    private ServicesInfoVo servicesInfoVo;
+    private ServiceInfoVo serviceInfoVo;
 }

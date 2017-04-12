@@ -4,7 +4,7 @@ import com.alpha.common.exceptions.DataNotFoundException;
 import com.alpha.common.exceptions.ValidationException;
 import com.alpha.common.page.PageView;
 import com.alpha.common.utils.ValidationUtils;
-import com.alpha.services.domain.IServicesInfo;
+import com.alpha.services.domain.IServiceInfo;
 import com.alpha.testcase.domain.TestCaseImpl;
 import com.alpha.testcase.entities.TestCase;
 import com.alpha.testcase.model.CreateTestCaseVo;
@@ -35,7 +35,7 @@ public class TestCaseController {
     private TestCaseImpl testCases;
 
     @Resource
-    private IServicesInfo servicesInfo;
+    private IServiceInfo servicesInfo;
 
     @Autowired
     private PageView pageView;
@@ -91,7 +91,7 @@ public class TestCaseController {
     @GetMapping(TEST_CASE_TO_UPDATE)
     public TestCaseUpdateView toUpdate(@PathVariable("id") Long id) {
         try {
-            this.testCaseUpdateView.getResultHandler().success(this.testCases.findById(id));
+            this.testCaseUpdateView.getResultHandler().successNoMsg(this.testCases.findById(id));
         } catch (DataNotFoundException e) {
             this.testCaseUpdateView.getResultHandler().fail(null, e.getMessage());
         }

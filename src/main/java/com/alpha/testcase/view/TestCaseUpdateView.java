@@ -2,8 +2,8 @@ package com.alpha.testcase.view;
 
 import com.alpha.common.model.Result;
 import com.alpha.common.view.HandlerModelView;
-import com.alpha.services.domain.IServicesInfo;
-import com.alpha.services.entities.ServicesInfo;
+import com.alpha.services.domain.IServiceInfo;
+import com.alpha.services.entities.ServiceInfo;
 import com.alpha.testcase.domain.ICaseGroup;
 import com.alpha.testcase.entities.CaseGroup;
 import com.alpha.testcase.entities.TestCase;
@@ -21,12 +21,12 @@ import static com.alpha.common.controller.Urls.TEST_CASE_UPDATE;
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class TestCaseUpdateView extends HandlerModelView<TestCase, TestCaseVo> {
-    private final IServicesInfo servicesInfo;
+    private final IServiceInfo servicesInfo;
 
     private final ICaseGroup caseGroup;
 
     @Autowired
-    public TestCaseUpdateView(IServicesInfo servicesInfo, ICaseGroup caseGroup) {
+    public TestCaseUpdateView(IServiceInfo servicesInfo, ICaseGroup caseGroup) {
         this.servicesInfo = servicesInfo;
         this.caseGroup = caseGroup;
         this.setViewName(TEST_CASE_UPDATE);
@@ -38,7 +38,7 @@ public class TestCaseUpdateView extends HandlerModelView<TestCase, TestCaseVo> {
     }
 
     public void init() {
-        this.addObject("servicesInfoList", ServicesInfo.toVo(this.servicesInfo.findAllActive(), true));
+        this.addObject("servicesInfoList", ServiceInfo.toVo(this.servicesInfo.findAllActive(), true));
         this.addObject("caseGroupList", CaseGroup.toVo(this.caseGroup.findAllActive()));
     }
 

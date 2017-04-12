@@ -44,7 +44,14 @@ public class Urls {
     public static final String CASE_GROUP_TO_CREATE = CASE_GROUP + SEPARATOR + "toCreate";
     public static final String CASE_GROUP_CREATE = CASE_GROUP + SEPARATOR + "create";
 
-    public static final String SERVICES_INFO = ROOT + "servicesInfo";
-    public static final String SERVICES_INFO_INDEX = SERVICES_INFO + SEPARATOR + "index";
+    public static final String SERVICE_INFO = ROOT + "serviceInfo";
+    public static final String SERVICE_INFO_INDEX = SERVICE_INFO + SEPARATOR + "index";
+    public static final String SERVICE_INFO_SEARCH = SERVICE_INFO + SEPARATOR + "search";
+    public static final String SERVICE_INFO_TO_CREATE = SERVICE_INFO + SEPARATOR + "toCreate";
+    public static final String SERVICE_INFO_CREATE = SERVICE_INFO + SEPARATOR + "create";
+    public static final String SERVICE_INFO_CREATE_ASSEMBLE = SERVICE_INFO + SEPARATOR + "createAndAssemble";
+    public static final String SERVICE_INFO_TO_UPDATE = SERVICE_INFO + SEPARATOR + "toUpdate";
+    public static final String SERVICE_INFO_UPDATE = SERVICE_INFO + SEPARATOR + "update";
+    public static final String SERVICE_INFO_ASSEMBLE = SERVICE_INFO + SEPARATOR + "assemble";
 
 }

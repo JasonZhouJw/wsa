@@ -29,8 +29,8 @@ public class MethodInfo {
     private String method;
 
     @ManyToOne
-    @JoinColumn(name = "services_info_id")
-    private ServicesInfo servicesInfo;
+    @JoinColumn(name = "service_info_id")
+    private ServiceInfo serviceInfo;
 
     public MethodInfo() {
     }
@@ -62,12 +62,12 @@ public class MethodInfo {
         methodInfoVo.setId(this.id);
         methodInfoVo.setMethod(this.method);
         if (hasChild) {
-            methodInfoVo.setServicesInfoVo(this.servicesInfo.toVo(false));
+            methodInfoVo.setServiceInfoVo(this.serviceInfo.toVo(false));
         }
         return methodInfoVo;
     }
 
     public String getMethodName() {
-        return this.servicesInfo.getInterfaceClass() + DOT + this.method;
+        return this.serviceInfo.getInterfaceClass() + DOT + this.method;
     }
 }

@@ -1,7 +1,8 @@
 package com.alpha.services.entities;
 
 import com.alpha.common.model.Option;
-import com.alpha.services.model.ServicesInfoVo;
+import com.alpha.services.model.ServiceInfoUpdateVo;
+import com.alpha.services.model.ServiceInfoVo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,7 +21,7 @@ import java.util.List;
 @Setter
 @Getter
 @ToString
-public class ServicesInfo {
+public class ServiceInfo {
 
     @Id
     @GeneratedValue
@@ -38,10 +39,10 @@ public class ServicesInfo {
     @Column
     private Boolean active = true;
 
-    @Column(nullable = false)
+    @Column
     private String interfaceClass;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicesInfo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceInfo")
     private List<MethodInfo> methodInfoList = new ArrayList<>();
 
     @Column(updatable = false)
@@ -52,41 +53,63 @@ public class ServicesInfo {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;
 
-    public static List<ServicesInfoVo> toVo(List<ServicesInfo> serviceInfoList, boolean hasChild) {
-        List<ServicesInfoVo> servicesInfoVoList = new ArrayList<>();
+    public static List<ServiceInfoVo> toVo(List<ServiceInfo> serviceInfoList, boolean hasChild) {
+        List<ServiceInfoVo> serviceInfoVoList = new ArrayList<>();
         if (serviceInfoList != null) {
-            serviceInfoList.forEach(serviceInfo -> servicesInfoVoList.add(serviceInfo.toVo(hasChild)));
+            serviceInfoList.forEach(serviceInfo -> serviceInfoVoList.add(serviceInfo.toVo(hasChild)));
         }
-        return servicesInfoVoList;
+        return serviceInfoVoList;
     }
 
-    public static List<Option> convert(List<ServicesInfo> servicesInfoList) {
+    public static List<Option> convert(List<ServiceInfo> serviceInfoList) {
         List<Option> optionList = new ArrayList<>();
-        if (servicesInfoList != null) {
-            servicesInfoList.forEach(servicesInfo -> {
+        if (serviceInfoList != null) {
+            serviceInfoList.forEach(servicesInfo -> {
                 optionList.add(new Option(servicesInfo.getInterfaceClass(), String.valueOf(servicesInfo.getId())));
             });
         }
         return optionList;
     }
 
-    public ServicesInfoVo toVo(boolean hasChild) {
-        ServicesInfoVo servicesInfoVo = new ServicesInfoVo();
-        servicesInfoVo.setId(this.id);
-        servicesInfoVo.setWsdl(this.wsdl);
-        servicesInfoVo.setName(this.name);
-        servicesInfoVo.setWsdl2java(this.wsdl2java);
-        servicesInfoVo.setActive(this.active);
-        servicesInfoVo.setUpdatedTime(this.updatedTime);
-        servicesInfoVo.setCreatedTime(this.createdTime);
-        if (hasChild) {
-            servicesInfoVo.setMethodInfoList(MethodInfo.toVo(this.methodInfoList, false));
-        }
-        return servicesInfoVo;
+    public static ServiceInfo valueOf(ServiceInfoVo serviceInfoVo) {
+        ServiceInfo serviceInfo = new ServiceInfo();
+        serviceInfo.setName(serviceInfoVo.getName());
+        serviceInfo.setWsdl(serviceInfoVo.getWsdl());
+        serviceInfo.setUpdatedTime(new Date());
+        serviceInfo.setActive(serviceInfoVo.getActive());
+        serviceInfo.setWsdl2java(serviceInfoVo.getWsdl2java());
+        return serviceInfo;
     }
 
-    public Example<ServicesInfo> getExample() {
+    public ServiceInfoVo toVo(boolean hasChild) {
+        ServiceInfoVo serviceInfoVo = new ServiceInfoVo();
+        serviceInfoVo.setId(this.id);
+        serviceInfoVo.setWsdl(this.wsdl);
+        serviceInfoVo.setName(this.name);
+        serviceInfoVo.setWsdl2java(this.wsdl2java);
+        serviceInfoVo.setActive(this.active);
+        serviceInfoVo.setUpdatedTime(this.updatedTime);
+        serviceInfoVo.setCreatedTime(this.createdTime);
+        if (hasChild) {
+            serviceInfoVo.setMethodInfoList(MethodInfo.toVo(this.methodInfoList, false));
+        }
+        return serviceInfoVo;
+    }
+
+    public Example<ServiceInfo> getExample() {
         ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("createdTime", "updatedTime");
         return Example.of(this, matcher);
+    }
+
+    public void update() {
+        this.updatedTime = new Date();
+    }
+
+    public void updateValue(ServiceInfoUpdateVo serviceInfoVo) {
+        this.setName(serviceInfoVo.getName());
+        this.setWsdl(serviceInfoVo.getWsdl());
+        this.setActive(serviceInfoVo.getActive());
+        this.setWsdl2java(serviceInfoVo.getWsdl2java());
+        update();
     }
 }

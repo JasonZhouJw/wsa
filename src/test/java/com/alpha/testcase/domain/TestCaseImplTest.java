@@ -3,7 +3,7 @@ package com.alpha.testcase.domain;
 import com.alpha.common.model.Result;
 import com.alpha.common.view.ResultHandler;
 import com.alpha.services.entities.MethodInfo;
-import com.alpha.services.entities.ServicesInfo;
+import com.alpha.services.entities.ServiceInfo;
 import com.alpha.testcase.entities.TestCase;
 import com.alpha.testcase.model.TestCaseVo;
 import com.alpha.testcase.repository.TestCaseRepository;
@@ -105,9 +105,9 @@ public class TestCaseImplTest {
         existTestCase.setName("exist");
         MethodInfo methodInfo = new MethodInfo();
         methodInfo.setMethod("method");
-        ServicesInfo servicesInfo = new ServicesInfo();
-        servicesInfo.setInterfaceClass("class");
-        methodInfo.setServicesInfo(servicesInfo);
+        ServiceInfo serviceInfo = new ServiceInfo();
+        serviceInfo.setInterfaceClass("class");
+        methodInfo.setServiceInfo(serviceInfo);
         existTestCase.setMethodInfo(methodInfo);
         when(repository.findOne(1L)).thenReturn(existTestCase);
 
@@ -116,9 +116,9 @@ public class TestCaseImplTest {
         existTestCase.setName("ut");
         methodInfo = new MethodInfo();
         methodInfo.setMethod("method");
-        servicesInfo = new ServicesInfo();
-        servicesInfo.setInterfaceClass("class");
-        methodInfo.setServicesInfo(servicesInfo);
+        serviceInfo = new ServiceInfo();
+        serviceInfo.setInterfaceClass("class");
+        methodInfo.setServiceInfo(serviceInfo);
         existTestCase.setMethodInfo(methodInfo);
         when(repository.save((TestCase) anyObject())).thenReturn(existTestCase);
 

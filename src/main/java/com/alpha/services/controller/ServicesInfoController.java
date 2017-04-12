@@ -1,19 +1,32 @@
 package com.alpha.services.controller;
 
+import com.alpha.common.exceptions.DataNotFoundException;
+import com.alpha.common.exceptions.ValidationException;
 import com.alpha.common.page.PageView;
-import com.alpha.services.domain.IServicesInfo;
-import com.alpha.services.entities.ServicesInfo;
-import com.alpha.services.view.ServicesInfoIndexView;
+import com.alpha.common.utils.ValidationUtils;
+import com.alpha.services.domain.IServiceInfo;
+import com.alpha.services.entities.ServiceInfo;
+import com.alpha.services.model.ServiceInfoCreateVo;
+import com.alpha.services.model.ServiceInfoUpdateVo;
+import com.alpha.services.threads.AssembleWsdlRunnable;
+import com.alpha.services.view.ServiceInfoCreateView;
+import com.alpha.services.view.ServiceInfoIndexView;
+import com.alpha.services.view.ServiceInfoUpdateView;
+import com.alpha.wsdl2java.Wsdl2JavaGenerator;
+import com.alpha.wsdl2java.WsdlClassCompiler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static com.alpha.common.controller.Urls.SERVICES_INFO_INDEX;
+import static com.alpha.common.controller.Urls.*;
 
 /**
  * Created by jzhou237 on 2016-09-23.
@@ -24,11 +37,14 @@ public class ServicesInfoController {
     @Value("${upload.jar.filePath}")
     private String filePath;
 
-//    @Resource
-//    private WsdlAssembleExecutor wsdlAssembleExecutor;
+    @Autowired
+    private WsdlClassCompiler wsdlClassCompiler;
 
     @Autowired
-    private IServicesInfo servicesInfo;
+    private Wsdl2JavaGenerator wsdl2JavaGenerator;
+
+    @Autowired
+    private IServiceInfo servicesInfo;
 
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -36,131 +52,89 @@ public class ServicesInfoController {
     private PageView pageView;
 
     @Autowired
-    private ServicesInfoIndexView servicesInfoIndexView;
+    private ServiceInfoIndexView serviceInfoIndexView;
 
-    @GetMapping(SERVICES_INFO_INDEX)
+    @Autowired
+    private ServiceInfoCreateView servicesInfoCreateView;
+
+    @Autowired
+    private ServiceInfoUpdateView serviceInfoUpdateView;
+
+    @GetMapping(SERVICE_INFO_INDEX)
     public ModelAndView index() {
-        ServicesInfo condition = new ServicesInfo();
-        servicesInfo.findAll(new ServicesInfo(), pageView.create(), (page) -> {
-            servicesInfoIndexView.setServicesInfo(page.getContent());
-            servicesInfoIndexView.setSearchCondition(condition);
+        ServiceInfo condition = new ServiceInfo();
+        condition.setWsdl2java(null);
+        servicesInfo.findAll(condition, pageView.create(new Sort(Sort.Direction.DESC, "id")), (page) -> {
+            serviceInfoIndexView.setServicesInfo(page.getContent());
+            serviceInfoIndexView.setSearchCondition(condition);
             pageView.display(page.getTotalPages());
         });
-        return this.servicesInfoIndexView.Combine(pageView);
+        return this.serviceInfoIndexView.Combine(pageView);
     }
-//
-//    //    @GetMapping("/toThirdJar")
-//    public String toThirdJarView() {
-//        return "thirdJar/jarView";
-//    }
-//
-//    //    @GetMapping("/toCreate")
-//    public String toCreateView(ModelMap modelMap) {
-//        return "servicesInfo/create";
-//    }
-//
-//    //    @PostMapping("/uploadThirdJar/{id}")
-//    public String doUpload(@PathVariable("id") Long id, @RequestParam MultipartFile file, ModelMap model) throws WebException {
-////        ServicesInfo servicesInfo = this.servicesInfos.findById(id);
-////        if (!file.isEmpty()) {
-////            String type = file.getOriginalFilename().substring(
-////                    file.getOriginalFilename().lastIndexOf("."));
-////            if (StringUtils.equalsIgnoreCase(type, ".jar")) {
-////                String fileName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")) + "_" + System.currentTimeMillis() + type;
-////                String path = filePath + fileName;
-////                File destFile = new File(path);
-////                try {
-////                    FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);
-////                } catch (IOException e) {
-////                    throw new WebException(e.getMessage());
-////                }
-////                servicesInfo.setPath(path);
-////                this.servicesInfos.create(servicesInfo);
-////                executorService.execute(new AssembleWsdlRunnable(this.wsdlAssembleExecutor, servicesInfo));
-////            }
-////        }
-//        return "thirdJar/jarView";
-//    }
-//
-//    //    @PostMapping("/create")
-//    public String doCreate(@ModelAttribute UploadInfoVo uploadInfoVo, ModelMap model,
-//                           HttpServletRequest request, HttpServletResponse httpServletResponse) throws WebException {
-////        ValidationUtils.validate(uploadInfoVo, response);
-////        if (uploadInfoVo.getFile() == null || uploadInfoVo.getFile().isEmpty()) {
-////            throw new WebException(response.addValidationError(Errors.FILE_NOT_FOUND.getMessage()));
-////        }
-////        String type = uploadInfoVo.getFile().getOriginalFilename().substring(
-////                uploadInfoVo.getFile().getOriginalFilename().lastIndexOf("."));
-////        if (!StringUtils.equalsIgnoreCase(type, ".jar")) {
-////            throw new WebException(response.addValidationError("File type is invalidated"));
-////        }
-////        String fileName = uploadInfoVo.getFile().getOriginalFilename().substring(uploadInfoVo.getFile().getOriginalFilename().lastIndexOf(".")) + "_" + System.currentTimeMillis() + type;
-////        String path = filePath + fileName;
-////        File destFile = new File(path);
-////        try {
-////            FileUtils.copyInputStreamToFile(uploadInfoVo.getFile().getInputStream(), destFile);
-////        } catch (IOException e) {
-////            throw new WebException(response.addDanger(e.getMessage()));
-////        }
-////        ServicesInfo servicesInfo = new ServicesInfo();
-////        servicesInfo.setService(uploadInfoVo.getService());
-////        servicesInfo.setPath(path);
-////        servicesInfo.setProtocolType(uploadInfoVo.getProtocolType());
-////        servicesInfo.setType(uploadInfoVo.getEnvType());
-////        servicesInfo.setAliasName(uploadInfoVo.getAliasName());
-////        ServicesInfo savedServicesInfo = this.servicesInfos.create(servicesInfo);
-////        executorService.execute(new AssembleWsdlRunnable(this.wsdlAssembleExecutor, savedServicesInfo));
-////        return "servicesInfo/create";
-//        return null;
-//    }
-//
-//    //    @PostMapping("update/{id}")
-//    public String doUpdate(@PathVariable("id") Long id, @ModelAttribute UploadInfoVo uploadInfoVo, ModelMap model) throws WebException {
-////        Response response = Response.init("servicesInfo/update");
-////        ValidationUtils.validate(uploadInfoVo, response);
-////        if (uploadInfoVo.getFile() == null || uploadInfoVo.getFile().isEmpty()) {
-////            throw new WebException(response.addValidationError(Errors.FILE_NOT_FOUND.getMessage()));
-////        }
-////        String type = uploadInfoVo.getFile().getOriginalFilename().substring(
-////                uploadInfoVo.getFile().getOriginalFilename().lastIndexOf("."));
-////        if (!StringUtils.equalsIgnoreCase(type, ".jar")) {
-////            throw new WebException(response.addValidationError("File type is invalidated"));
-////        }
-////        String fileName = uploadInfoVo.getFile().getOriginalFilename().substring(uploadInfoVo.getFile().getOriginalFilename().lastIndexOf(".")) + "_" + System.currentTimeMillis() + type;
-////        String path = filePath + fileName;
-////        File destFile = new File(path);
-////        try {
-////            FileUtils.copyInputStreamToFile(uploadInfoVo.getFile().getInputStream(), destFile);
-////        } catch (IOException e) {
-////            throw new WebException(response.addDanger(e.getMessage()));
-////        }
-////        ServicesInfo servicesInfo = this.servicesInfos.findById(id);
-////        if (servicesInfo == null) {
-////            throw new WebException("Object is not found.");
-////        }
-////        servicesInfo.setPath(path);
-////        servicesInfo.setProtocolType(uploadInfoVo.getProtocolType());
-////        servicesInfo.setType(uploadInfoVo.getEnvType());
-////        servicesInfo.setAliasName(uploadInfoVo.getAliasName());
-////        ServicesInfo savedServicesInfo = this.servicesInfos.update(servicesInfo);
-////        executorService.execute(new AssembleWsdlRunnable(this.wsdlAssembleExecutor, savedServicesInfo));
-////        return response.getView();
-//        return null;
-//    }
-//
-//    //    @GetMapping("refresh/{id}")
-//    public String doRefresh(@PathVariable("id") Long id, ModelMap model) throws WebException {
-////        Response response = Response.init("servicesInfo/update");
-////        ServicesInfo servicesInfo = this.servicesInfos.findById(id);
-////        if (servicesInfo == null) {
-////            throw new WebException("Object is not found.");
-////        }
-////        executorService.execute(new AssembleWsdlRunnable(this.wsdlAssembleExecutor, servicesInfo));
-////        return response.getView();
-//        return null;
-//    }
-//
-//    public void initEdit(ModelMap modelMap) {
-//        modelMap.addAttribute("protocolTypes", ProtocolType.values());
-//    }
+
+    @GetMapping(SERVICE_INFO_TO_CREATE)
+    public ModelAndView toCreate() {
+        return servicesInfoCreateView;
+    }
+
+    @PostMapping(SERVICE_INFO_CREATE)
+    public ModelAndView create(ServiceInfoCreateVo serviceInfoVo) {
+        try {
+            ValidationUtils.validate(serviceInfoVo);
+            this.servicesInfo.create(serviceInfoVo, this.servicesInfoCreateView.getResultHandler());
+        } catch (ValidationException e) {
+            servicesInfoCreateView.getResultHandler().fail(serviceInfoVo, e.getMessages());
+        }
+        return servicesInfoCreateView;
+    }
+
+    @PostMapping(SERVICE_INFO_CREATE_ASSEMBLE)
+    public ModelAndView createAndAssemble(ServiceInfoCreateVo serviceInfoVo) {
+        try {
+            ValidationUtils.validate(serviceInfoVo);
+            this.servicesInfo.create(serviceInfoVo, this.servicesInfoCreateView.getResultHandler());
+        } catch (ValidationException e) {
+            servicesInfoCreateView.getResultHandler().fail(serviceInfoVo, e.getMessages());
+        }
+        if (servicesInfoCreateView.getResultHandler().isSuccess()) {
+            executorService.execute(new AssembleWsdlRunnable(servicesInfoCreateView.getResultHandler().getSuccessObj(), wsdlClassCompiler, wsdl2JavaGenerator, servicesInfo));
+        }
+        return servicesInfoCreateView;
+    }
+
+    @GetMapping(SERVICE_INFO_TO_UPDATE + "/{id}")
+    public ModelAndView toUpdate(@PathVariable("id") Long id) {
+        try {
+            this.serviceInfoUpdateView.getResultHandler().successNoMsg(this.servicesInfo.findOne(id));
+        } catch (DataNotFoundException e) {
+            this.serviceInfoUpdateView.getResultHandler().fail(null, e.getMessage());
+        }
+        return this.serviceInfoUpdateView;
+    }
+
+    @PostMapping(SERVICE_INFO_UPDATE)
+    public ModelAndView update(ServiceInfoUpdateVo serviceInfoVo) {
+        try {
+            ValidationUtils.validate(serviceInfoVo);
+            this.servicesInfo.update(serviceInfoVo, this.serviceInfoUpdateView.getResultHandler());
+        } catch (ValidationException e) {
+            serviceInfoUpdateView.getResultHandler().fail(serviceInfoVo, e.getMessages());
+        }
+        return this.serviceInfoUpdateView;
+    }
+
+    @PostMapping(SERVICE_INFO_ASSEMBLE)
+    public ModelAndView assemble(ServiceInfoUpdateVo serviceInfoVo) {
+        try {
+            ValidationUtils.validate(serviceInfoVo);
+            ServiceInfo serviceInfo = this.servicesInfo.findOne(serviceInfoVo.getId());
+            executorService.execute(new AssembleWsdlRunnable(serviceInfo, wsdlClassCompiler, wsdl2JavaGenerator, servicesInfo));
+            this.serviceInfoUpdateView.getResultHandler().success(serviceInfo);
+        } catch (ValidationException e) {
+            serviceInfoUpdateView.getResultHandler().fail(serviceInfoVo, e.getMessages());
+        } catch (DataNotFoundException e) {
+            serviceInfoUpdateView.getResultHandler().fail(serviceInfoVo, e.getMessage());
+        }
+        return this.serviceInfoUpdateView;
+    }
 }

@@ -1,12 +1,17 @@
 package com.alpha.services.threads;
 
-import com.alpha.services.entities.ServicesInfo;
-import com.alpha.services.repository.ServicesInfoRepository;
+import com.alpha.loader.ClassCache;
+import com.alpha.loader.ServicesLoader;
+import com.alpha.loader.entities.ServicesClass;
+import com.alpha.services.domain.IServiceInfo;
+import com.alpha.services.entities.ServiceInfo;
 import com.alpha.wsdl2java.Wsdl2JavaGenerator;
 import com.alpha.wsdl2java.WsdlClassCompiler;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -15,41 +20,51 @@ import java.util.UUID;
 @Slf4j
 public class AssembleWsdlRunnable implements Runnable {
 
+    @Getter
     private String name;
 
-    private ServicesInfo servicesInfo;
+    private ServiceInfo assembleServiceInfo;
 
     private WsdlClassCompiler wsdlClassCompiler;
 
     private Wsdl2JavaGenerator wsdl2JavaGenerator;
 
-    private ServicesInfoRepository servicesInfoRepository;
+    private IServiceInfo serviceInfo;
 
-    public AssembleWsdlRunnable(ServicesInfo servicesInfo, WsdlClassCompiler wsdlClassCompiler, Wsdl2JavaGenerator wsdl2JavaGenerator, ServicesInfoRepository servicesInfoRepository) {
+    public AssembleWsdlRunnable(ServiceInfo assembleServiceInfo, WsdlClassCompiler wsdlClassCompiler, Wsdl2JavaGenerator wsdl2JavaGenerator, IServiceInfo serviceInfo) {
         this.name = UUID.randomUUID().toString();
-        this.servicesInfo = servicesInfo;
+        this.assembleServiceInfo = assembleServiceInfo;
         this.wsdl2JavaGenerator = wsdl2JavaGenerator;
         this.wsdlClassCompiler = wsdlClassCompiler;
-        this.servicesInfoRepository = servicesInfoRepository;
+        this.serviceInfo = serviceInfo;
     }
 
     @Override
     public void run() {
         log.info("Thread [" + this.name + "] start.");
         try {
-            this.wsdl2JavaGenerator.execute(servicesInfo.getWsdl());
-            this.servicesInfo.setWsdl2java(true);
+            this.wsdl2JavaGenerator.execute(assembleServiceInfo.getWsdl());
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
         }
         this.wsdlClassCompiler.compile();
-        this.servicesInfoRepository.save(this.servicesInfo);
+        //analysis class information after compiled
+        this.analysisClass();
+
+        ServicesClass servicesClass = ServicesLoader.getInstance().get(assembleServiceInfo.getWsdl());
+        if (servicesClass != null) {
+            this.serviceInfo.assemble(this.assembleServiceInfo.getId(), servicesClass.getServiceName());
+        }
         log.info("Thread [" + this.name + "] end.");
     }
 
-    public String getName() {
-        return name;
+    private void analysisClass() {
+        Map<String, Class> classMap = ClassCache.getInstance().getClassData();
+        classMap.forEach((className, clazz) -> {
+            ServicesLoader.getInstance().put(clazz);
+        });
     }
+
 }

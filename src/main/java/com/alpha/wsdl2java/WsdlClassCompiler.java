@@ -2,11 +2,12 @@ package com.alpha.wsdl2java;
 
 import com.alpha.common.utils.Constants;
 import com.alpha.loader.ClassCache;
-import com.alpha.loader.ServicesLoader;
+import com.alpha.loader.CustomClassLoad;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.tools.JavaCompiler;
@@ -24,10 +25,10 @@ import java.util.*;
 @Component
 public class WsdlClassCompiler {
 
-    //    @Value("${cxf.javaPath}")
+    @Value("${cxf.javaPath}")
     private String javaPath;
 
-    //    @Value("${cxf.compilerPath}")
+    @Value("${cxf.compilerPath}")
     private String compilerPath;
 
     public void compile() {
@@ -35,19 +36,18 @@ public class WsdlClassCompiler {
         if (srcFile.isDirectory()) {
             Map<String, List<File>> fileMap = new HashMap<String, List<File>>();
             fileMap.put("", Arrays.asList(srcFile.listFiles()));
-            this.compile(fileMap);
+            this.compile(fileMap, new CustomClassLoad(this.compilerPath));
         } else {
             log.warn(this.javaPath + " is not a directory.");
         }
     }
 
-    private void compile(Map<String, List<File>> fileMap) {
+    private void compile(Map<String, List<File>> fileMap, CustomClassLoad customClassLoad) {
         if (fileMap == null || fileMap.size() == 0) {
             return;
         }
         Map<String, List<File>> childFileMap = new HashMap<String, List<File>>();
         fileMap.forEach((packageName, files) -> {
-            List<File> failFiles = new ArrayList<File>();
             List<File> javaFiles = new ArrayList<File>();
             for (File file : files) {
                 if (file.isFile() && file.getName().endsWith(".java")) {
@@ -70,18 +70,18 @@ public class WsdlClassCompiler {
                     log.error(e.getMessage(), e);
                 }
                 if (result) {
-                    loadClass(packageName, javaFiles);
+                    loadClass(packageName, javaFiles, customClassLoad);
                 }
             }
         });
-        compile(childFileMap);
+        compile(childFileMap, customClassLoad);
     }
 
-    private void loadClass(String packageName, List<File> files) {
+    private void loadClass(String packageName, List<File> files, CustomClassLoad customClassLoad) {
         files.forEach(file -> {
             String className = packageName + Constants.DOT + file.getName().substring(0, file.getName().lastIndexOf(".java"));
             try {
-                ServicesLoader.getInstance().put(ClassCache.getInstance().loadClass(className));
+                ClassCache.getInstance().loadClass(customClassLoad, className);
             } catch (ClassNotFoundException e) {
                 log.error("Fail to Load " + className, e);
             }
