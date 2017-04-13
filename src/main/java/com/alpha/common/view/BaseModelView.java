@@ -3,9 +3,9 @@ package com.alpha.common.view;
 import com.alpha.common.model.Message;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -19,7 +19,6 @@ import static com.alpha.common.view.PropertyResources.LABEL_TEXT_FULL_NAME;
 @Setter
 @Getter
 @PropertySource(LABEL_TEXT_FULL_NAME)
-@Component
 public class BaseModelView extends ModelAndView {
 
     public static final String MESSAGE_PARAM = "messages";
@@ -45,7 +44,11 @@ public class BaseModelView extends ModelAndView {
     }
 
     protected void setMessage(List<Message> messageList) {
-        this.addObject(MESSAGE_PARAM, messageList);
+        if (CollectionUtils.isEmpty(messageList)) {
+            this.success();
+        } else {
+            this.addObject(MESSAGE_PARAM, messageList);
+        }
     }
 
 

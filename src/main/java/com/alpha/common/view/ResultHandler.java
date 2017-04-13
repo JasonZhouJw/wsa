@@ -26,25 +26,20 @@ public class ResultHandler<S, R> {
 
     private boolean success = true;
 
-    private String defaultMessage;
+    private boolean noMsg = false;
 
     public ResultHandler(Consumer<Result<S>> successHandler, Consumer<Result<R>> fail) {
         this.successHandler = successHandler;
         this.failHandler = fail;
     }
 
-    public ResultHandler(String defaultMessage, Consumer<Result<S>> successHandler, Consumer<Result<R>> fail) {
-        this.defaultMessage = defaultMessage;
-        this.successHandler = successHandler;
-        this.failHandler = fail;
-    }
-
     public void success(S s) {
         this.successObj = s;
-        this.successHandler.accept(new Result<S>(s, defaultMessage));
+        this.successHandler.accept(new Result<S>(s));
     }
 
     public void successNoMsg(S s) {
+        this.noMsg = true;
         this.successObj = s;
         this.successHandler.accept(new Result<S>(s));
     }
