@@ -18,8 +18,10 @@
             <input type="text" class="form-control" id="wsdl" placeholder="{{label.name}}" name="wsdl" required>
         </div>
 
-        <button class="btn btn-lg btn-primary" type="submit">{{label.submit}}</button>
-        <button class="btn btn-lg btn-primary" type="submit" formaction="createAndAssemble">{{label.saveAndAssemble}}</button>
-        <a class="btn btn-lg btn-primary" href="../index">{{label.return}}</a>
+        <button class="btn btn-lg btn-primary" id="create" type="submit">{{label.submit}}</button>
+        <button class="btn btn-lg btn-primary" id="createAndAssemble" type="submit" formaction="createAndAssemble">
+            {{label.saveAndAssemble}}
+        </button>
+        <a class="btn btn-lg btn-primary" id="return" href="{{indexUrl}}">{{label.return}}</a>
     </form>
 </div>

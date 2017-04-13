@@ -65,7 +65,7 @@ public class CaseGroupController {
     @GetMapping(CASE_GROUP_TO_UPDATE + "/{id}")
     public CaseGroupUpdateView toUpdate(@PathVariable("id") Long id) {
         try {
-            this.caseGroupUpdateView.getResultHandler().success(this.caseGroup.findOne(id));
+            this.caseGroupUpdateView.getResultHandler().successNoMsg(this.caseGroup.findOne(id));
         } catch (DataNotFoundException e) {
             this.caseGroupUpdateView.getResultHandler().fail(null, e.getMessage());
         }

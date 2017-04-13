@@ -5,10 +5,10 @@ package com.alpha.common.exceptions;
  */
 public class DataNotFoundException extends DomainException {
 
-    private static String message = "result.not.found.data";
+    public static final String MESSAGE = "result.not.found.data";
 
     public DataNotFoundException() {
-        super(message);
+        super(MESSAGE);
     }
 
     public DataNotFoundException(String message) {

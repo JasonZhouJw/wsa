@@ -35,7 +35,7 @@ public class LoginView extends ModelAndView implements View<AuthenticationResult
     }
 
     private void setMessageAndType(String message, String type) {
-        addObject("message", message);
+        addObject("MESSAGE", message);
         addObject("type", type);
     }
 

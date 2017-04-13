@@ -18,6 +18,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JsonResponseInterceptor());
+        registry.addInterceptor(new ResultMessageInterceptor(new ExposedResourceBundleMessageSource()));
         registry.addInterceptor(new AuthenticationInterceptor());
         registry.addInterceptor(new LayoutNavigationInterceptor());
         registry.addInterceptor(new LabelTextInterceptor(new ExposedResourceBundleMessageSource()));

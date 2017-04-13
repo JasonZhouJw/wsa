@@ -2,8 +2,7 @@ package com.alpha.testcase.view.casegroup;
 
 import com.alpha.common.enums.Active;
 import com.alpha.common.model.Result;
-import com.alpha.common.view.BaseModelView;
-import com.alpha.common.view.ResultHandler;
+import com.alpha.common.view.HandlerModelView;
 import com.alpha.testcase.entities.CaseGroup;
 import com.alpha.testcase.model.CaseGroupVo;
 import lombok.Getter;
@@ -19,15 +18,13 @@ import static com.alpha.common.controller.Urls.CASE_GROUP_UPDATE;
 @Getter
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class CaseGroupUpdateView extends BaseModelView {
+public class CaseGroupUpdateView extends HandlerModelView<CaseGroup, CaseGroupVo> {
 
-    private ResultHandler<CaseGroup, CaseGroupVo> resultHandler;
 
     public CaseGroupUpdateView() {
         this.setViewName(CASE_GROUP_UPDATE);
-        this.addObject("update", CASE_GROUP_UPDATE);
+        this.addObject("updateUrl", CASE_GROUP_UPDATE);
         this.addObject("activeList", Active.options());
-        this.initResultHandler();
     }
 
     public void setCaseGroup(CaseGroup caseGroup) {
@@ -35,16 +32,13 @@ public class CaseGroupUpdateView extends BaseModelView {
     }
 
     public void success(Result<CaseGroup> result) {
-        this.addMessage(this.success);
+        super.success(result);
         this.setCaseGroup(result.getResult());
     }
 
     public void fail(Result<CaseGroupVo> result) {
+        super.fail(result);
         this.addObject("caseGroup", result.getResult());
-        this.setMessage(result.getMessageList());
     }
 
-    private void initResultHandler() {
-        resultHandler = new ResultHandler<CaseGroup, CaseGroupVo>(this::success, this::fail);
-    }
 }

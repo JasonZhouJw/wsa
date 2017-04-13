@@ -48,7 +48,7 @@ public class ServicesClass {
             if (method.getParameterCount() == 0 && method.getName().startsWith("get")) {
                 Annotation[] annotations = method.getAnnotations();
                 for (Annotation annotation : annotations) {
-                    if (annotation.getClass().getName().equals("javax.xml.ws.WebEndpoint")) {
+                    if (annotation.annotationType().getName().equals("javax.xml.ws.WebEndpoint")) {
                         this.serviceMethod = method;
                         this.analyseServiceInterface(this.serviceMethod.getReturnType());
                         return;
@@ -57,7 +57,7 @@ public class ServicesClass {
             }
         }
         if (this.serviceMethod == null) {
-            throw new MethodNotFoundException("Can not find the method which return type is " + interfaceClazz.getName());
+            throw new MethodNotFoundException("Can not find the method which return type is " + clazz.getMethods());
         }
     }
 

@@ -1,10 +1,6 @@
 package com.alpha.loader;
 
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by jzhou237 on 2016-12-09.
@@ -13,13 +9,10 @@ public class ClassCache {
 
     private ClassCache classCache;
 
-    private CustomClassLoad customClassLoad;
+    private ConcurrentHashMap<String, Class> classData = new ConcurrentHashMap<>();
 
-    private Map<String, Class> classData = new HashMap<>();
 
     private ClassCache() {
-        WebApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
-        customClassLoad = new CustomClassLoad(applicationContext.getEnvironment().getProperty("cxf.compilerPath"));
     }
 
     public static ClassCache getInstance() {
@@ -27,23 +20,24 @@ public class ClassCache {
     }
 
     public Class addClass(Class clazz) {
-        return classData.putIfAbsent(clazz.getName(), clazz);
+        classData.put(clazz.getName(), clazz);
+        return clazz;
     }
 
-    public Class loadClass(String name) throws ClassNotFoundException {
+    public Class loadClass(CustomClassLoad customClassLoad, String name) throws ClassNotFoundException {
         return this.addClass(customClassLoad.loadCustomClass(name));
     }
 
     public Class getClass(String name) throws ClassNotFoundException {
-        return this.getClass(name, true);
-    }
-
-    public Class getClass(String name, boolean reload) throws ClassNotFoundException {
         Class existClass = this.classData.get(name);
-        if (existClass == null && reload) {
-            existClass = loadClass(name);
+        if (existClass == null) {
+            throw new ClassNotFoundException();
         }
         return existClass;
+    }
+
+    public ConcurrentHashMap<String, Class> getClassData() {
+        return classData;
     }
 
     private static class ClassCacheInner {

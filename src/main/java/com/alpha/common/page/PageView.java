@@ -9,6 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,5 +74,9 @@ public class PageView extends ModelAndView implements View<Integer> {
 
     public Pageable create() {
         return new PageRequest(currentPage.number() - 1, perPageLimit);
+    }
+
+    public Pageable create(Sort sort) {
+        return new PageRequest(currentPage.number() - 1, perPageLimit, sort);
     }
 }

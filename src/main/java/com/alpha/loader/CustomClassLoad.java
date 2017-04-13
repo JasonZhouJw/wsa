@@ -1,39 +1,45 @@
 package com.alpha.loader;
 
 import lombok.Cleanup;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by jzhou237 on 2016-12-02.
  */
+@Getter
+@Setter
 @Slf4j
 public class CustomClassLoad extends ClassLoader {
 
     private String basedir;
 
-    public CustomClassLoad(String basedir, String name) throws ClassNotFoundException {
-        super(null);
-        this.basedir = basedir;
-        loadCustomClass(name);
-    }
+    private Set<String> classNameSet = new HashSet<>();
 
     public CustomClassLoad(String basedir) {
         super(null);
         this.basedir = basedir;
     }
 
+
     public Class loadCustomClass(String name) throws ClassNotFoundException {
+        Class clazz = null;
         try {
-            return loadDirectly(name);
+            clazz = loadDirectly(name);
+            classNameSet.add(name);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new ClassNotFoundException();
         }
+        return clazz;
     }
 
     private Class loadDirectly(String name) throws IOException {
@@ -49,9 +55,16 @@ public class CustomClassLoad extends ClassLoader {
 
     protected Class loadClass(String name, boolean resolve)
             throws ClassNotFoundException {
-        Class cls = ClassCache.getInstance().getClass(name);
+        Class cls = null;
+        cls = findLoadedClass(name);
+        if (!this.classNameSet.contains(name) && cls == null) {
+            cls = getSystemClassLoader().loadClass(name);
+        }
         if (cls == null) {
-            cls = super.loadClass(name, resolve);
+            throw new ClassNotFoundException(name);
+        }
+        if (resolve) {
+            resolveClass(cls);
         }
         return cls;
     }

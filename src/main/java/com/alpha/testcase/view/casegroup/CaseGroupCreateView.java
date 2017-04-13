@@ -2,8 +2,7 @@ package com.alpha.testcase.view.casegroup;
 
 import com.alpha.common.enums.Active;
 import com.alpha.common.model.Result;
-import com.alpha.common.view.BaseModelView;
-import com.alpha.common.view.ResultHandler;
+import com.alpha.common.view.HandlerModelView;
 import com.alpha.testcase.entities.CaseGroup;
 import com.alpha.testcase.model.CaseGroupVo;
 import lombok.Getter;
@@ -21,28 +20,21 @@ import static com.alpha.common.controller.Urls.CASE_GROUP_CREATE;
 @Getter
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class CaseGroupCreateView extends BaseModelView {
-
-    private ResultHandler<CaseGroup, CaseGroupVo> resultHandler;
+public class CaseGroupCreateView extends HandlerModelView<CaseGroup, CaseGroupVo> {
 
     public CaseGroupCreateView() {
         this.setViewName(CASE_GROUP_CREATE);
         this.addObject("activeList", Active.options());
-        this.initResultHandler();
-    }
-
-    private void initResultHandler() {
-        resultHandler = new ResultHandler<>(this::success, this::fail);
     }
 
     public void success(Result<CaseGroup> result) {
-        super.success();
+        super.success(result);
         this.setCaseGroup(result.getResult());
     }
 
     public void fail(Result<CaseGroupVo> result) {
+        super.fail(result);
         this.addObject("caseGroup", result.getResult());
-        this.setMessage(result.getMessageList());
     }
 
 

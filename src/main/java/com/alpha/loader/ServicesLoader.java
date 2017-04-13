@@ -2,6 +2,7 @@ package com.alpha.loader;
 
 import com.alpha.loader.entities.ServicesClass;
 
+import javax.xml.ws.WebServiceClient;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -9,6 +10,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ServicesLoader {
 
+    /**
+     * key: WSDL
+     * <p>
+     * value: Services Class
+     */
     private ConcurrentHashMap<String, ServicesClass> servicesClassMap = new ConcurrentHashMap<>();
 
     private ServicesLoader() {
@@ -19,14 +25,31 @@ public class ServicesLoader {
         return ServiceLoaderInner.instance;
     }
 
+    /**
+     * put the class into map when it's ServiceFactory.
+     * <p>
+     * WsdlLocation is the key, value is ServicesClass
+     *
+     * @param clazz
+     */
     public void put(Class clazz) {
+        if (clazz == null) {
+            return;
+        }
         Class superClazz = clazz.getSuperclass();
-        if (superClazz.getName().equals("javax.xml.ws.Service")) {
+        WebServiceClient webServiceClient = (WebServiceClient) clazz.getAnnotation(WebServiceClient.class);
+        if (superClazz != null && superClazz.getName().equals("javax.xml.ws.Service") && webServiceClient != null) {
             ServicesClass servicesClass = new ServicesClass(clazz);
-            servicesClassMap.put(servicesClass.getServiceName(), servicesClass);
+            servicesClassMap.put(webServiceClient.wsdlLocation(), servicesClass);
         }
     }
 
+    /**
+     * get ServicesClass by WSDL
+     *
+     * @param name
+     * @return
+     */
     public ServicesClass get(String name) {
         return servicesClassMap.get(name);
     }

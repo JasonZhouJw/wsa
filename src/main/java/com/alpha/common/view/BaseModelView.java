@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.alpha.common.utils.Constants.DANGER;
 import static com.alpha.common.view.PropertyResources.LABEL_TEXT_FULL_NAME;
 
 /**
@@ -19,7 +19,8 @@ import static com.alpha.common.view.PropertyResources.LABEL_TEXT_FULL_NAME;
 @Setter
 @Getter
 @PropertySource(LABEL_TEXT_FULL_NAME)
-public abstract class BaseModelView extends ModelAndView {
+@Component
+public class BaseModelView extends ModelAndView {
 
     public static final String MESSAGE_PARAM = "messages";
     @Value("${label.success}")
@@ -32,10 +33,6 @@ public abstract class BaseModelView extends ModelAndView {
 
     public void addMessage(String message) {
         setMessage(new Message(message));
-    }
-
-    public void addDanger(String message) {
-        setMessage(new Message(message, DANGER));
     }
 
     protected void setMessage(Message message) {

@@ -33,7 +33,7 @@ public class LabelTextInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        if (modelAndView == null) {
+        if (modelAndView == null || modelAndView.getViewName() == null) {
             return;
         }
         Set<String> labelKeySet = allLabelMessageKeys(request);
@@ -65,6 +65,9 @@ public class LabelTextInterceptor implements HandlerInterceptor {
 
     private void replaceLabelInDataModel(Set<String> labelKeys, ModelAndView view, HttpServletRequest request) {
         view.getModelMap().forEach((key, data) -> {
+            if (data == null) {
+                return;
+            }
             if (data instanceof Collection) {
                 ((Collection) data).forEach((element) -> {
                     this.replaceLabel(labelKeys, element, request);
@@ -80,6 +83,7 @@ public class LabelTextInterceptor implements HandlerInterceptor {
         });
     }
 
+
     private void replaceLabel(Set<String> labelKeys, Object target, HttpServletRequest request) {
         if (target instanceof ViewElement && labelKeys.contains(((ViewElement) target).getLabel())) {
             ((ViewElement) target).setLabel(exposedResourceBundleMessageSource.getMessageOverrided(((ViewElement) target).getLabel(), null, request.getLocale()));
@@ -89,4 +93,5 @@ public class LabelTextInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
     }
+
 }

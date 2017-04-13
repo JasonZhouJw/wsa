@@ -18,9 +18,9 @@ import static com.alpha.common.controller.Urls.*;
  */
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class ServicesInfoIndexView extends BaseModelView implements ModelAndViewCombiner {
+public class ServiceInfoIndexView extends BaseModelView implements ModelAndViewCombiner {
 
-    public ServicesInfoIndexView(@Value("${list.empty}") String noDataMessage) {
+    public ServiceInfoIndexView(@Value("${list.empty}") String noDataMessage) {
         addObject("noDataMessage", noDataMessage);
         addObject("updateUrl", SERVICE_INFO_TO_UPDATE);
         addObject("addUrl", SERVICE_INFO_TO_CREATE);
