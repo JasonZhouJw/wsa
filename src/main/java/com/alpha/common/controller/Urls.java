@@ -26,6 +26,9 @@ public class Urls {
 
     public static final String VERIFY_RESULT = ROOT + "verifyResult";
     public static final String VERIFY_RESULT_INDEX = VERIFY_RESULT + SEPARATOR + "index";
+    public static final String VERIFY_RESULT_SEARCH = VERIFY_RESULT + SEPARATOR + "search";
+    public static final String VERIFY_RESULT_TO_UPDATE = VERIFY_RESULT + SEPARATOR + "toUpdate";
+    public static final String VERIFY_RESULT_UPDATE = VERIFY_RESULT + SEPARATOR + "update";
 
     public static final String TEST_CASE = ROOT + "testCase";
     public static final String TEST_CASE_INDEX = TEST_CASE + SEPARATOR + "index";

@@ -1,13 +1,23 @@
 package com.alpha.verifyresult.controller;
 
-import com.alpha.home.view.HomeView;
+import com.alpha.common.exceptions.DataNotFoundException;
+import com.alpha.common.page.PageView;
 import com.alpha.verifyresult.domain.VerifyResultImpl;
-import com.alpha.verifyresult.view.IndexView;
+import com.alpha.verifyresult.entities.VerifyResult;
+import com.alpha.verifyresult.view.VerifyResultIndexView;
+import com.alpha.verifyresult.view.VerifyResultUpdateView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.function.Consumer;
+
+import static com.alpha.common.controller.Urls.VERIFY_RESULT_INDEX;
+import static com.alpha.common.controller.Urls.VERIFY_RESULT_TO_UPDATE;
 
 /**
  * Created by jzhou237 on 2016-11-29.
@@ -16,26 +26,36 @@ import org.springframework.web.servlet.ModelAndView;
 public class VerifyResultController {
 
     @Autowired
-    private HomeView homeView;
+    private VerifyResultIndexView verifyResultIndexView;
 
     @Autowired
-    @Qualifier("verifyResultIndexView")
-    private IndexView indexView;
+    private VerifyResultUpdateView verifyResultUpdateView;
+
+    @Autowired
+    private PageView pageView;
 
     @Autowired
     private VerifyResultImpl verifyResult;
 
-    @GetMapping("/toView")
-    public ModelAndView toView() {
-        return homeView;
+    @GetMapping(VERIFY_RESULT_INDEX)
+    public ModelAndView index() {
+        this.verifyResult.findAll(new VerifyResult(), pageView.create(new Sort(Sort.Direction.DESC, "id")), new Consumer<Page<VerifyResult>>() {
+            @Override
+            public void accept(Page<VerifyResult> verifyResults) {
+                pageView.display(verifyResults.getTotalPages());
+                verifyResultIndexView.setVerifyResult(verifyResults.getContent());
+            }
+        });
+        return this.verifyResultIndexView.Combine(pageView);
     }
 
-//    @RequestMapping("/toView")
-//    public String toView(ModelMap modelMap) {
-//        PageRequest pageRequest = new PageRequest(0, 50);
-//        Page<VerifyResultImpl> pageable = this.verifyResultService.search(new SearchParam(), pageRequest);
-//        modelMap.addAttribute("pageable", Pageable.toPageable(pageable));
-//        modelMap.addAttribute("verifyResultList", VerifyResultVo.toVo(pageable.getContent()));
-//        return "/VerifyResultImpl/View";
-//    }
+    @GetMapping(VERIFY_RESULT_TO_UPDATE + "/{id}")
+    public ModelAndView toUpdate(@PathVariable("id") Long id) {
+        try {
+            this.verifyResultUpdateView.getResultHandler().successNoMsg(this.verifyResult.findOne(id));
+        } catch (DataNotFoundException e) {
+            this.verifyResultUpdateView.getResultHandler().fail(null, e.getMessage());
+        }
+        return verifyResultUpdateView;
+    }
 }
