@@ -2,6 +2,7 @@ package com.alpha.verifyresult.domain;
 
 import com.alpha.common.exceptions.DataNotFoundException;
 import com.alpha.verifyresult.entities.VerifyResult;
+import com.alpha.verifyresult.model.VerifyResultSearchVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -22,7 +23,9 @@ public interface IVerifyResult {
      */
     void saveResult(Map<String, VerifyResult> resultMap);
 
-    void findAll(VerifyResult verifyResult, Pageable pageable, Consumer<Page<VerifyResult>> consumer);
+    void findAll(Pageable pageable, Consumer<Page<VerifyResult>> consumer);
 
     VerifyResult findOne(Long id) throws DataNotFoundException;
+
+    void search(VerifyResultSearchVo verifyResultVo, Pageable pageable, Consumer<Page<VerifyResult>> consumer);
 }

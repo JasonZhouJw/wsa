@@ -25,7 +25,7 @@ import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLAS
 public class PageView extends ModelAndView implements View<Integer> {
 
     public static final String PAGE_PARAM_NAME = "page";
-    private final CurrentPage currentPage;
+    private CurrentPage currentPage;
 
     @Value("${application.perPageLimit}")
     private int perPageLimit;
@@ -79,4 +79,5 @@ public class PageView extends ModelAndView implements View<Integer> {
     public Pageable create(Sort sort) {
         return new PageRequest(currentPage.number() - 1, perPageLimit, sort);
     }
+
 }

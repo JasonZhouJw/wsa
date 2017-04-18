@@ -1,25 +1,66 @@
-<div class="panel panel-primary">
-    <div class="panel-heading">{{label.title}}</div>
-    {{^userList.0}}
-    <div class="panel-body">{{noDataMessage}}</div>
-    {{/userList.0}}
-    {{#userList.0}}
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>{{label.type}}</th>
-            <th>{{label.description}}</th>
-        </tr>
-        </thead>
-        {{#userList}}
-        <tbody class="table-hover">
-        <tr>
-            <td class="text-left">{{id}}</td>
-            <td class="text-left">{{name}}</td>
-        </tr>
-        </tbody>
-        {{/userList}}
-    </table>
+<script>
+    $(document).ready(function(){
+    Object.create(TestCaseIndex).Init({{{jsonData}}})
+});
+
+</script>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title pull-left">{{label.title}}</h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="panel-title">
+            <form class="form-inline" method="get" action="search">
+                <div class="form-group">
+                    <label for="startExecutedTime">{{label.startExecutedTime}}</label>
+                    <input type="date" class="form-control" id="startExecutedTime" name="startExecutedTime"
+                           value="{{searchParam.startExecutedTime}}"
+                           placeholder="{{label.startExecutedTime}}">
+                </div>
+                <div class="form-group">
+                    <label for="endExecutedTime">{{label.endExecutedTime}}</label>
+                    <input type="date" class="form-control" id="endExecutedTime" name="endExecutedTime"
+                           value="{{searchParam.endExecutedTime}}"
+                           placeholder="{{label.endExecutedTime}}">
+                </div>
+                <div class="form-group">
+                    <label for="result">{{label.result}}</label>
+                    <select id="result" name="result" class="form-control">
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-default">{{label.search}}</button>
+            </form>
+        </div>
+        <br/>
+        {{^verifyResultList.0}}
+        {{noDataMessage}}
+        {{/verifyResultList.0}}
+        {{#verifyResultList.0}}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{{label.id}}</th>
+                <th>{{label.testcase}}</th>
+                <th>{{label.result}}</th>
+                <th>{{label.message}}</th>
+                <th>{{label.executedTime}}</th>
+            </tr>
+            </thead>
+            {{#verifyResultList}}
+            <tbody class="table-hover">
+            <tr>
+                <td class="text-left"><a href="{{updateUrl}}/{{id}}">{{id}}</a></td>
+                <td class="text-left">{{testCase.id}}-{{testCase.name}}</td>
+                <td class="text-left">{{result.type}}</td>
+                <td class="text-left">{{message}}</td>
+                <td class="text-left">{{executedTime}}</td>
+            </tr>
+            </tbody>
+            {{/verifyResultList}}
+        </table>
+        {{/verifyResultList.0}}
+    </div>
     <div class="panel-footer">
         <div class="row">
             <div class="col-md-3">
@@ -32,6 +73,7 @@
                     {{/previousPageUrl}}
                 </div>
                 <div class="col-md-4 media-middle"><span>{{currentPage}}</span></div>
+                <div class="col-md-4 media-middle"><span>{{totalPage}}</span></div>
                 <div class="col-md-4 media-middle">
                     {{#nextPageUrl}}
                     <a href="{{nextPageUrl}}">{{label.nextPage}}</a>
@@ -43,5 +85,4 @@
             </div>
         </div>
     </div>
-    {{/userList.0}}
 </div>

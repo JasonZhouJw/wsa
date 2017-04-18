@@ -4,6 +4,7 @@ import com.alpha.common.exceptions.DataNotFoundException;
 import com.alpha.common.page.PageView;
 import com.alpha.verifyresult.domain.VerifyResultImpl;
 import com.alpha.verifyresult.entities.VerifyResult;
+import com.alpha.verifyresult.model.VerifyResultSearchVo;
 import com.alpha.verifyresult.view.VerifyResultIndexView;
 import com.alpha.verifyresult.view.VerifyResultUpdateView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.function.Consumer;
 
-import static com.alpha.common.controller.Urls.VERIFY_RESULT_INDEX;
-import static com.alpha.common.controller.Urls.VERIFY_RESULT_TO_UPDATE;
+import static com.alpha.common.controller.Urls.*;
 
 /**
  * Created by jzhou237 on 2016-11-29.
@@ -39,7 +39,7 @@ public class VerifyResultController {
 
     @GetMapping(VERIFY_RESULT_INDEX)
     public ModelAndView index() {
-        this.verifyResult.findAll(new VerifyResult(), pageView.create(new Sort(Sort.Direction.DESC, "id")), new Consumer<Page<VerifyResult>>() {
+        this.verifyResult.findAll(pageView.create(new Sort(Sort.Direction.DESC, "id")), new Consumer<Page<VerifyResult>>() {
             @Override
             public void accept(Page<VerifyResult> verifyResults) {
                 pageView.display(verifyResults.getTotalPages());
@@ -57,5 +57,18 @@ public class VerifyResultController {
             this.verifyResultUpdateView.getResultHandler().fail(null, e.getMessage());
         }
         return verifyResultUpdateView;
+    }
+
+    @GetMapping(VERIFY_RESULT_SEARCH)
+    public ModelAndView search(VerifyResultSearchVo verifyResultVo) {
+        this.verifyResult.search(verifyResultVo, pageView.create(new Sort(Sort.Direction.DESC, "id")), new Consumer<Page<VerifyResult>>() {
+            @Override
+            public void accept(Page<VerifyResult> verifyResults) {
+                pageView.display(verifyResults.getTotalPages());
+                verifyResultIndexView.setSearchParam(verifyResultVo);
+                verifyResultIndexView.setVerifyResult(verifyResults.getContent());
+            }
+        });
+        return verifyResultIndexView;
     }
 }

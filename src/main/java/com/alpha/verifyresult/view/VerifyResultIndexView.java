@@ -1,8 +1,10 @@
 package com.alpha.verifyresult.view;
 
+import com.alpha.common.enums.ResultType;
 import com.alpha.common.view.BaseModelView;
 import com.alpha.common.view.ModelAndViewCombiner;
 import com.alpha.verifyresult.entities.VerifyResult;
+import com.alpha.verifyresult.model.VerifyResultSearchVo;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,11 @@ public class VerifyResultIndexView extends BaseModelView implements ModelAndView
     public VerifyResultIndexView() {
         this.setViewName(VERIFY_RESULT_INDEX);
         this.addObject("toUpdateUrl", VERIFY_RESULT_TO_UPDATE);
+        this.init();
+    }
+
+    private void init() {
+        this.addObject("resultType", ResultType.options());
     }
 
     public void setVerifyResult(List<VerifyResult> verifyResultList) {
@@ -32,5 +39,9 @@ public class VerifyResultIndexView extends BaseModelView implements ModelAndView
     @Override
     public ModelAndView original() {
         return this;
+    }
+
+    public void setSearchParam(VerifyResultSearchVo verifyResultVo) {
+        this.addObject("searchParam", verifyResultVo);
     }
 }

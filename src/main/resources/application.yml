@@ -28,7 +28,10 @@ spring:
     username: sa
     password: sa
     driverClassName: org.h2.Driver
-
+logging:
+  level:
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.engine.QueryParameters: DEBUG
 # customer
 cxf:
   executor: c:/dev/apache-cxf-3.1.8/bin/wadl2java.bat
