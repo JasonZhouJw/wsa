@@ -76,7 +76,6 @@ public class ServiceExecutor {
         verificationMapList.forEach(verificationMap -> {
             AbsVerification verification = VerificationFactory.getVerification(verificationMap);
             VerifyResult result = new VerifyResult();
-            result.setMethodInfo(testCase.getMethodInfo());
             result.setTestCase(testCase);
             try {
                 verification.verify(response);

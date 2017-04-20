@@ -10,7 +10,7 @@ import java.util.List;
  * Created by jzhou237 on 2016-09-21.
  */
 @Getter
-public enum ResultType {
+public enum ResultType implements IIdentifierEnum {
 
     SUCCESS("SUCCESS", "label.success"),
     FAIL("FAIL", "label.fail"),
@@ -38,4 +38,9 @@ public enum ResultType {
         return type;
     }
 
+
+    @Override
+    public String getIdentifier() {
+        return this.type;
+    }
 }

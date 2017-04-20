@@ -1,9 +1,11 @@
 package com.alpha.verifyresult.domain;
 
 import com.alpha.common.exceptions.DataNotFoundException;
+import com.alpha.testcase.entities.TestCase;
 import com.alpha.verifyresult.entities.VerifyResult;
 import com.alpha.verifyresult.model.VerifyResultSearchVo;
 import com.alpha.verifyresult.repository.VerifyResultRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,10 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,8 +76,10 @@ public class VerifyResultImpl implements IVerifyResult {
                 if (verifyResultSearchVo.getEndExecutedTime() != null) {
                     predicate.add(cb.lessThanOrEqualTo(root.get("executedTime").as(Date.class), verifyResultSearchVo.getEndExecutedTime()));
                 }
-                if (verifyResultSearchVo.getTestCase() != null && verifyResultSearchVo.getTestCase().getId() > 0) {
-                    predicate.add(cb.equal(root.get("test_case_id"), verifyResultSearchVo.getTestCase().getId()));
+                if (StringUtils.isNotBlank(verifyResultSearchVo.getTestCaseName())) {
+//                    predicate.add(cb.equal(root.get("test_case_id"), verifyResultSearchVo.getTestCase().getId()));
+                    Join<VerifyResult, TestCase> testCaseJoin = root.join(root.getModel().getSingularAttribute("testCase", TestCase.class), JoinType.LEFT);
+                    predicate.add(cb.like(testCaseJoin.get("name").as(String.class), "%" + verifyResultSearchVo.getTestCaseName() + "%"));
                 }
                 if (verifyResultSearchVo.getResult() != null) {
                     predicate.add(cb.equal(root.get("result").as(Enum.class), verifyResultSearchVo.getResult()));

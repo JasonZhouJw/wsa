@@ -1,7 +1,6 @@
 package com.alpha.verifyresult.entities;
 
 import com.alpha.common.enums.ResultType;
-import com.alpha.services.entities.MethodInfo;
 import com.alpha.testcase.entities.TestCase;
 import com.alpha.verifyresult.model.VerifyResultVo;
 import lombok.Getter;
@@ -32,10 +31,6 @@ public class VerifyResult {
     @JoinColumn(name = "test_case_id")
     private TestCase testCase;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "method_info_id")
-    private MethodInfo methodInfo;
-
     @Column(length = 20)
     @Enumerated(EnumType.STRING)
     private ResultType result = ResultType.SUCCESS;
@@ -64,9 +59,9 @@ public class VerifyResult {
         verifyResultVo.setId(this.id);
         verifyResultVo.setExecutedTime(this.executedTime);
         verifyResultVo.setMessage(this.message);
-        verifyResultVo.setTestCase(this.testCase.toVo());
         verifyResultVo.setResult(this.result);
         verifyResultVo.setUpdatedTime(this.updatedTime);
+        verifyResultVo.setTestCase(this.testCase.toVo());
         return verifyResultVo;
     }
 

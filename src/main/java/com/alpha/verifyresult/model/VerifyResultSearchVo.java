@@ -19,4 +19,6 @@ public class VerifyResultSearchVo extends VerifyResultVo {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endExecutedTime;
 
+    private String testCaseName;
+
 }
