@@ -43,7 +43,13 @@ dependencies {
     testCompile(
             "org.springframework.boot:spring-boot-starter-test:${springBootVersion}",
             "junit:junit:4.12",
-            "org.mockito:mockito-all:1.10.19",
+//            "org.mockito:mockito-all:1.10.19",
+            "org.powermock:powermock-module-junit4:1.6.6",
+            "org.powermock:powermock-api-mockito:1.6.6",
+//            "org.powermock:powermock-core:1.6.6",
+//            "org.powermock:powermock-api-easymock:1.6.6",
+
+
             "info.cukes:cucumber-java:1.2.5",
             "info.cukes:cucumber-junit:1.2.5",
             "info.cukes:cucumber-spring:1.2.5",
